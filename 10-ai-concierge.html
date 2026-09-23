@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 AI Concierge Chat · Dahab Guest App Specs</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <label for="nav-toggle" class="nav-btn" aria-label="Menu"><span></span><span></span><span></span></label>
+  <a class="brand" href="index.html">
+    <img src="assets/logo.svg" alt="">
+    <span><span class="brand-name">DAHAB<span class="ar">• دهب</span></span>
+    <span class="brand-sub">Guest App · Product Specification</span></span>
+  </a>
+  <nav class="topbar-links">
+    <a href="index.html">Modules</a>
+    <a href="issues.html">Issues</a>
+    <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">Figma ↗</a>
+  </nav>
+</header>
+<input type="checkbox" id="nav-toggle">
+<div class="layout">
+<nav class="sidebar"><div class="side-label">Overview</div><ul><li><a href="index.html"><span class="num alt">★</span>Home</a></li><li><a href="issues.html"><span class="num alt">!</span>Issues tracker</a></li></ul><div class="side-label">Guest app modules</div><ul><li><a href="01-account-authentication.html"><span class="num">01</span>Account &amp; Authentication</a></li><li><a href="02-discovery-home.html"><span class="num">02</span>Discovery Home</a></li><li><a href="03-search-results-and-map.html"><span class="num">03</span>Search Results &amp; Map</a></li><li><a href="04-dahab-guide-zones-pois-articles.html"><span class="num">04</span>Dahab Guide — Zones, Points of Interest &amp; Articles</a></li><li><a href="05-listing-detail-property-activity.html"><span class="num">05</span>Listing Detail — Property &amp; Activity</a></li><li><a href="06-accommodation-booking-and-my-bookings.html"><span class="num">06</span>Accommodation Booking &amp; My Bookings</a></li><li><a href="07-activity-booking.html"><span class="num">07</span>Activity Booking</a></li><li><a href="08-reviews-and-favorites.html"><span class="num">08</span>Reviews &amp; Favorites</a></li><li><a href="09-notifications-and-language.html"><span class="num">09</span>Notifications &amp; Language Settings</a></li><li><a href="10-ai-concierge.html" class=active><span class="num">10</span>AI Concierge Chat</a></li></ul></nav>
+<main class="content">
+<section class="hero">
+  <div class="eyebrow"><span class="hero-num">10</span> Guest App · Module</div>
+  <h1>AI Concierge Chat</h1>
+  <p class="lead">A chat assistant, opened from anywhere in the guest app, that answers practical questions about Dahab (visibility and currents, wind, safety, transport, what to pack, culture) in the guest's language, and <b>surfaces bookable listings and guide articles inline</b> as tappable cards.</p>
+  <dl class="meta"><div><dt>Module</dt><dd>AI Concierge chatbot (drawer / bottom sheet)</dd></div><div><dt>Apps</dt><dd>Desktop Web (1440), Tablet Web (834), Mobile Web, Native App (390)</dd></div><div><dt>Figma</dt><dd><b>Not in the Figma file yet.</b> The screens exist in Stitch ("AI Concierge — Chat Drawer Empty State" and "AI Concierge — Active Conversation State", 4 breakpoints each) but were not added to page <em>New</em>. Screenshots will be added once they are in Figma.</dd></div><div><dt>SRS</dt><dd>§3.10 FR-10.1, FR-10.2 (FR-10.3 Later), §3.11 FR-11.2, §5.3 LLM API, §2.6 LLM provider dependency</dd></div><div><dt>Screens</dt><dd>1 component · 2 states · 8 Stitch screens</dd></div></dl>
+  <div class="hero-waves"></div>
+</section><article class="doc"><h2 id="1-module-summary">1. Module summary</h2>
+<p>A chat assistant, opened from anywhere in the guest app, that answers practical questions about Dahab (visibility and currents, wind, safety, transport, what to pack, culture) in the guest's language, and <strong>surfaces bookable listings and guide articles inline</strong> as tappable cards. It is a slide-over drawer (desktop/tablet) or bottom sheet (mobile/native), not a full page, so the guest keeps their browsing context.</p>
+<h2 id="2-business-requirements-covered-srs">2. Business requirements covered (SRS)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>MVP</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FR-10.1</td>
+<td>Chat with an AI assistant in their language about practical Dahab questions</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Empty state + conversation</td>
+</tr>
+<tr class="even">
+<td>FR-10.2</td>
+<td>Chatbot surfaces relevant properties/activities/guide articles inline</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Inline listing cards in answers</td>
+</tr>
+<tr class="odd">
+<td>FR-10.3</td>
+<td>Escalate to human support</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-later">Later</span></td>
+<td>Not designed (safety disclaimer only)</td>
+</tr>
+<tr class="even">
+<td>FR-11.2</td>
+<td>Popular / similar suggestions for new users</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Suggested starter questions</td>
+</tr>
+<tr class="odd">
+<td>§5.3</td>
+<td>LLM/AI API</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Backend</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-screen-inventory">3. Screen inventory</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>State</th>
+<th>Breakpoints (Stitch)</th>
+<th>Presentation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4.1</td>
+<td>Chat drawer — Empty state</td>
+<td>All 4</td>
+<td>Desktop: right slide-over, full height, 460 px wide, blurred page behind · Tablet: 420 px slide-over with scrim · Mobile Web: bottom sheet with drag handle · Native: iOS-style modal sheet</td>
+</tr>
+<tr class="even">
+<td>4.2</td>
+<td>Chat drawer — Active conversation</td>
+<td>All 4</td>
+<td>Same containers; desktop drawer 480 px</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-screen-specifications">4. Screen specifications</h2>
+<h3 id="41-empty-state">4.1 Empty state</h3>
+<p><em>Screenshots pending — not in Figma.</em></p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Stitch spec)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Launcher</td>
+<td>Entry point to open the concierge (floating button / header icon)</td>
+<td><strong>Not specified in the designs</strong> — see §7 G2.</td>
+</tr>
+<tr class="even">
+<td>Header</td>
+<td>Title, language quick switch <strong>عربي</strong>, close <strong>✕</strong> (native: grabber bar + close)</td>
+<td>Close keeps the conversation in memory for the session.</td>
+</tr>
+<tr class="odd">
+<td>Greeting</td>
+<td>"Marhaban! I'm your Dahab Coastal Guide" / "Ahlan! What can I guide you to?" — capabilities: tides, Blue Hole visibility, wind, Bedouin safaris, transport</td>
+<td>Greeting in the UI language.</td>
+</tr>
+<tr class="even">
+<td>Live conditions pills</td>
+<td>"Laguna: 14 kts NNE · High tide at 16:40 · Blue Hole: 35m+ visibility · Chamber standby 24/7"</td>
+<td>Same data source as module 02.</td>
+</tr>
+<tr class="odd">
+<td>Suggested starter questions (4 cards)</td>
+<td>🌊 "What's the visibility and drift like at Blue Hole today?" · 🤿 "Find me a beginner-friendly dive site near Eel Garden or Lighthouse" · 🎒 "What should I pack for an overnight Bedouin desert safari in Wadi Ghnai?" · ☕ "Where can I enjoy authentic campfire habak tea at sunset with locals?"</td>
+<td>One tap sends the question.</td>
+</tr>
+<tr class="even">
+<td>Input bar</td>
+<td>Placeholder "Ask about dive spots, wind, treks, or stays…", voice dictation, terracotta send button</td>
+<td>Send disabled when empty.</td>
+</tr>
+<tr class="odd">
+<td>Disclaimer</td>
+<td>"Data verified by local Bedouin guides &amp; CDWS certified dive masters. For marine emergencies call VHF Ch 16."</td>
+<td>Always visible.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="42-active-conversation">4.2 Active conversation</h3>
+<p><em>Screenshots pending — not in Figma.</em></p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Stitch spec)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Guest message</td>
+<td>"Find me a beginner-friendly dive site near Eel Garden or Lighthouse" · 10:24 AM</td>
+<td>Timestamp; delivered state.</td>
+</tr>
+<tr class="even">
+<td>AI answer</td>
+<td>Local greeting, comparison (Lighthouse Reef sheltered pebble entry &amp; zero drift vs Eel Garden surge today), live metrics (35m+ visibility, calm, 26°C)</td>
+<td>Answer in guest's language; grounded in platform data (listings, guide content, conditions).</td>
+</tr>
+<tr class="odd">
+<td>Inline activity card</td>
+<td>"Lighthouse Reef Guided Beginner Scuba &amp; Skills Refresher" — instructor Youssef Ben-Ammar, CDWS badge, 12 m, gear included, ★ 4.95, 1,200 EGP/person — <strong>Book Slot / View Session</strong></td>
+<td>Card → Activity Detail / Session Picker (05/07). Only real, approved listings.</td>
+</tr>
+<tr class="even">
+<td>Inline stay card</td>
+<td>"Dar Tarabin Coastal Ecolodge" — host Sheikh Salama, "4 minutes from Lighthouse dive center", ★ 4.96, 2,400 EGP/night — <strong>Explore Stay</strong></td>
+<td>Card → Property Detail (05). Native shows cards as a horizontal carousel.</td>
+</tr>
+<tr class="odd">
+<td>Follow-up chips</td>
+<td>Suggested next questions</td>
+<td>One tap sends.</td>
+</tr>
+<tr class="even">
+<td>Input</td>
+<td>"Ask follow-up or request booking…", voice, photo attachment, send</td>
+<td>Photo attachment — see §7 G4.</td>
+</tr>
+<tr class="odd">
+<td>Typing / loading state</td>
+<td>AI "typing" indicator</td>
+<td>Required while waiting for the LLM.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens the concierge</td>
+<td>Opens drawer/sheet over the current page; shows greeting, conditions, 4 starter questions.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Taps a starter or types a question</td>
+<td>Shows the message; shows typing indicator; calls the LLM with context (language, current page/listing, conditions, catalogue search).</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>—</td>
+<td>Streams the answer; attaches up to N listing/article cards from the catalogue (FR-10.2).</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps a card CTA</td>
+<td>Navigates to detail/booking; drawer closes (desktop may keep it open).</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Asks a follow-up</td>
+<td>Keeps conversation context.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Asks something unsafe/unknown</td>
+<td>Answers with safety guidance and emergency contacts; (escalation to human is Later — FR-10.3).</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Closes the drawer</td>
+<td>Conversation kept for the session (history persistence — decide).</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-business-rules">5. Business rules</h2>
+<ol type="1">
+<li>Answers must only recommend <strong>approved, active</strong> listings and published guide content; prices and availability come from the platform, never generated by the model.</li>
+<li>Answer language = UI language (EN/AR), or the language the guest writes in.</li>
+<li>Safety: medical/diving-emergency questions always include the hyperbaric chamber and VHF 16 contacts and a "not a substitute for a certified guide" note.</li>
+<li>Store chat sessions (entity <strong>AI Chat Session</strong>, SRS §6) for quality review; retention and privacy rules per NFR-9.</li>
+<li>Rate limits per user/device to control LLM cost.</li>
+<li>Works logged-out (read-only answers); booking still requires login.</li>
+</ol>
+<h2 id="6-story-candidates-for-jira">6. Story candidates for Jira</h2>
+<p><strong>Epic:</strong> GUEST-AI-CONCIERGE</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Key idea</th>
+<th>Story</th>
+<th>Acceptance criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-key">AI-1</span></td>
+<td>As a guest, I want to open a chat assistant from any page.</td>
+<td>Drawer (desktop/tablet) / bottom sheet (mobile/native); close keeps context; launcher defined.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">AI-2</span></td>
+<td>As a guest, I want suggested questions to start.</td>
+<td>4 starter cards; tap sends.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">AI-3</span></td>
+<td>As a guest, I want answers about Dahab in my language.</td>
+<td>EN/AR answers; typing indicator; streamed response; error state if LLM fails.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">AI-4</span></td>
+<td>As a guest, I want the assistant to show bookable stays/activities and articles as cards.</td>
+<td>Cards link to detail/booking; only live catalogue items; correct price.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">AI-5</span></td>
+<td>As a guest, I want safety-critical answers to include emergency contacts.</td>
+<td>Chamber + VHF 16 shown for safety topics; disclaimer visible.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">AI-6 (tech)</span></td>
+<td>LLM integration with catalogue retrieval, logging and rate limiting.</td>
+<td>Prompt includes language + retrieved listings/articles; sessions logged; per-user limits.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-gaps--open-questions">7. Gaps &amp; open questions</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Finding</th>
+<th>Suggested decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-gap">G1</span></td>
+<td><strong>Concierge screens are not in the Figma file</strong> (only in Stitch).</td>
+<td>Copy the 8 Stitch screens into Figma page <em>New</em> (section "AI Concierge").</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G2</span></td>
+<td><strong>Launcher</strong> (where the guest opens the chat) is not designed on any screen.</td>
+<td>Add floating button / header icon to the shell.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G3</span></td>
+<td>Error, offline and "can't answer" states not designed.</td>
+<td>Add sibling states.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G4</span></td>
+<td>Photo attachment &amp; voice dictation in the input are not in the SRS.</td>
+<td>Phase 2 or confirm scope.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G5</span></td>
+<td>Human escalation (FR-10.3) is Later — define fallback (WhatsApp desk link?).</td>
+<td>Show "Chat with the Dahab desk on WhatsApp" link.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G6</span></td>
+<td>Conversation history persistence across sessions not specified.</td>
+<td>Decide (session only for MVP).</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-out-of-scope-for-mvp">8. Out of scope for MVP</h2>
+<ul>
+<li>Human escalation (FR-10.3), AI trip planner (FR-9, Phase 2), personalised recommendations (FR-11.1).</li>
+</ul>
+</article><nav class="pager"><a href="09-notifications-and-language.html"><small>← Previous</small><b>09 · Notifications &amp; Language Settings</b></a></nav>
+</main>
+<aside class="toc"><div class="side-label">On this page</div><ul><li class="l2"><a href="#1-module-summary">1. Module summary</a></li>
+<li class="l2"><a href="#2-business-requirements-covered-srs">2. Business requirements covered (SRS)</a></li>
+<li class="l2"><a href="#3-screen-inventory">3. Screen inventory</a></li>
+<li class="l2"><a href="#4-screen-specifications">4. Screen specifications</a></li>
+<li class="l3"><a href="#41-empty-state">4.1 Empty state</a></li>
+<li class="l3"><a href="#42-active-conversation">4.2 Active conversation</a></li>
+<li class="l2"><a href="#5-business-rules">5. Business rules</a></li>
+<li class="l2"><a href="#6-story-candidates-for-jira">6. Story candidates for Jira</a></li>
+<li class="l2"><a href="#7-gaps--open-questions">7. Gaps &amp; open questions</a></li>
+<li class="l2"><a href="#8-out-of-scope-for-mvp">8. Out of scope for MVP</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <span><b style="color:#fff">DAHAB • دهب</b> — Reservations • Touring • Trips · Guest App specification</span>
+  <span>Sources: SRS v1.0 · Figma “Dahab” → page <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">New</a> · Prepared 23 Sep 2026</span>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06 Accommodation Booking &amp; My Bookings · Dahab Guest App Specs</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <label for="nav-toggle" class="nav-btn" aria-label="Menu"><span></span><span></span><span></span></label>
+  <a class="brand" href="index.html">
+    <img src="assets/logo.svg" alt="">
+    <span><span class="brand-name">DAHAB<span class="ar">• دهب</span></span>
+    <span class="brand-sub">Guest App · Product Specification</span></span>
+  </a>
+  <nav class="topbar-links">
+    <a href="index.html">Modules</a>
+    <a href="issues.html">Issues</a>
+    <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">Figma ↗</a>
+  </nav>
+</header>
+<input type="checkbox" id="nav-toggle">
+<div class="layout">
+<nav class="sidebar"><div class="side-label">Overview</div><ul><li><a href="index.html"><span class="num alt">★</span>Home</a></li><li><a href="issues.html"><span class="num alt">!</span>Issues tracker</a></li></ul><div class="side-label">Guest app modules</div><ul><li><a href="01-account-authentication.html"><span class="num">01</span>Account &amp; Authentication</a></li><li><a href="02-discovery-home.html"><span class="num">02</span>Discovery Home</a></li><li><a href="03-search-results-and-map.html"><span class="num">03</span>Search Results &amp; Map</a></li><li><a href="04-dahab-guide-zones-pois-articles.html"><span class="num">04</span>Dahab Guide — Zones, Points of Interest &amp; Articles</a></li><li><a href="05-listing-detail-property-activity.html"><span class="num">05</span>Listing Detail — Property &amp; Activity</a></li><li><a href="06-accommodation-booking-and-my-bookings.html" class=active><span class="num">06</span>Accommodation Booking &amp; My Bookings</a></li><li><a href="07-activity-booking.html"><span class="num">07</span>Activity Booking</a></li><li><a href="08-reviews-and-favorites.html"><span class="num">08</span>Reviews &amp; Favorites</a></li><li><a href="09-notifications-and-language.html"><span class="num">09</span>Notifications &amp; Language Settings</a></li><li><a href="10-ai-concierge.html"><span class="num">10</span>AI Concierge Chat</a></li></ul></nav>
+<main class="content">
+<section class="hero">
+  <div class="eyebrow"><span class="hero-num">06</span> Guest App · Module</div>
+  <h1>Accommodation Booking &amp; My Bookings</h1>
+  <p class="lead">Takes a guest from "Reserve" on a property page to a confirmed, paid stay, and lets them manage it afterwards.</p>
+  <dl class="meta"><div><dt>Module</dt><dd>Room Type &amp; Date Selector → <em>Guest details &amp; payment (not designed)</em> → Booking Confirmation → My Bookings → Cancel booking → Modify dates</dd></div><div><dt>Apps</dt><dd>Desktop Web (1440), Tablet Web (834), Mobile Web, Native App (390)</dd></div><div><dt>Figma</dt><dd>Page <b>New</b> → sections <em>Room Type &amp; Date Selector</em>, <em>Booking Confirmation</em>, <em>My Bookings</em>, <em>Cancel Booking Confirmation</em>, <em>Modify Dates</em> (20 frames). Example: Dar Tarabin Coastal Ecolodge, booking <b>DHB-2025-8841-ARB</b></dd></div><div><dt>SRS</dt><dd>§3.3 FR-3.1–3.6, §3.5 FR-5.1, 5.3, 5.5, FR-8.3, FR-13.4, NFR-5, NFR-6, NFR-8, NFR-10, NFR-12</dd></div><div><dt>Screens</dt><dd>5 screens designed + 1 missing (checkout) · 20 frames</dd></div></dl>
+  <div class="hero-waves"></div>
+</section><article class="doc"><h2 id="1-module-summary">1. Module summary</h2>
+<p>Takes a guest from "Reserve" on a property page to a confirmed, paid stay, and lets them manage it afterwards.</p>
+<p><strong>Step 1 – Select room &amp; dates</strong> → <strong>Step 2 – Guest details &amp; accords + payment</strong> <em>(no screen in the new Figma — see §7 G1)</em> → <strong>Step 3 – Confirmation</strong> (voucher, offline QR check-in pass, host contact, arrival logistics) → <strong>My Bookings</strong> (upcoming / past / cancelled; view voucher; modify; cancel) → <strong>Cancel</strong> (refund per policy) / <strong>Modify dates</strong> (with sold-out conflict handling).</p>
+<h2 id="2-business-requirements-covered-srs">2. Business requirements covered (SRS)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>MVP</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FR-3.1</td>
+<td>Select room type, dates, guests; live price &amp; availability before booking</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Room Type &amp; Date Selector</td>
+</tr>
+<tr class="even">
+<td>FR-3.2</td>
+<td>Complete booking with online payment</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td><strong>Checkout step 2 — missing</strong></td>
+</tr>
+<tr class="odd">
+<td>FR-3.3</td>
+<td>View booking confirmation; receive it by email/notification</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Booking Confirmation ("Voucher dispatched to …")</td>
+</tr>
+<tr class="even">
+<td>FR-3.4</td>
+<td>View, modify (where policy allows), or cancel an upcoming booking</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>My Bookings, Modify Dates, Cancel</td>
+</tr>
+<tr class="odd">
+<td>FR-3.5</td>
+<td>Enforce cancellation policy; calculate refunds</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Cancel dialog (refund eligibility &amp; amount)</td>
+</tr>
+<tr class="even">
+<td>FR-3.6</td>
+<td>Prevent double booking (atomic availability decrement)</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Backend; "Units left" badges; sold-out conflict on Modify</td>
+</tr>
+<tr class="odd">
+<td>FR-5.1</td>
+<td>Pay by card via integrated gateway</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Missing checkout; confirmation shows "Paid in full (Visa •••• 9012)"</td>
+</tr>
+<tr class="even">
+<td>FR-5.3</td>
+<td>Automatic refund to original payment method</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Cancel dialog ("returned to Visa / Apple Pay •••• 9012 within 3–5 business days")</td>
+</tr>
+<tr class="odd">
+<td>FR-5.5</td>
+<td>Receipt/invoice for each completed payment</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>"Download PDF", "Print Voucher"</td>
+</tr>
+<tr class="even">
+<td>FR-8.3</td>
+<td>Push/email/SMS for confirmations, cancellations</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Confirmation email + notifications (module 09)</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">NFR-6</span></td>
+<td>First-time guest books in ≤ 5 screens/steps</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>3-step progress bar</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">NFR-12</span></td>
+<td>Full audit trail of booking/payment transactions</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Backend</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-screen-inventory">3. Screen inventory</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Screen</th>
+<th>States</th>
+<th>Breakpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4.1</td>
+<td>Room Type &amp; Date Selector (Step 1)</td>
+<td>Default</td>
+<td>All 4</td>
+</tr>
+<tr class="even">
+<td>4.2</td>
+<td>Guest Details &amp; Payment (Step 2)</td>
+<td>—</td>
+<td><strong>Not designed</strong></td>
+</tr>
+<tr class="odd">
+<td>4.3</td>
+<td>Booking Confirmation (Step 3)</td>
+<td>Default</td>
+<td>All 4</td>
+</tr>
+<tr class="even">
+<td>4.4</td>
+<td>My Bookings</td>
+<td>Default (upcoming booking selected)</td>
+<td>All 4</td>
+</tr>
+<tr class="odd">
+<td>4.5</td>
+<td>Cancel Booking Confirmation</td>
+<td>Dialog / bottom sheet</td>
+<td>All 4</td>
+</tr>
+<tr class="even">
+<td>4.6</td>
+<td>Modify Dates</td>
+<td>Sold-out collision error</td>
+<td>All 4</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-screen-specifications">4. Screen specifications</h2>
+<h3 id="41-room-type--date-selector--step-1-of-3">4.1 Room Type &amp; Date Selector — Step 1 of 3</h3>
+<p><strong>Entry:</strong> Reserve on Property Detail (values carried over). <strong>Exit:</strong> Continue → Step 2; back → Property Detail.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-5279.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-5279.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-5279" target="_blank" rel="noopener">Open in Figma · 42:5279</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-4719.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-4719.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-4719" target="_blank" rel="noopener">Open in Figma · 42:4719</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-4364.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-4364.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-4364" target="_blank" rel="noopener">Open in Figma · 42:4364</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-3947.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-3947.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-3947" target="_blank" rel="noopener">Open in Figma · 42:3947</a></figure>
+</div>
+
+<h4 id="ui-elements">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Progress</td>
+<td>Step 1 Select Room &amp; Dates · Step 2 Guest Details &amp; Accords · Step 3 Confirmation (native "STEP 1 OF 3")</td>
+<td>Shows position; previous steps clickable.</td>
+</tr>
+<tr class="even">
+<td>Property summary</td>
+<td>Name, "100% OFF-GRID SOLAR &amp; REEF CERTIFIED", rating 4.99 (67), "SANCTUARY CAPACITY — Low Impact (3/5 Units Left)"</td>
+<td>Units left = live inventory.</td>
+</tr>
+<tr class="odd">
+<td><strong>1. Dates</strong></td>
+<td>Two-month calendar (Oct/Nov 2025); legend Selected · Stay span · Past / Full; preset chips <strong>Weekend Escape (2N) · Lunar Stargazing (4N) · Deep Reef Dive (7N)</strong> (native: 3 Nights · 4 Nights · 7 Nights (10% off) · Custom); CHECK-IN "Thu, Oct 16, 2025 — After 2:00 PM", CHECK-OUT "Mon, Oct 20, 2025 — Before 11:00 AM"; note "New Moon Night: Oct 18 (Best Milky Way view)"</td>
+<td>Past and fully booked dates disabled. Preset = check-in + N nights. Min/max stay per property (to define).</td>
+</tr>
+<tr class="even">
+<td><strong>2. Guest allocation</strong></td>
+<td>Steppers: Adults (13+) · Children (2–12) · Extra Cot / Majlis (+EGP 300/night) ; "Off-grid sanctuary preserves strict max capacity per hut"</td>
+<td>Total guests ≤ selected tier capacity; extra cot adds a nightly fee.</td>
+</tr>
+<tr class="odd">
+<td><strong>3. Room tier</strong></td>
+<td>3 tier cards (see module 05) with "MOST POPULAR", "2 Units Left" / "ONLY 1 LEFT", specs, inclusions, <strong>TIER SELECTED / Select Suite / Select Hut</strong>; tablet shows price difference ("+EGP 3,200 total difference") and <strong>Switch Room</strong></td>
+<td>One tier per booking (multi-room not designed).</td>
+</tr>
+<tr class="even">
+<td>Arrival note</td>
+<td>"Arrival via Camel or Coastal Footpath — accessible only by a 1.5-hour coastal walk from the Blue Hole or Bedouin camel transfer"</td>
+<td>Property-specific access info.</td>
+</tr>
+<tr class="odd">
+<td><strong>Reservation summary</strong> (sticky)</td>
+<td>Tier, dates, "4 Nights · 2 Adults"; lines: EGP 2,400 × 4 = 9,600 · Eco-Conservation Reef Fund (5%) 480 · Solar Microgrid &amp; Desal Water 350 · Bedouin Hearth Breakfast "EGP 0 (Included)" · Subtotal 10,430 · Sinai Eco Tourism Tax (10%) 1,043 · <strong>Total Payable EGP 11,473</strong> · "Approx. $240 USD" · "Free cancellation up to 5 days before check-in — 100% refund until 2:00 PM on Oct 11, 2025"</td>
+<td>Recalculates on every change. Refund deadline = check-in − policy days.</td>
+</tr>
+<tr class="even">
+<td>Primary CTA</td>
+<td><strong>Continue to Guest Details &amp; Accords</strong> (tablet: "Continue to Guest Details (EGP 11,473)"; native: "Continue")</td>
+<td>Re-validates availability, places a short <strong>hold</strong> on the unit (see rules), goes to Step 2.</td>
+</tr>
+<tr class="odd">
+<td>Host contact</td>
+<td>"Questions for Sheikh Salama? Message on WhatsApp"</td>
+<td>See module 05 G1.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Arrives from Reserve</td>
+<td>Pre-fills tier, dates, guests from the property page.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Picks check-in, then check-out (or a preset)</td>
+<td>Highlights span; disables unavailable dates; recalculates nights and total.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Adjusts adults / children / extra cot</td>
+<td>Enforces tier capacity (disables "+" at max, message); adds cot fee.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Switches tier</td>
+<td>Re-checks availability for the dates; shows difference; updates total.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps <strong>Continue</strong></td>
+<td>Server re-prices and re-checks availability; creates a pending reservation with a hold (e.g. 15 min); opens Step 2.</td>
+</tr>
+<tr class="even">
+<td>5b</td>
+<td>Unit no longer available</td>
+<td>Shows error and suggests other tiers/dates (reuse Modify-dates conflict pattern 4.6).</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="42-guest-details--payment--step-2-of-3-not-designed">4.2 Guest Details &amp; Payment — Step 2 of 3 (<strong>NOT DESIGNED</strong>)</h3>
+<p>The new Figma has no screen for Step 2 although both progress bars reference it ("Guest Details &amp; Accords"). An older version exists in the first Stitch project (<em>Coral Coast Camp – Checkout &amp; Payment</em> / <em>Confirm &amp; Pay</em>). Minimum content required by the SRS:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Block</th>
+<th>Required content</th>
+<th>SRS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lead guest details</td>
+<td>Full name, email, phone (+20 default), nationality; pre-filled from profile</td>
+<td>FR-1.3</td>
+</tr>
+<tr class="even">
+<td>Special requests / arrival transfer choice</td>
+<td>Camel caravan vs boat shuttle (shown later on confirmation)</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Accords</td>
+<td>Accept house rules, cancellation policy, Environmental Charter (checkbox)</td>
+<td>FR-13.4</td>
+</tr>
+<tr class="even">
+<td>Price summary</td>
+<td>Same breakdown as Step 1</td>
+<td>FR-3.1</td>
+</tr>
+<tr class="odd">
+<td>Payment</td>
+<td>Card via PCI-DSS gateway (Paymob/Fawry/Stripe), tokenised; 3-D Secure; <strong>Pay EGP 11,473</strong></td>
+<td>FR-5.1, NFR-3, NFR-8</td>
+</tr>
+<tr class="even">
+<td>Coupon code</td>
+<td><em>Later</em> (FR-5.4)</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Cash on arrival</td>
+<td><em>Later</em> (FR-5.2)</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Errors</td>
+<td>Card declined, 3DS failed, timeout, hold expired</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="43-booking-confirmation--step-3-of-3">4.3 Booking Confirmation — Step 3 of 3</h3>
+<p><strong>Entry:</strong> successful payment. <strong>Exit:</strong> My Bookings, Discovery, Browse Expeditions.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-7053.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-7053.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-7053" target="_blank" rel="noopener">Open in Figma · 42:7053</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-6658.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-6658.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-6658" target="_blank" rel="noopener">Open in Figma · 42:6658</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-6368.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-6368.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-6368" target="_blank" rel="noopener">Open in Figma · 42:6368</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-6147.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-6147.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-6147" target="_blank" rel="noopener">Open in Figma · 42:6147</a></figure>
+</div>
+
+<h4 id="ui-elements-1">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Progress</td>
+<td>Step 1 ✓ · Step 2 ✓ · <strong>Step 3: Confirmed</strong></td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Success message</td>
+<td>"Mabrouk! Your Sanctuary is Secured" / "Reservation Confirmed!" / "Booking Confirmed • مبروك!"</td>
+<td>Bilingual celebration line.</td>
+</tr>
+<tr class="odd">
+<td>Booking reference</td>
+<td><strong>DHB-2025-8841-ARB</strong> + <strong>Copy Pass / Copy / Copy Ref</strong>; "Voucher dispatched to <a href="mailto:guest@redseadive.com">guest@redseadive.com</a>"</td>
+<td>Unique reference format DHB-YYYY-NNNN-XXX; confirmation email sent (FR-3.3).</td>
+</tr>
+<tr class="even">
+<td>Stay voucher</td>
+<td>Property, tier (Stargazing Palm Arish, Tier 01), CHECK-IN Thu Oct 16 from 2:00 PM, CHECK-OUT Mon Oct 20 until 11:30 AM, 2 Adults, 4 nights, board (Bedouin breakfast), meeting point "Blue Hole Camel Staging Hub"</td>
+<td>From the booking record.</td>
+</tr>
+<tr class="odd">
+<td><strong>Offline check-in pass</strong></td>
+<td>QR code + <strong>PIN 4192</strong>, "Present this digital token to the Ras Abu Galum Protectorate Gate rangers…", "Valid without mobile reception", "Sinai Park Entry Taxes Pre-cleared"; native <strong>Add to Wallet</strong>, <strong>Trailhead Map</strong></td>
+<td>QR encodes booking ref + signature; must work offline; Apple/Google Wallet pass.</td>
+</tr>
+<tr class="even">
+<td>Host card</td>
+<td>Sheikh Salama Tarabin, rating, message; <strong>Chat on WhatsApp (+20 10 2481 9920)</strong> · <strong>Direct Call</strong> · <strong>In-App Chat</strong></td>
+<td>Host contact revealed after booking. In-app chat is FR-8.1 (Later).</td>
+</tr>
+<tr class="odd">
+<td>Arrival protocol</td>
+<td>"NO PAVED ROADS" — Option A Bedouin camel caravan (1.5 h), Option B coastal boat shuttle (20 min, weather-dependent, 250 EGP paid to captain); "Open Blue Hole Staging on GPS" / "Get Directions"</td>
+<td>Property-specific arrival instructions (provider content).</td>
+</tr>
+<tr class="even">
+<td>Payment summary</td>
+<td>"Paid in Full (Visa •••• 9012)": 4 nights 9,600 · Reef restoration 480 · Solar desal 350 · EEAA levies 1,043 · <strong>Total Settled EGP 11,473</strong></td>
+<td>Must match Step 1 total.</td>
+</tr>
+<tr class="odd">
+<td>Utilities</td>
+<td><strong>Print Voucher</strong> · <strong>Download PDF</strong> · <strong>Add to Calendar</strong> (mobile: Add to Cal · Directions · Save PDF)</td>
+<td>PDF = voucher + receipt (FR-5.5); .ics calendar event.</td>
+</tr>
+<tr class="even">
+<td>Emergency channels</td>
+<td>Deco Chamber +20 69 3640 530 · Ranger coastal rescue 1909 / VHF 16</td>
+<td>Shared config.</td>
+</tr>
+<tr class="odd">
+<td>Charter accord</td>
+<td>Zero single-use plastics · mineral sunscreen · silent hours after 22:30</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Cross-sell</td>
+<td>"Enhance Your Stay with Marine &amp; Desert Safaris" · <strong>Browse Expeditions</strong> · <strong>Return to Discovery</strong></td>
+<td>Opens activity search (03).</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-1">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Payment succeeds (gateway webhook)</td>
+<td>Confirms booking, decrements availability atomically (FR-3.6), generates reference, QR/PIN, voucher PDF, receipt; sends email + push (FR-3.3, FR-8.3); notifies provider (FR-15.3).</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Sees confirmation</td>
+<td>Shows voucher, pass, host contact, arrival options.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Copies reference / adds to wallet / calendar / downloads PDF</td>
+<td>Performs action with feedback toast.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps <strong>Go to My Bookings</strong> / Bookings tab</td>
+<td>Opens My Bookings with this booking selected.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="44-my-bookings">4.4 My Bookings</h3>
+<p><strong>Entry:</strong> "My Bookings" in the web header, Bookings tab (native/mobile), confirmation screen, notifications. <strong>Exit:</strong> booking actions (voucher, modify, calendar, cancel), host contact, Book Again.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-8654.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-8654.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-8654" target="_blank" rel="noopener">Open in Figma · 42:8654</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-8124.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-8124.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-8124" target="_blank" rel="noopener">Open in Figma · 42:8124</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-7829.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-7829.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-7829" target="_blank" rel="noopener">Open in Figma · 42:7829</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-7539.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-7539.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-7539" target="_blank" rel="noopener">Open in Figma · 42:7539</a></figure>
+</div>
+
+<h4 id="ui-elements-checked-against-the-exported-desktop-screen">UI elements (checked against the exported Desktop screen)</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Header</td>
+<td>"My Bookings" active in the top nav (native: Bookings tab)</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Title &amp; tabs</td>
+<td>"My Sanctuary Bookings" · segmented <strong>Upcoming (1) · Past Stays (2) · Cancelled (0)</strong> · search "Search ref, lodge, guide…"</td>
+<td>Counts per status; search by reference, property or guide name.</td>
+</tr>
+<tr class="odd">
+<td>Upcoming card (left list)</td>
+<td>"Confirmed &amp; Secured", #DHB-2025-8841, zone, Dar Tarabin Coastal Ecolodge, "Stargazing Palm Arish • 2 Guests", Thu Oct 16 – Mon Oct 20 2025, 4 Nights, countdown "In 14 Days • New Moon Tide", <strong>EGP 11,473 Paid in Full</strong></td>
+<td>Selecting a card opens its detail on the right (desktop/tablet) or a new screen (mobile/native).</td>
+</tr>
+<tr class="even">
+<td>Past journeys</td>
+<td>"2 Completed": Canyon Dune Camp (White Canyon Stargazer Expedition, Sep 4–7 2025, 3 nights, EGP 6,800, <strong>Receipt &amp; Tax Leaf</strong>, <strong>Book Again</strong>); Bells &amp; Arch Guided Freediving (Aug 18 2025, EGP 2,400, <strong>Dive Log Certificate</strong>, <strong>Book Again</strong>)</td>
+<td>Stays and activities in one list. Receipt = FR-5.5. Book Again → the listing with new dates.</td>
+</tr>
+<tr class="odd">
+<td>Impact card</td>
+<td>"Your completed 2025 stays have contributed 350 sqm of coral reef surveillance…"</td>
+<td>Informational; needs a data source or static copy.</td>
+</tr>
+<tr class="even">
+<td>Detail header</td>
+<td>BOOKING REFERENCE <strong>DHB-2025-8841-ARB</strong> + COPY REF, status "Confirmed • 100% Off-Grid Solar Sanctuary"; actions <strong>Download PDF Voucher</strong> · <strong>Modify Dates</strong> · <strong>Add to Calendar</strong> · <strong>Cancel Stay</strong></td>
+<td>Actions shown only when allowed by status/policy.</td>
+</tr>
+<tr class="odd">
+<td>Stay block</td>
+<td>Photo, rating 4.96 (64 reviews), CHECK-IN Thu Oct 16 from 2:00 PM (habak tea welcome at Blue Hole), CHECK-OUT Mon Oct 20 until 11:30 AM (camel footpath escort), room "Stargazing Palm Arish • 34 m²", "2 Adults (Private Sanctuary)", inclusions (breakfast, solar, spring water)</td>
+<td>Same data as confirmation.</td>
+</tr>
+<tr class="even">
+<td>Offline check-in pass</td>
+<td>QR + <strong>PIN 4192</strong>, "Valid at Ras Abu Galum Checkpoint — No cellular coverage needed", "EEAA Sinai Marine Reserve Permit pre-cleared", "Port Police coastal clearance logged"; native: <strong>Add to Apple / Google Wallet</strong></td>
+<td>Cached for offline use.</td>
+</tr>
+<tr class="odd">
+<td>Settled financials</td>
+<td>Receipt #4810-RC: 4 nights 9,600 · Eco-Conservation Reef Fund (5%) 480 · Solar microgrid 350 · EEAA levy 1,043 · <strong>TOTAL PAID EGP 11,473</strong> via Visa •••• 9012</td>
+<td>Matches Step 1/Step 3.</td>
+</tr>
+<tr class="even">
+<td>Host card</td>
+<td>Sheikh Salama Tarabin, message, <strong>WhatsApp Sheikh Salama (+20 10 2481 9920)</strong> · <strong>Call Host</strong> · <strong>In-App Chat</strong></td>
+<td>In-app chat = FR-8.1 (Later).</td>
+</tr>
+<tr class="odd">
+<td>Arrival logistics</td>
+<td>3 steps (Blue Hole taxi drop → coastal canyon passage 1.5 h trek or 15 min boat → Dar Tarabin arish), map with coordinates, <strong>Open Trailhead in GPS</strong></td>
+<td>Provider content.</td>
+</tr>
+<tr class="even">
+<td>Policy box</td>
+<td>"Free cancellation until Saturday, Oct 11, 2025 (5 days prior to arrival). 100% refund… <strong>Cancellations within 5 days retain the 5% Eco-Conservation Reef Fund</strong>"</td>
+<td>This is the refund rule after the deadline (FR-3.5).</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-2">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens My Bookings</td>
+<td>Lists the guest's bookings by tab; the nearest upcoming booking is selected.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Searches by reference/lodge/guide</td>
+<td>Filters the list.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Selects a booking</td>
+<td>Shows detail, pass, financials, host, logistics, policy.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps <strong>Download PDF Voucher</strong> / <strong>Add to Calendar</strong></td>
+<td>PDF voucher + receipt / .ics event.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps <strong>Cancel Stay</strong></td>
+<td>Opens Cancel dialog (4.5).</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Taps <strong>Modify Dates</strong></td>
+<td>Opens Modify Dates (4.6).</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>On a past item taps <strong>Receipt / Dive Log Certificate / Book Again</strong></td>
+<td>Downloads document / opens the listing to rebook.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="45-cancel-booking-confirmation">4.5 Cancel Booking Confirmation</h3>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-9905.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-9905.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-9905" target="_blank" rel="noopener">Open in Figma · 42:9905</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-9601.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-9601.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-9601" target="_blank" rel="noopener">Open in Figma · 42:9601</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-9448.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-9448.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-9448" target="_blank" rel="noopener">Open in Figma · 42:9448</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-9291.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-9291.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-9291" target="_blank" rel="noopener">Open in Figma · 42:9291</a></figure>
+</div>
+
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Presentation</td>
+<td>Desktop/Tablet: centred modal over dimmed My Bookings. Mobile/Native: bottom sheet with drag handle and ✕</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Title &amp; reference</td>
+<td>"Cancel Reservation?" · REFERENCE DHB-2025-8841-ARB</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Booking summary</td>
+<td>Dar Tarabin, Oct 16–20 2025 (4 nights), Stargazing Palm Arish • 2 Adults, <strong>Total paid / Settled charge EGP 11,473</strong> (Visa •••• 9012)</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Refund status</td>
+<td>Badge "Full 100% Refund Eligible" / "100% Full Refund Guarantee"; "Grace period valid until Oct 11, 2025, 2:00 PM (5 days prior to arrival)"; native: "the entire amount of EGP 11,473 will be refunded to Apple Pay (•••• 9012). Zero penalty or conservation levy withheld."</td>
+<td>Refund % from policy + time (FR-3.5); after the deadline the 5% reef fund is retained (see 4.4).</td>
+</tr>
+<tr class="odd">
+<td>Refund ledger (desktop)</td>
+<td>Accommodation &amp; Breakfast +9,600 (100%) · Solar microgrid +350 (100%) · EEAA levy +1,043 (100%) · Eco-Conservation Reef Fund (5%) +480 "Fully refunded to card" · TOTAL REFUND AMOUNT</td>
+<td>Line-by-line refundability.</td>
+</tr>
+<tr class="even">
+<td>Cancellation reason (native)</td>
+<td>"Why are you cancelling? (Optional)": Change in dates · Trip postponed · Found another stay · Other</td>
+<td>Optional; stored for reporting.</td>
+</tr>
+<tr class="odd">
+<td>Host note</td>
+<td>"Sheikh Salama and your Bedouin guide will be notified to release your reserved Arish and trailhead camel."</td>
+<td>Provider notified (FR-15).</td>
+</tr>
+<tr class="even">
+<td>Actions</td>
+<td><strong>Confirm Cancellation</strong> (destructive) · <strong>Keep My Stay</strong></td>
+<td>Confirm is irreversible.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Step-by-step:</strong> 1) Guest taps Cancel Stay → 2) system computes refund lines with policy + current time → 3) guest (optionally) picks a reason and taps <strong>Confirm Cancellation</strong> → 4) system cancels the booking, releases inventory, refunds via gateway to the original method (FR-5.3), logs the audit trail (NFR-12), sends cancellation email/push (FR-8.3), notifies the provider → 5) booking moves to <strong>Cancelled</strong> with refund status.</p>
+<hr />
+<h3 id="46-modify-dates--sold-out-collision">4.6 Modify Dates — Sold-out collision</h3>
+<div class="state-title">Sold-Out Collision Error</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-11458.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-11458.jpg" alt="Sold-Out Collision Error – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-11458" target="_blank" rel="noopener">Open in Figma · 42:11458</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-10893.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-10893.jpg" alt="Sold-Out Collision Error – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-10893" target="_blank" rel="noopener">Open in Figma · 42:10893</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-10581.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-10581.jpg" alt="Sold-Out Collision Error – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-10581" target="_blank" rel="noopener">Open in Figma · 42:10581</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-10267.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-10267.jpg" alt="Sold-Out Collision Error – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-10267" target="_blank" rel="noopener">Open in Figma · 42:10267</a></figure>
+</div>
+
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Header</td>
+<td>"Modify Stay Dates" · DHB-2025-8841-ARB · "Dar Tarabin Coastal Ecolodge • Unit: Stargazing Palm Arish" · ✕</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Collision alert</td>
+<td>"Selected Dates Unavailable — FULL MOON HIGH TIDE SURGE — Stargazing Palm Arish is fully booked on Friday, Oct 24 and Saturday, Oct 25…" · "Requested Window Oct 23 → Oct 27 (4N)"</td>
+<td>Lists conflicting nights.</td>
+</tr>
+<tr class="odd">
+<td>Calendar</td>
+<td>Two months (Oct "Peak Season", Nov "Open Season"); legend Current Stay (Oct 16–20) · Sold Out / Collision · Requested Range (Broken) · Suggested Open Window; <strong>View full lodge calendar</strong></td>
+<td>Sold-out nights struck through and disabled.</td>
+</tr>
+<tr class="even">
+<td>Conflict resolutions ("3 instant solutions")</td>
+<td>① RECOMMENDED • ZERO FEE — Shift 2 days earlier Oct 14–18, "Fare Difference: EGP 0" — <strong>Select Window →</strong> ② KEEP REQUESTED DATES — Upgrade to Limestone Canyon Suite +EGP 800/night, "Total Stay Delta (4 nights) +EGP 3,200", "Only 1 suite remaining" — <strong>Switch Room Tier</strong> ③ AUTOMATED WAITLIST — "Hold Oct 23–27 Cancellation Alert", WhatsApp number field — <strong>Join Waitlist</strong></td>
+<td>Price difference charged/refunded; waitlist stores an alert subscription.</td>
+</tr>
+<tr class="odd">
+<td>Host override</td>
+<td>"Need specific dates…? Sheikh Salama can coordinate a bespoke tent setup" — <strong>Request Host Override</strong></td>
+<td>Sends a request to the provider (not in SRS — see §7).</td>
+</tr>
+<tr class="even">
+<td>Footer</td>
+<td>"Reservation In Conflict (2 unavailable nights selected)" · <strong>Revert to Original (Oct 16–20)</strong> · <strong>Update Reservation</strong> (disabled until conflict resolved)</td>
+<td>Original booking untouched until Update.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Step-by-step:</strong> 1) Guest taps Modify Dates → 2) picks new dates → 3) system checks availability for the same tier → 4a) available → shows new total and difference → <strong>Update Reservation</strong> → booking updated, difference charged/refunded, new voucher, notifications → 4b) conflict → this state: guest selects an alternative window, switches tier, joins the waitlist, requests a host override, or reverts.</p>
+<hr />
+<h2 id="5-cross-screen-business-rules">5. Cross-screen business rules</h2>
+<ol type="1">
+<li><strong>Price formula (as designed):</strong> nights × nightly rate (with date overrides) + eco-conservation fund (5%) + fixed solar/desal fee + extra-cot fee → subtotal → + Sinai eco-tourism tax (10%) = total. Breakfast included. Fee names/percentages must be configurable per property/zone.</li>
+<li><strong>Availability hold:</strong> at Continue (Step 1) the unit is held for a limited time; released if payment is not completed.</li>
+<li><strong>Double booking:</strong> availability decremented atomically on payment confirmation (FR-3.6); if two guests pay for the last unit, the second payment is voided/refunded automatically.</li>
+<li><strong>Policy snapshot:</strong> the cancellation policy is copied onto the booking at payment time; later policy edits don't affect existing bookings.</li>
+<li><strong>Refund:</strong> amount = paid × refund % by time before check-in (FR-3.5); design rule for Dar Tarabin: 100% until 5 days before arrival (2:00 PM), after that everything except the 5% Eco-Conservation Reef Fund; refund to original method (FR-5.3); status tracked (pending → refunded).</li>
+<li><strong>Modify:</strong> allowed only if the policy allows and before the refund deadline (to confirm); price difference charged or refunded.</li>
+<li><strong>Offline pass:</strong> QR/PIN must be verifiable offline by the provider/ranger (signed token).</li>
+<li><strong>Notifications:</strong> confirmation, modification, cancellation → email + push (+ SMS/WhatsApp) (FR-8.3).</li>
+<li><strong>Audit:</strong> every state change and payment event is logged (NFR-12).</li>
+</ol>
+<h2 id="6-story-candidates-for-jira">6. Story candidates for Jira</h2>
+<p><strong>Epic:</strong> GUEST-BOOK-STAY — Accommodation booking &amp; management</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Key idea</th>
+<th>Story</th>
+<th>Acceptance criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-key">STAY-1</span></td>
+<td>As a guest, I want to choose dates with a calendar showing unavailable nights.</td>
+<td>Past/full dates disabled; presets set N nights; check-in/out times shown.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">STAY-2</span></td>
+<td>As a guest, I want to set adults, children and extra cot within the room's capacity.</td>
+<td>"+" disabled at capacity with message; cot adds EGP 300/night.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">STAY-3</span></td>
+<td>As a guest, I want to switch room tier and see the price difference.</td>
+<td>Availability per tier for chosen dates; total updates.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">STAY-4</span></td>
+<td>As a guest, I want a transparent price breakdown before paying.</td>
+<td>Lines &amp; total as designed; USD approximation; refund deadline date computed.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">STAY-5</span></td>
+<td>As a guest, I want my selected unit held while I pay.</td>
+<td>Hold created on Continue; expiry handled with message.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">STAY-6</span></td>
+<td>As a guest, I want to enter guest details and pay by card securely.</td>
+<td><em>Needs design.</em> PCI gateway, 3DS, tokenisation, error states.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">STAY-7</span></td>
+<td>As a guest, I want a confirmation with reference, voucher, QR pass and host contact.</td>
+<td>Email sent; reference copy; PDF/print; calendar; wallet pass (native).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">STAY-8</span></td>
+<td>As a guest, I want my check-in pass to work offline.</td>
+<td>QR + PIN visible without network after first load; signed token.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">STAY-9</span></td>
+<td>As a guest, I want to see my upcoming, past and cancelled bookings.</td>
+<td>Tabs with counts; detail view; stays and activities both listed.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">STAY-10</span></td>
+<td>As a guest, I want to cancel and see my refund before confirming.</td>
+<td>Refund % &amp; amount per policy; confirm → cancelled, refund issued, emails, provider notified, inventory released.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">STAY-11</span></td>
+<td>As a guest, I want to change my dates.</td>
+<td>Availability check; price difference charged/refunded; new voucher.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">STAY-12</span></td>
+<td>As a guest, I want alternatives when new dates are sold out.</td>
+<td>Conflict nights shown; alternative dates, upgrade option, waitlist toggle; original kept until confirm.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">STAY-13 (tech)</span></td>
+<td>Double-booking protection &amp; audit log.</td>
+<td>Concurrent payments for last unit → one succeeds, other auto-voided; all events logged.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Finding</th>
+<th>Suggested decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-gap">G1</span></td>
+<td><strong>Step 2 "Guest Details &amp; Accords" + payment is not in the new Figma</strong> — required for FR-3.2 / FR-5.1 (High, MVP).</td>
+<td>Design Step 2 (all 4 breakpoints) incl. payment errors.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G2</span></td>
+<td><strong>Fee lines differ by breakpoint although the total is always EGP 11,473:</strong> Desktop 9,600 + 480 (5% fund) + 350 + 1,043 (10% tax) = 11,473 ✓; Tablet selector lists 520 + 310 + "14% tax" (10,430 × 1.14 would be 11,890, not 11,473); Mobile Web shows a single "EGP 830" levy; Tablet confirmation uses 8,800 for 4 nights (EGP 2,200/night) + 920 + 640 + 1,113; Property page shows "Total before taxes 10,350" with other fees.</td>
+<td>Define one fee/tax model (names, % vs fixed, taxable base) — needs finance/legal input (SRS §7.1 VAT) — and use it on every breakpoint.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G3</span></td>
+<td><strong>Cancellation window differs:</strong> 5 days (desktop/tablet/native) vs 48 hours (mobile web).</td>
+<td>Use the property's policy only.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G4</span></td>
+<td><strong>Check-out time differs:</strong> 11:00 AM vs 11:30 AM.</td>
+<td>Property field.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G5</span></td>
+<td>Mobile Web calendar shows October <strong>2024</strong> and weekdays "Wed/Sun" for Oct 16/20 (other breakpoints Thu/Mon 2025).</td>
+<td>Fix copy.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G6</span></td>
+<td>Tablet selector shows host "Sheikh Salem Tarabin"; elsewhere "Sheikh Salama". Review count 142/218 vs 67.</td>
+<td>Fix copy.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G7</span></td>
+<td>Activity bookings appear in My Bookings (past list) but there is no activity-specific booking detail/cancel design.</td>
+<td>Reuse this pattern for activities (module 07).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G8</span></td>
+<td>Refundability of third-party fees (EEAA permit, eco tax) after cancellation is undefined.</td>
+<td>Business decision.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G9</span></td>
+<td>Modify rules (allowed until when? fee?) undefined.</td>
+<td>Define in policy model.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G12</span></td>
+<td><strong>Desktop Cancel dialog is rendered behind the page footer</strong> (title and total cut off) — layout bug in Figma.</td>
+<td>Fix the modal z-order/height.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G13</span></td>
+<td>Refund destination shown as Visa (desktop) vs Apple Pay (native) for the same booking.</td>
+<td>Copy fix — always the original payment method.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G14</span></td>
+<td>Cancel dialog says "Half-Board Bedouin Dining Included"; everywhere else breakfast only.</td>
+<td>Copy fix.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G15</span></td>
+<td>"Request Host Override" (bespoke dates) and "Impact" card are not in the SRS.</td>
+<td>Decide scope.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G16</span></td>
+<td>Past items in My Bookings have <strong>Book Again</strong> but <strong>no Leave a Review</strong> button (module 08 depends on it).</td>
+<td>Add "Leave a Review" to completed bookings.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G17</span></td>
+<td>My Bookings uses a different brand lockup ("DAHAB SANCTUARY &amp; SEA") from the rest of the app ("DAHAB • دهب RESERVATIONS • TOURING • TRIPS").</td>
+<td>Pick one brand name.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G10</span></td>
+<td>"Approx. $240 USD" conversion shown — multi-currency is FR-20.3 (Later).</td>
+<td>Keep as informational or remove.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G11</span></td>
+<td>Multi-room booking ("2 Rooms" appears in search) — selector supports one tier/unit only.</td>
+<td>Decide MVP: one unit per booking.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-out-of-scope-for-mvp">8. Out of scope for MVP</h2>
+<ul>
+<li>Cash on arrival (FR-5.2), coupon codes (FR-5.4 / FR-21), booking reminders (FR-4.4-like for stays), in-app messaging (FR-8.1).</li>
+</ul>
+</article><nav class="pager"><a href="05-listing-detail-property-activity.html"><small>← Previous</small><b>05 · Listing Detail — Property &amp; Activity</b></a><a class="next" href="07-activity-booking.html"><small>Next →</small><b>07 · Activity Booking</b></a></nav>
+</main>
+<aside class="toc"><div class="side-label">On this page</div><ul><li class="l2"><a href="#1-module-summary">1. Module summary</a></li>
+<li class="l2"><a href="#2-business-requirements-covered-srs">2. Business requirements covered (SRS)</a></li>
+<li class="l2"><a href="#3-screen-inventory">3. Screen inventory</a></li>
+<li class="l2"><a href="#4-screen-specifications">4. Screen specifications</a></li>
+<li class="l3"><a href="#41-room-type--date-selector--step-1-of-3">4.1 Room Type &amp; Date Selector — Step 1 of 3</a></li>
+<li class="l3"><a href="#42-guest-details--payment--step-2-of-3-not-designed">4.2 Guest Details &amp; Payment — Step 2 of 3 (NOT DESIGNED)</a></li>
+<li class="l3"><a href="#43-booking-confirmation--step-3-of-3">4.3 Booking Confirmation — Step 3 of 3</a></li>
+<li class="l3"><a href="#44-my-bookings">4.4 My Bookings</a></li>
+<li class="l3"><a href="#45-cancel-booking-confirmation">4.5 Cancel Booking Confirmation</a></li>
+<li class="l3"><a href="#46-modify-dates--sold-out-collision">4.6 Modify Dates — Sold-out collision</a></li>
+<li class="l2"><a href="#5-cross-screen-business-rules">5. Cross-screen business rules</a></li>
+<li class="l2"><a href="#6-story-candidates-for-jira">6. Story candidates for Jira</a></li>
+<li class="l2"><a href="#7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</a></li>
+<li class="l2"><a href="#8-out-of-scope-for-mvp">8. Out of scope for MVP</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <span><b style="color:#fff">DAHAB • دهب</b> — Reservations • Touring • Trips · Guest App specification</span>
+  <span>Sources: SRS v1.0 · Figma “Dahab” → page <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">New</a> · Prepared 23 Sep 2026</span>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

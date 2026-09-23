@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05 Listing Detail — Property &amp; Activity · Dahab Guest App Specs</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <label for="nav-toggle" class="nav-btn" aria-label="Menu"><span></span><span></span><span></span></label>
+  <a class="brand" href="index.html">
+    <img src="assets/logo.svg" alt="">
+    <span><span class="brand-name">DAHAB<span class="ar">• دهب</span></span>
+    <span class="brand-sub">Guest App · Product Specification</span></span>
+  </a>
+  <nav class="topbar-links">
+    <a href="index.html">Modules</a>
+    <a href="issues.html">Issues</a>
+    <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">Figma ↗</a>
+  </nav>
+</header>
+<input type="checkbox" id="nav-toggle">
+<div class="layout">
+<nav class="sidebar"><div class="side-label">Overview</div><ul><li><a href="index.html"><span class="num alt">★</span>Home</a></li><li><a href="issues.html"><span class="num alt">!</span>Issues tracker</a></li></ul><div class="side-label">Guest app modules</div><ul><li><a href="01-account-authentication.html"><span class="num">01</span>Account &amp; Authentication</a></li><li><a href="02-discovery-home.html"><span class="num">02</span>Discovery Home</a></li><li><a href="03-search-results-and-map.html"><span class="num">03</span>Search Results &amp; Map</a></li><li><a href="04-dahab-guide-zones-pois-articles.html"><span class="num">04</span>Dahab Guide — Zones, Points of Interest &amp; Articles</a></li><li><a href="05-listing-detail-property-activity.html" class=active><span class="num">05</span>Listing Detail — Property &amp; Activity</a></li><li><a href="06-accommodation-booking-and-my-bookings.html"><span class="num">06</span>Accommodation Booking &amp; My Bookings</a></li><li><a href="07-activity-booking.html"><span class="num">07</span>Activity Booking</a></li><li><a href="08-reviews-and-favorites.html"><span class="num">08</span>Reviews &amp; Favorites</a></li><li><a href="09-notifications-and-language.html"><span class="num">09</span>Notifications &amp; Language Settings</a></li><li><a href="10-ai-concierge.html"><span class="num">10</span>AI Concierge Chat</a></li></ul></nav>
+<main class="content">
+<section class="hero">
+  <div class="eyebrow"><span class="hero-num">05</span> Guest App · Module</div>
+  <h1>Listing Detail — Property &amp; Activity</h1>
+  <p class="lead">The detail page is where a guest decides to book.</p>
+  <dl class="meta"><div><dt>Module</dt><dd>Property Detail Page (PDP) · Activity / Expedition Detail Page · Photo gallery lightbox · Reviews expanded</dd></div><div><dt>Apps</dt><dd>Desktop Web (1440), Tablet Web (834), Mobile Web, Native App (390)</dd></div><div><dt>Figma</dt><dd>Page <b>New</b> → sections <em>Property Detail</em> (12 frames, example <b>Dar Tarabin Coastal Ecolodge</b>) and <em>Activity Detail</em> (13 frames, example <b>Blue Hole Arch &amp; Bells Deep Freediving Session</b>)</dd></div><div><dt>SRS</dt><dd>FR-2.3, FR-3.1 (entry), FR-4.1 (entry), FR-6.1 (display), FR-7.1, FR-13.4 (cancellation policy), FR-8.1 (Later), NFR-1, NFR-11</dd></div><div><dt>Screens</dt><dd>2 screens · 3 states each (Default, Photo gallery lightbox, Reviews expanded) · 25 frames</dd></div></dl>
+  <div class="hero-waves"></div>
+</section><article class="doc"><h2 id="1-module-summary">1. Module summary</h2>
+<p>The detail page is where a guest decides to book. The <strong>Property</strong> page shows the stay, host, room tiers with prices, amenities, location, house rules, cancellation policy and reviews, with a sticky booking box. The <strong>Activity</strong> page shows the session, guides, schedule/time slots with live capacity, prerequisites, inclusions and add-ons, safety protocol and reviews, with a sticky booking box. Both open a full-screen photo lightbox and an expanded reviews view.</p>
+<p>Next step after "Reserve": Property → Room Type &amp; Date Selector (module 06); Activity → Session Picker (module 07).</p>
+<h2 id="2-business-requirements-covered-srs">2. Business requirements covered (SRS)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>MVP</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FR-2.3</td>
+<td>Detail page with photos, description, pricing, availability, amenities, cancellation policy, reviews</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Both detail pages</td>
+</tr>
+<tr class="even">
+<td>FR-3.1</td>
+<td>Select room type, dates, guest count; see live price &amp; availability</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Property booking box + room tiers (full flow in 06)</td>
+</tr>
+<tr class="odd">
+<td>FR-4.1</td>
+<td>Select session (date/time), participants; see live slot availability</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Activity slot selector + booking box (full flow in 07)</td>
+</tr>
+<tr class="even">
+<td>FR-6.1</td>
+<td>Ratings (1–5) and written reviews after completed bookings</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Reviews section + Reviews Expanded (display)</td>
+</tr>
+<tr class="odd">
+<td>FR-7.1</td>
+<td>Save to favourites</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Save / heart</td>
+</tr>
+<tr class="even">
+<td>FR-13.4</td>
+<td>Provider sets cancellation policy per property</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Displayed ("Full refund up to 5 days prior")</td>
+</tr>
+<tr class="odd">
+<td>FR-8.1</td>
+<td>Guest messages provider</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><strong>Later</strong></td>
+<td>Design shows Chat / WhatsApp buttons — see §7 G1</td>
+</tr>
+<tr class="even">
+<td>FR-6.3</td>
+<td>Provider publicly responds to a review</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><strong>Later</strong></td>
+<td>Design shows host responses — see §7 G2</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-screen-inventory">3. Screen inventory</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Screen</th>
+<th>States</th>
+<th>Breakpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4.1</td>
+<td>Property Detail</td>
+<td>Default · Photo gallery lightbox · Reviews expanded</td>
+<td>All 4</td>
+</tr>
+<tr class="even">
+<td>4.2</td>
+<td>Activity Detail</td>
+<td>Default · Photo gallery lightbox · Reviews expanded</td>
+<td>All 4 (+1 duplicate desktop "Reviews expanded" frame)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-screen-specifications">4. Screen specifications</h2>
+<h3 id="41-property-detail--dar-tarabin-coastal-ecolodge">4.1 Property Detail — Dar Tarabin Coastal Ecolodge</h3>
+<p><strong>Entry:</strong> listing cards (home, search, map, zone, POI, favourites). <strong>Exit:</strong> Room Type &amp; Date Selector (06), lightbox, reviews, WhatsApp host, back to results.</p>
+<div class="state-title">Dar Tarabin Coastal Ecolodge</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-25591.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-25591.jpg" alt="Dar Tarabin Coastal Ecolodge – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-25591" target="_blank" rel="noopener">Open in Figma · 16:25591</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-24395.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-24395.jpg" alt="Dar Tarabin Coastal Ecolodge – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-24395" target="_blank" rel="noopener">Open in Figma · 16:24395</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-23946.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-23946.jpg" alt="Dar Tarabin Coastal Ecolodge – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-23946" target="_blank" rel="noopener">Open in Figma · 16:23946</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-23499.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-23499.jpg" alt="Dar Tarabin Coastal Ecolodge – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-23499" target="_blank" rel="noopener">Open in Figma · 16:23499</a></figure>
+</div>
+
+<h4 id="page-sections-desktop-order">Page sections (desktop order)</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Section</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Conditions strip</td>
+<td>"Red Sea Marine Conditions: Lighthouse 24°C • Blue Hole visibility optimal…", "Protectorates Eco-Permit active"</td>
+<td>See module 02 G3.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Breadcrumb + actions</td>
+<td>Stays › North Canyon Shore › Dar Tarabin Coastal Ecolodge · <strong>Share</strong> · <strong>Save</strong></td>
+<td>Save → favourites (login). Share → link/share sheet.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Title block</td>
+<td>Badges (RARE FIND, SOLAR POWERED ECO-SANCTUARY, MARINE REEF SLOT 0M), "Authentic Tarabin Clan Land • Zone 01 Reserve", rating <strong>4.99 (67 verified reviews)</strong>, "Verified Bedouin Heritage Host", address</td>
+<td>Rating links to Reviews section.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Photo mosaic</td>
+<td>5 captioned photos + <strong>View all 28 photos</strong> (native/mobile: swipe carousel "1 / 28 Photos")</td>
+<td>Opens Lightbox (state 2).</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Key facts chips</td>
+<td>2 Guests · 1 Bedroom · 1 King Bed · Open-Air Bath · Fringing Reef Slot 0m (tablet: Type / Capacity / Access / Grid)</td>
+<td>Values of the selected tier.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Host card</td>
+<td>"Hosted by Sheikh Salama &amp; Family — Tribal Elder &amp; Eco-Builder — Tarabin Clan Stewards … since 1984", quote, Response rate 100%, response time within 1 hour, languages (English, Arabic) · <strong>WhatsApp / Chat / Contact Host</strong></td>
+<td>See §7 G1 for messaging scope.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Highlights</td>
+<td>100% Off-Grid Solar &amp; Well · Zero Light Pollution Sky · Private Fringing Reef Entry · Daily Hearth-Baked Meals</td>
+<td>Admin/provider-managed highlights (max 4).</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Story</td>
+<td>"The Story of Dar Tarabin — Where Red Sea Reefs Meet the Silence of Sinai" + "Sinai Protectorate Permitted — Official eco-concession #SIN-842"</td>
+<td>Provider description + licence number.</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><strong>Room tiers</strong> "Select Your Sanctuary Tier"</td>
+<td>3 tiers with photo, availability badge (AVAILABLE / ONLY 1 LEFT), location in lodge, description, price/night, specs (max guests, m², beds, bath) and <strong>Selected / Select Room</strong>: <br>• Stargazing Palm Arish — EGP 2,400 — max 2 — 38 m² — King<br>• Limestone Canyon Suite — EGP 3,200 — max 4 — 54 m² — 2 Queen<br>• Shoreline Sanctuary Hut — EGP 2,850 — 42 m² — private tide deck</td>
+<td>Selecting a tier updates the booking box price. Availability based on the chosen dates (FR-3.1).</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Amenities</td>
+<td>Grouped: Scenic Views · Eco &amp; Sustainable Energy · Open-Air Bathing · Bedouin Culinary Hearth · Diving &amp; Reef Sanctuary · Mindful Connectivity</td>
+<td>Amenity list from the listing (FR-13.1).</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Location</td>
+<td>Map "Zone 01 Eco-Buffer — North Canyon Shoreline", distances (The Canyon dive site 400 m walk; Blue Hole 2.2 km / 7 min 4x4), <strong>Open Satellite Trail</strong></td>
+<td>Exact address shown after booking? (decide).</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>House rules "Sinai Marine &amp; Desert Accord"</td>
+<td>Mineral Sunscreen Only · Never Walk on Reef Flat · Quiet Hours 10 PM–7 AM · Check-in 2:00–8:00 PM · Check-out 11:00 AM</td>
+<td>Structured fields: check-in/out times + free-text rules.</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Cancellation policy</td>
+<td>"Flexible Policy: Full refund up to 5 days prior to arrival"</td>
+<td>From the property's policy (FR-13.4); drives refunds (FR-3.5).</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>Reviews</td>
+<td>Overall 4.99 · 67 reviews, sub-scores (House Reef 5.0, Cleanliness 4.9, Hospitality…), 3 review cards (name, city, month, text, room stayed), <strong>Read All / View All</strong></td>
+<td>Opens Reviews Expanded (state 3).</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td><strong>Sticky booking box</strong> (desktop sidebar; mobile/native bottom bar)</td>
+<td>Price "EGP 2,400 / night", rating, selected tier (<strong>CHANGE</strong>), CHECK-IN / CHECK-OUT (Oct 14 → Oct 18, 2025), GUESTS (2 Guests, 1 Private Room), price lines (EGP 2,400 × 4 nights = 9,600; Eco-Conservation Fee 400; Cleaning &amp; Solar Upkeep 350; <strong>Total before taxes EGP 10,350</strong>), CTA <strong>Reserve Your Sanctuary Stay</strong> (mobile: <strong>Reserve</strong> + "Oct 14 – 18 (4 nights)"; tablet: <strong>Edit Dates</strong> + <strong>Reserve Stay</strong>), notes "You won't be charged yet • Direct host confirmation", "100% Fair-Trade Bedouin Direct Compensation", "Questions for Sheikh Salama? WhatsApp"</td>
+<td>Changing dates/guests/tier recalculates live. Reserve → module 06 (Room Type &amp; Date Selector) with these values.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens the page</td>
+<td>Loads listing, availability for any dates carried from search, reviews summary.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Browses photos / taps "View all 28 photos"</td>
+<td>Opens Lightbox.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Picks a room tier</td>
+<td>Highlights "Selected", updates booking box price and facts.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Picks dates and guests in booking box</td>
+<td>Checks availability; if tier unavailable shows "Sold out for these dates" (not designed); recalculates total incl. fees.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps <strong>Reserve</strong></td>
+<td>If logged-out → Login/Register then returns; opens Room Type &amp; Date Selector (06) pre-filled.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Taps <strong>Save</strong> / <strong>Share</strong></td>
+<td>Favourite toggle / share.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Taps <strong>Read All</strong> reviews</td>
+<td>Opens Reviews Expanded.</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Taps WhatsApp host</td>
+<td>Opens WhatsApp (see §7 G1).</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="42-activity-detail--blue-hole-arch--bells-deep-freediving-session">4.2 Activity Detail — Blue Hole Arch &amp; Bells Deep Freediving Session</h3>
+<div class="state-title">Blue Hole Arch &amp; Bells Deep Freediving Session</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-29648.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-29648.jpg" alt="Blue Hole Arch &amp; Bells Deep Freediving Session – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-29648" target="_blank" rel="noopener">Open in Figma · 16:29648</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-28300.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-28300.jpg" alt="Blue Hole Arch &amp; Bells Deep Freediving Session – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-28300" target="_blank" rel="noopener">Open in Figma · 16:28300</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-27807.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-27807.jpg" alt="Blue Hole Arch &amp; Bells Deep Freediving Session – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-27807" target="_blank" rel="noopener">Open in Figma · 16:27807</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-27313.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-27313.jpg" alt="Blue Hole Arch &amp; Bells Deep Freediving Session – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-27313" target="_blank" rel="noopener">Open in Figma · 16:27313</a></figure>
+</div>
+
+<h4 id="page-sections">Page sections</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Section</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Conditions strip</td>
+<td>"Mild Current (0.4 kts) • Visibility 30m+", "COASTGUARD STATION 4 ACTIVE", "DAN Egypt: 19123"</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Breadcrumb + actions</td>
+<td>Protected Marine Reserve Zone 01 › session name · "CDWS Active Float #BH-402" · Share · Save</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Title block</td>
+<td>Badges (AIDA / SSI CERTIFIED, ZONE 01 MARINE SANCTUARY, MUZAYNA BEDOUIN PARTNER), "Depth: 30m–45m Custom Line", rating <strong>4.98 (86 verified divers)</strong>, "100% Zero-Decompression Dive Safety Record", meeting area</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Gallery</td>
+<td>Captioned photos + <strong>View all 16 photos &amp; log</strong></td>
+<td>Lightbox.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Key facts</td>
+<td>Duration 3.5 hours · Max depth 30–45m · Ratio &amp; cap "Max 4 (1:2 safety)" · Prerequisite AIDA 2 / SSI Lvl 1 · Languages English &amp; Arabic</td>
+<td>Structured activity fields (FR-13.2).</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Guides</td>
+<td><strong>Youssef Ben-Ammar</strong> — Master Instructor (AIDA &amp; SSI, 12 years in Dahab, 3,200+ dives) · <strong>Chat with Instructor</strong> · "Responds &lt; 15 mins"; <strong>Salem Abu-Muzayna</strong> — Bedouin elder &amp; boat safety</td>
+<td>Guide profiles belong to the provider.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Session route</td>
+<td>4 phases with duration: Majlis breathwork (45 min) → Bells chimney entry 0–26 m (45 min) → Arch drift &amp; line 30–45 m (60 min) → Habak tea debrief (30 min)</td>
+<td>Itinerary steps field.</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><strong>Slot selector</strong> "Select Session Date &amp; Window"</td>
+<td>Month (October 2025), day chips (TUE … SAT) with capacity ("Full", "1 left", "3 left", "4 left"), 3 windows: <strong>Morning Glass 07:30–11:00</strong> (2 spots left, "Recommended for depth PBs") · <strong>Midday Sunrays 11:30–15:00</strong> (3 left) · <strong>Late Afternoon Drift 15:30–18:30</strong> (4 left); rule "Limited strictly to 4 spots per time slot to protect the 1:2 safety diver ratio"</td>
+<td>Live capacity per session (FR-4.1). Full days disabled.</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Prerequisites</td>
+<td>Certification level (min AIDA 2 / SSI Level 1 / Molchanovs Wave 1 / PADI Advanced Freediver) · Medical clearance · Age 16+ &amp; ID · <strong>Upload C-Card</strong></td>
+<td>Upload optional before booking; verified by instructor ("No charge until instructor verifies your C-Card").</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Inclusions &amp; add-ons</td>
+<td>Included (buoy + bottom plate, counter-ballast, O2 kit, Bedouin tent &amp; tea, 4K media) · Optional rentals: Carbon bi-fins +EGP 250 · 5 mm wetsuit +EGP 200 · Noseclip &amp; fluid goggles +EGP 100</td>
+<td>Add-ons selectable here or in module 07.</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Safety &amp; sanctuary accords</td>
+<td>Mineral sunscreen · Hyperbaric chamber link · Lanyard mandate below 20 m · <strong>Weather reschedule guarantee</strong> (wind &gt; 18 kn or swell &gt; 0.8 m → free reschedule)</td>
+<td>Weather rule affects module 07/06 cancellation logic.</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Reviews</td>
+<td>"Diver Reviews &amp; Logbook Notes", 86 sessions, 2 cards</td>
+<td>Opens Reviews Expanded.</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td><strong>Sticky booking box</strong></td>
+<td>EGP 1,650 / person, LIVE AVAILABILITY, Date (Thu, Oct 16, 2025), Time (Morning Glass 07:30), Ratio, <strong>Number of certified divers</strong> stepper ("Max 2 per safety line"), lines (Dive session 1 × 1,650; Ras Abu Galum eco-reserve entry EGP 150; Hyperbaric chamber support levy EGP 50; <strong>Total due EGP 1,850</strong>), CTA <strong>Reserve Your Dive Spot</strong>, "Free cancellation up to 48 hours prior • Weather guarantees apply", "Message Youssef on WhatsApp"</td>
+<td>Recalculates on divers/slot change. Reserve → Session Picker / checkout (07).</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-1">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens the activity</td>
+<td>Loads details, next 5–7 days of sessions with live remaining spots.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Picks a day</td>
+<td>Shows the 3 windows with remaining spots; "Full" days disabled.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Picks a window</td>
+<td>Updates booking box date/time.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Sets number of divers</td>
+<td>Stepper limited by remaining spots and per-line max; recalculates total.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Optionally uploads C-Card</td>
+<td>Stores file for instructor verification.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Taps <strong>Reserve Your Dive Spot</strong></td>
+<td>Login if needed → Activity Session Picker / checkout (07) pre-filled.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Chosen slot fills meanwhile</td>
+<td>Shows the Sold-out slot state (module 07).</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="43-photo-gallery-lightbox-both-pages">4.3 Photo gallery lightbox (both pages)</h3>
+<div class="state-title">Photo Gallery Lightbox</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-26397.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-26397.jpg" alt="Photo Gallery Lightbox – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-26397" target="_blank" rel="noopener">Open in Figma · 16:26397</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-24965.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-24965.jpg" alt="Photo Gallery Lightbox – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-24965" target="_blank" rel="noopener">Open in Figma · 16:24965</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-24338.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-24338.jpg" alt="Photo Gallery Lightbox – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-24338" target="_blank" rel="noopener">Open in Figma · 16:24338</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-23884.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-23884.jpg" alt="Photo Gallery Lightbox – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-23884" target="_blank" rel="noopener">Open in Figma · 16:23884</a></figure>
+</div>
+
+<div class="state-title">Photo Gallery Lightbox</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-30464.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-30464.jpg" alt="Photo Gallery Lightbox – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-30464" target="_blank" rel="noopener">Open in Figma · 16:30464</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-28926.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-28926.jpg" alt="Photo Gallery Lightbox – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-28926" target="_blank" rel="noopener">Open in Figma · 16:28926</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-28223.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-28223.jpg" alt="Photo Gallery Lightbox – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-28223" target="_blank" rel="noopener">Open in Figma · 16:28223</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-27725.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-27725.jpg" alt="Photo Gallery Lightbox – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-27725" target="_blank" rel="noopener">Open in Figma · 16:27725</a></figure>
+</div>
+
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Header: title, "Photo 3 of 28", <strong>Back to Lodge</strong> / ✕</td>
+<td>Close returns to the same scroll position.</td>
+</tr>
+<tr class="even">
+<td>Category tabs (Property: All 28 · Suites &amp; Arish 12 · Reef &amp; Water 8 · Bedouin Majlis &amp; Food 5 · Around the Property 3; Activity: All 16 · The Bells Chimney 5 · The Blue Hole Arch 4 · Coral Saddle &amp; Reef 4 · Bedouin Shoreline Camp 3)</td>
+<td>Filters photos; counts per category (photo category = field on each photo).</td>
+</tr>
+<tr class="odd">
+<td>Main image + prev/next arrows; keyboard arrows &amp; Esc (desktop); swipe, pinch-to-zoom, double-tap (mobile/native)</td>
+<td>Standard gallery controls.</td>
+</tr>
+<tr class="even">
+<td>Caption block (room/tier name, description, host quote; activity: EXIF "Sony α7S III • 16 mm", instructor note)</td>
+<td>Caption per photo.</td>
+</tr>
+<tr class="odd">
+<td>Filmstrip thumbnails "+23 more"</td>
+<td>Jump to photo.</td>
+</tr>
+<tr class="even">
+<td>Activity only: <strong>Download RAW</strong> / "Full 4K", "Exif &amp; Safety"</td>
+<td>See §7 G6.</td>
+</tr>
+<tr class="odd">
+<td>Native/Mobile only: price line ("EGP 2,400 / night") and <strong>Book</strong></td>
+<td>Shortcut to booking.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="44-reviews-expanded-both-pages">4.4 Reviews expanded (both pages)</h3>
+<div class="state-title">Reviews Expanded</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-1027.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-1027.jpg" alt="Reviews Expanded – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-1027" target="_blank" rel="noopener">Open in Figma · 42:1027</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-647.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-647.jpg" alt="Reviews Expanded – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-647" target="_blank" rel="noopener">Open in Figma · 42:647</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-328.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-328.jpg" alt="Reviews Expanded – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-328" target="_blank" rel="noopener">Open in Figma · 42:328</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-3.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-3.jpg" alt="Reviews Expanded – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-3" target="_blank" rel="noopener">Open in Figma · 42:3</a></figure>
+</div>
+
+<div class="state-title">Reviews Expanded</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-2626.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-2626.jpg" alt="Reviews Expanded – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-2626" target="_blank" rel="noopener">Open in Figma · 42:2626</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-2165.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-2165.jpg" alt="Reviews Expanded – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-2165" target="_blank" rel="noopener">Open in Figma · 42:2165</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-1840.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-1840.jpg" alt="Reviews Expanded – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-1840" target="_blank" rel="noopener">Open in Figma · 42:1840</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-1510.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-1510.jpg" alt="Reviews Expanded – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-1510" target="_blank" rel="noopener">Open in Figma · 42:1510</a></figure>
+</div>
+
+<div class="state-title">Reviews Expanded (duplicate)</div>
+<div class="shot-grid" style="grid-template-columns:2fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-3292.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-3292.jpg" alt="Reviews Expanded (duplicate) – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-3292" target="_blank" rel="noopener">Open in Figma · 42:3292</a></figure>
+</div>
+
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Property (Figma)</th>
+<th>Activity (Figma)</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Summary</td>
+<td>4.99 / 5.0 "Top 1% in South Sinai", 67 verified reviews</td>
+<td>4.98, 86 verified sessions, certification distribution (AIDA 3 42%, AIDA 2 38%, Molchanovs 15%)</td>
+<td>Average of all published reviews.</td>
+</tr>
+<tr class="even">
+<td>Sub-ratings</td>
+<td>Reef Quality &amp; Cleanliness · Eco-Living &amp; Solar · Bedouin Hospitality · Listing Accuracy · Coordination &amp; Logistics · Value for Conservation</td>
+<td>Instructor Safety · Line Rig Stability · Equalization Coaching · Bedouin Tea &amp; Debrief · 4K Media Quality</td>
+<td>Averages per category — <strong>same categories must be used in "Leave a Review" (module 08)</strong>.</td>
+</tr>
+<tr class="odd">
+<td>Search</td>
+<td>"Search reviews by keyword…"</td>
+<td>"Search by technique (mouthfill, Frenzel, 30m)…"</td>
+<td>Full-text search in review text.</td>
+</tr>
+<tr class="even">
+<td>Sort</td>
+<td>Most Recent</td>
+<td>Most Helpful</td>
+<td>Options: Most recent, Most helpful, Highest, Lowest.</td>
+</tr>
+<tr class="odd">
+<td>Filter chips</td>
+<td>All (67) · With Photos (24) · per room tier (31/18/18) · Solo Travelers (15) · Divers (28)</td>
+<td>All · With 4K Video Clips (34) · Chimney &amp; Bells (52) · The Arch (24) · First Deep Dives (19)</td>
+<td>Tier filter uses the booked room type.</td>
+</tr>
+<tr class="even">
+<td>Review card</td>
+<td>Name, "Verified Stay", city, room, month, score, text, <strong>Helpful (19)</strong>, <strong>Report</strong>, "Reviewed 3 weeks ago"; host response block</td>
+<td>Name, verified diver, certification, date, logged PB depth, text, tags, <strong>Helpful</strong>, <strong>Share Log</strong>, "Verified Dive Logbook #D-8941", <strong>Watch Clip</strong></td>
+<td>Helpful = one vote per user; Report → moderation queue (FR-17.3 Later).</td>
+</tr>
+<tr class="odd">
+<td>Pagination</td>
+<td><strong>Show 10 More Verified Reviews</strong> / Load More (63 remaining)</td>
+<td><strong>Load More Diver Logbook Reviews</strong></td>
+<td>Append.</td>
+</tr>
+<tr class="even">
+<td>Sticky CTA (mobile/native)</td>
+<td>EGP 2,400 / night · <strong>Reserve Now</strong></td>
+<td>EGP 1,650 / diver · <strong>Reserve Spot</strong></td>
+<td>Returns into booking flow.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-cross-screen-business-rules">5. Cross-screen business rules</h2>
+<ol type="1">
+<li><strong>Only verified reviews</strong> (guest had a completed booking — FR-6.1) are shown; label "Verified Stay / Verified Diver".</li>
+<li>Prices displayed = base rate for the selected dates (incl. date overrides FR-14.2) + mandatory fees; the total line wording must be consistent ("before taxes" vs "total due" — see §7 G4).</li>
+<li>Room tier availability and activity slot capacity are <strong>live</strong> and re-checked at Reserve (FR-3.6 prevents double booking).</li>
+<li>The property's cancellation policy (FR-13.4) is shown on the page and copied onto the booking at reservation time.</li>
+<li>Activity participants ≤ remaining spots and ≤ per-line maximum; certification prerequisites must be acknowledged before paying.</li>
+<li>Gallery categories and captions are provider-managed with the listing (FR-13.1/13.2).</li>
+</ol>
+<h2 id="6-story-candidates-for-jira">6. Story candidates for Jira</h2>
+<p><strong>Epic:</strong> GUEST-LISTING — Listing detail pages</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Key idea</th>
+<th>Story</th>
+<th>Acceptance criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-key">LIST-1</span></td>
+<td>As a guest, I want a property page with photos, description, host, amenities, location, rules, cancellation policy and reviews.</td>
+<td>All sections of §4.1 on 4 breakpoints; rating + review count link to reviews; loads &lt; 2 s.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">LIST-2</span></td>
+<td>As a guest, I want to compare and select room tiers with live availability and price.</td>
+<td>Selecting a tier updates booking box; unavailable tiers disabled for chosen dates; "Only 1 left" when 1 unit remains.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">LIST-3</span></td>
+<td>As a guest, I want a sticky booking box that calculates my total.</td>
+<td>Nights × rate + fees; updates on date/guest/tier change; Reserve → module 06 with values.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">LIST-4</span></td>
+<td>As a guest, I want an activity page with guides, route, prerequisites, inclusions and safety info.</td>
+<td>Sections of §4.2; prerequisites visible before booking.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">LIST-5</span></td>
+<td>As a guest, I want to pick an activity day and time window with live spots left.</td>
+<td>Full days disabled; remaining spots shown; max 4 per slot enforced.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">LIST-6</span></td>
+<td>As a guest, I want to choose number of divers and optional rentals.</td>
+<td>Stepper bounded; add-on prices added to total.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">LIST-7</span></td>
+<td>As a guest, I want to upload my certification card.</td>
+<td>JPG/PNG/PDF upload; stored with booking; optional at this step.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">LIST-8</span></td>
+<td>As a guest, I want a full-screen photo gallery with categories.</td>
+<td>Tabs with counts, arrows/keyboard/swipe/zoom, captions, filmstrip; Esc/✕ closes to same position.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">LIST-9</span></td>
+<td>As a guest, I want to read, search, filter and sort all reviews.</td>
+<td>Sub-ratings, keyword search, filter chips, sort, load more, Helpful votes, Report.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">LIST-10</span></td>
+<td>As a guest, I want to save or share a listing.</td>
+<td>Save toggles favourite (login); share link opens same listing.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Finding</th>
+<th>Suggested decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-gap">G1</span></td>
+<td><strong>Messaging buttons</strong> (Chat with Instructor, In-App Chat, Contact Host, WhatsApp host) — in-app messaging is <strong>FR-8.1 Phase 2</strong>.</td>
+<td>MVP: WhatsApp deep link only (or hide); in-app chat in Phase 2. Also confirm whether exposing hosts' phone numbers before booking is allowed.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G2</span></td>
+<td><strong>Host responses to reviews</strong> are shown — FR-6.3 is Later.</td>
+<td>Hide in MVP or pull FR-6.3 into MVP.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G3</span></td>
+<td><strong>Activity price inconsistent:</strong> EGP 1,650 on detail/search, EGP 2,400 in Session Picker (module 07); totals EGP 1,850 (desktop) vs 1,700 (tablet).</td>
+<td>Single source price; fees defined once.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G4</span></td>
+<td><strong>Cancellation window inconsistent:</strong> Property 5 days (most) vs "48 hours" (mobile web room selector); Activity 48 h (desktop) vs 24 h (tablet).</td>
+<td>Policy comes from the listing — fix copy.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G5</span></td>
+<td><strong>Guide names inconsistent:</strong> Tablet shows "Salem Muzayna — AIDA Master Instructor" and review text "Guide: Youssef Barakat"; native says "9 Yrs"; desktop "12 Years". Host name "Sheikh Salama" vs "Sheikh Salem Tarabin" (tablet room selector).</td>
+<td>Data from provider profile; fix Figma copy.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G6</span></td>
+<td>Activity lightbox <strong>"Download RAW"</strong> of marketing photos.</td>
+<td>Remove, or restrict to guests' own session media after the activity.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G7</span></td>
+<td>Review counts differ (67 vs 142 vs 218 for the same lodge; 86 vs 142 for the activity).</td>
+<td>Real data; note only.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G8</span></td>
+<td>Duplicate frame <em>Activity Detail — Reviews Expanded (Desktop)</em> (42:2626 and 42:3292).</td>
+<td>Keep one.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G9</span></td>
+<td>"You won't be charged yet • Direct host confirmation" implies request-to-book; "Instant Reserve" elsewhere implies instant.</td>
+<td>Decide confirmation mode (see module 03 G7).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G10</span></td>
+<td>Unavailable-tier / sold-out-date state on the property page not designed.</td>
+<td>Add "Not available for your dates" state.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G11</span></td>
+<td>C-Card upload &amp; medical clearance — storage of certificates/medical info (sensitive).</td>
+<td>Define retention &amp; access (NFR-9).</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-out-of-scope-for-mvp">8. Out of scope for MVP</h2>
+<ul>
+<li>In-app guest ↔︎ provider messaging (FR-8.1/8.2), review photos (FR-6.2), provider review responses (FR-6.3), AI review sentiment (FR-6.4).</li>
+</ul>
+</article><nav class="pager"><a href="04-dahab-guide-zones-pois-articles.html"><small>← Previous</small><b>04 · Dahab Guide — Zones, Points of Interest &amp; Articles</b></a><a class="next" href="06-accommodation-booking-and-my-bookings.html"><small>Next →</small><b>06 · Accommodation Booking &amp; My Bookings</b></a></nav>
+</main>
+<aside class="toc"><div class="side-label">On this page</div><ul><li class="l2"><a href="#1-module-summary">1. Module summary</a></li>
+<li class="l2"><a href="#2-business-requirements-covered-srs">2. Business requirements covered (SRS)</a></li>
+<li class="l2"><a href="#3-screen-inventory">3. Screen inventory</a></li>
+<li class="l2"><a href="#4-screen-specifications">4. Screen specifications</a></li>
+<li class="l3"><a href="#41-property-detail--dar-tarabin-coastal-ecolodge">4.1 Property Detail — Dar Tarabin Coastal Ecolodge</a></li>
+<li class="l3"><a href="#42-activity-detail--blue-hole-arch--bells-deep-freediving-session">4.2 Activity Detail — Blue Hole Arch &amp; Bells Deep Freediving Session</a></li>
+<li class="l3"><a href="#43-photo-gallery-lightbox-both-pages">4.3 Photo gallery lightbox (both pages)</a></li>
+<li class="l3"><a href="#44-reviews-expanded-both-pages">4.4 Reviews expanded (both pages)</a></li>
+<li class="l2"><a href="#5-cross-screen-business-rules">5. Cross-screen business rules</a></li>
+<li class="l2"><a href="#6-story-candidates-for-jira">6. Story candidates for Jira</a></li>
+<li class="l2"><a href="#7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</a></li>
+<li class="l2"><a href="#8-out-of-scope-for-mvp">8. Out of scope for MVP</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <span><b style="color:#fff">DAHAB • دهب</b> — Reservations • Touring • Trips · Guest App specification</span>
+  <span>Sources: SRS v1.0 · Figma “Dahab” → page <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">New</a> · Prepared 23 Sep 2026</span>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

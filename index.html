@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home · Dahab Guest App Specs</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <label for="nav-toggle" class="nav-btn" aria-label="Menu"><span></span><span></span><span></span></label>
+  <a class="brand" href="index.html">
+    <img src="assets/logo.svg" alt="">
+    <span><span class="brand-name">DAHAB<span class="ar">• دهب</span></span>
+    <span class="brand-sub">Guest App · Product Specification</span></span>
+  </a>
+  <nav class="topbar-links">
+    <a href="index.html" class="active">Modules</a>
+    <a href="issues.html">Issues</a>
+    <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">Figma ↗</a>
+  </nav>
+</header>
+<input type="checkbox" id="nav-toggle">
+<div class="layout no-toc">
+<nav class="sidebar"><div class="side-label">Overview</div><ul><li><a href="index.html" class=active><span class="num alt">★</span>Home</a></li><li><a href="issues.html"><span class="num alt">!</span>Issues tracker</a></li></ul><div class="side-label">Guest app modules</div><ul><li><a href="01-account-authentication.html"><span class="num">01</span>Account &amp; Authentication</a></li><li><a href="02-discovery-home.html"><span class="num">02</span>Discovery Home</a></li><li><a href="03-search-results-and-map.html"><span class="num">03</span>Search Results &amp; Map</a></li><li><a href="04-dahab-guide-zones-pois-articles.html"><span class="num">04</span>Dahab Guide — Zones, Points of Interest &amp; Articles</a></li><li><a href="05-listing-detail-property-activity.html"><span class="num">05</span>Listing Detail — Property &amp; Activity</a></li><li><a href="06-accommodation-booking-and-my-bookings.html"><span class="num">06</span>Accommodation Booking &amp; My Bookings</a></li><li><a href="07-activity-booking.html"><span class="num">07</span>Activity Booking</a></li><li><a href="08-reviews-and-favorites.html"><span class="num">08</span>Reviews &amp; Favorites</a></li><li><a href="09-notifications-and-language.html"><span class="num">09</span>Notifications &amp; Language Settings</a></li><li><a href="10-ai-concierge.html"><span class="num">10</span>AI Concierge Chat</a></li></ul></nav>
+<main class="content">
+<section class="hero">
+  <div class="eyebrow">Dahab Reservations · Touring · Trips</div>
+  <h1>Guest App — Product Specification</h1>
+  <p class="lead">Every guest-app module described from the business requirements (SRS v1.0) and the final Figma design:
+  screens for all four breakpoints, UI elements, step-by-step flows, states, business rules, Jira story candidates and open issues.</p>
+  <div class="stats">
+    <div class="stat"><b>10</b><span>Modules</span></div>
+    <div class="stat"><b>162</b><span>Figma frames</span></div>
+    <div class="stat"><b>4</b><span>Breakpoints</span></div>
+    <div class="stat"><b>117</b><span>Open issues</span></div>
+    <div class="stat"><b>37</b><span>High / blocker</span></div>
+  </div>
+  <div class="stats"><a class="btn" href="01-account-authentication.html">Start reading →</a>
+  <a class="btn ghost" href="issues.html">Open issues tracker</a></div>
+  <div class="hero-waves"></div>
+</section>
+
+<h2 class="section-title">Modules</h2>
+<p class="section-sub">Each module becomes one Jira epic. Open a module to see its screens, flows and stories.</p>
+<div class="cards"><a class="card" href="01-account-authentication.html"><div class="card-thumb"><span class="num">01</span><img loading="lazy" src="images/thumbs/16-635.jpg" alt=""></div>
+  <div class="card-body"><h3>Account &amp; Authentication</h3><p>Register, Login, Forgot Password, Verification OTP, Edit Profile</p>
+  <div class="card-foot"><span class="badge b-low">28 frames</span>
+  <span class="badge b-high">15 issues</span>
+  <span class="badge b-cat">GUEST-AUTH</span></div></div></a><a class="card" href="02-discovery-home.html"><div class="card-thumb"><span class="num">02</span><img loading="lazy" src="images/thumbs/16-9383.jpg" alt=""></div>
+  <div class="card-body"><h3>Discovery Home</h3><p>Discovery Home Feed</p>
+  <div class="card-foot"><span class="badge b-low">17 frames</span>
+  <span class="badge b-high">9 issues</span>
+  <span class="badge b-cat">GUEST-DISCOVERY</span></div></div></a><a class="card" href="03-search-results-and-map.html"><div class="card-thumb"><span class="num">03</span><img loading="lazy" src="images/thumbs/16-12886.jpg" alt=""></div>
+  <div class="card-body"><h3>Search Results &amp; Map</h3><p>Property Search Results, Activity Search Results, Search Results (map)</p>
+  <div class="card-foot"><span class="badge b-low">20 frames</span>
+  <span class="badge b-high">9 issues</span>
+  <span class="badge b-cat">GUEST-SEARCH</span></div></div></a><a class="card" href="04-dahab-guide-zones-pois-articles.html"><div class="card-thumb"><span class="num">04</span><img loading="lazy" src="images/thumbs/16-19353.jpg" alt=""></div>
+  <div class="card-body"><h3>Dahab Guide — Zones, Points of Interest &amp; Articles</h3><p>Zone Overview, POI Detail, Guide Article</p>
+  <div class="card-foot"><span class="badge b-low">12 frames</span>
+  <span class="badge b-high">9 issues</span>
+  <span class="badge b-cat">GUEST-GUIDE</span></div></div></a><a class="card" href="05-listing-detail-property-activity.html"><div class="card-thumb"><span class="num">05</span><img loading="lazy" src="images/thumbs/16-25591.jpg" alt=""></div>
+  <div class="card-body"><h3>Listing Detail — Property &amp; Activity</h3><p>Property Detail, Activity Detail</p>
+  <div class="card-foot"><span class="badge b-low">25 frames</span>
+  <span class="badge b-high">11 issues</span>
+  <span class="badge b-cat">GUEST-LISTING</span></div></div></a><a class="card" href="06-accommodation-booking-and-my-bookings.html"><div class="card-thumb"><span class="num">06</span><img loading="lazy" src="images/thumbs/42-5279.jpg" alt=""></div>
+  <div class="card-body"><h3>Accommodation Booking &amp; My Bookings</h3><p>Room Type &amp; Date Selector, Booking Confirmation, My Bookings, Cancel Booking Confirmation, Modify Dates</p>
+  <div class="card-foot"><span class="badge b-low">20 frames</span>
+  <span class="badge b-high">17 issues</span>
+  <span class="badge b-cat">GUEST-BOOK-STAY</span></div></div></a><a class="card" href="07-activity-booking.html"><div class="card-thumb"><span class="num">07</span><img loading="lazy" src="images/thumbs/42-15644.jpg" alt=""></div>
+  <div class="card-body"><h3>Activity Booking</h3><p>Activity Session Picker, Activity Booking Confirmation</p>
+  <div class="card-foot"><span class="badge b-low">12 frames</span>
+  <span class="badge b-high">14 issues</span>
+  <span class="badge b-cat">GUEST-BOOK-ACTIVITY</span></div></div></a><a class="card" href="08-reviews-and-favorites.html"><div class="card-thumb"><span class="num">08</span><img loading="lazy" src="images/thumbs/42-17849.jpg" alt=""></div>
+  <div class="card-body"><h3>Reviews &amp; Favorites</h3><p>Leave a Review, Favorites / Wishlist</p>
+  <div class="card-foot"><span class="badge b-low">12 frames</span>
+  <span class="badge b-high">12 issues</span>
+  <span class="badge b-cat">GUEST-ENGAGE</span></div></div></a><a class="card" href="09-notifications-and-language.html"><div class="card-thumb"><span class="num">09</span><img loading="lazy" src="images/thumbs/42-23093.jpg" alt=""></div>
+  <div class="card-body"><h3>Notifications &amp; Language Settings</h3><p>Notification Center, Language Switcher</p>
+  <div class="card-foot"><span class="badge b-low">12 frames</span>
+  <span class="badge b-high">12 issues</span>
+  <span class="badge b-cat">GUEST-NOTIFY-L10N</span></div></div></a><a class="card" href="10-ai-concierge.html"><div class="card-thumb empty"><span class="num">10</span>Designs in Stitch · not in Figma yet</div>
+  <div class="card-body"><h3>AI Concierge Chat</h3><p><em>not in Figma yet</em></p>
+  <div class="card-foot"><span class="badge b-low">0 frames</span>
+  <span class="badge b-high">6 issues</span>
+  <span class="badge b-cat">GUEST-AI-CONCIERGE</span></div></div></a></div>
+
+<h2 class="section-title">How to read a module page</h2>
+<div class="howto">
+  <div><b>Summary & SRS</b><span>What the module does and which requirements (FR / NFR) it covers, with priority and MVP flag.</span></div>
+  <div><b>Screens</b><span>Every state in Desktop · Tablet · Mobile Web · Native. Click a screen to open it full size, or jump to the Figma frame.</span></div>
+  <div><b>Flows & rules</b><span>UI elements, step-by-step tables (guest action → system response), states, errors and business rules.</span></div>
+  <div><b>Stories & gaps</b><span>Jira story candidates with acceptance criteria, then the gaps and decisions still needed.</span></div>
+</div>
+
+<article class="doc"><h2 id="top-findings-across-all-modules-decide-before-writing-stories">Top findings across all modules (decide before writing stories)</h2>
+<h3 id="a-screens-required-by-the-srs-but-missing-from-figma">A. Screens required by the SRS but missing from Figma</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Missing screen</th>
+<th>Blocks</th>
+<th>Module</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Checkout — Guest details &amp; payment (stays)</strong></td>
+<td>FR-3.2, FR-5.1 (High, MVP)</td>
+<td>06</td>
+</tr>
+<tr class="even">
+<td><strong>Checkout — Participant details &amp; payment (activities)</strong></td>
+<td>FR-4.2 (High, MVP)</td>
+<td>07</td>
+</tr>
+<tr class="odd">
+<td><strong>Set new password</strong> (after reset link/code)</td>
+<td>FR-1.2</td>
+<td>01</td>
+</tr>
+<tr class="even">
+<td>OTP error states (wrong / expired / too many attempts)</td>
+<td>FR-1.5</td>
+<td>01</td>
+</tr>
+<tr class="odd">
+<td>Activity search filter panel + empty state</td>
+<td>FR-2.2, FR-2.6</td>
+<td>03</td>
+</tr>
+<tr class="even">
+<td>Activity cancel / reschedule</td>
+<td>FR-4.3</td>
+<td>07</td>
+</tr>
+<tr class="odd">
+<td>AI Concierge screens (exist in Stitch only) + launcher</td>
+<td>FR-10.1, FR-10.2</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>Logged-in web account menu (Profile, Bookings, Saved, Log out)</td>
+<td>FR-1.2</td>
+<td>01</td>
+</tr>
+<tr class="odd">
+<td>Stories/Guides index, Zones index</td>
+<td>FR-2.4</td>
+<td>04</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="b-designed-features-that-the-srs-marks-later-decide-hide-for-mvp-or-move-into-mvp">B. Designed features that the SRS marks "Later" (decide: hide for MVP or move into MVP)</h3>
+<p>In-app chat with host/instructor (FR-8.1) · host responses to reviews (FR-6.3) · review photo upload (FR-6.2) · currency selector (FR-20.3) · "Save to Itinerary" (AI trip planner FR-9) · plus features not in the SRS at all: audio article narration, wishlist collections/sharing &amp; split deposits, extended profile (passport ID, emergency contact, dive certificates, permits), French/German/Russian + Hijri calendar settings, "Request Host Override" on date changes, host moderation of reviews.</p>
+<h3 id="c-data-that-must-be-defined-once-currently-inconsistent-between-screens">C. Data that must be defined once (currently inconsistent between screens)</h3>
+<ul>
+<li><strong>Fee &amp; tax model</strong> for stays (5% fund vs fixed levies; 10% vs 14% tax) — module 06 G2.</li>
+<li><strong>Cancellation windows</strong> (5 days vs 48 h for the same property; 48 h vs 24 h for the activity).</li>
+<li><strong>Activity price</strong> (EGP 1,650 vs 2,400), time windows and add-on prices — module 07 G1–G3.</li>
+<li><strong>Emergency numbers</strong> (several variants of the chamber, police and hospital numbers) — module 04 G1.</li>
+<li><strong>Password rule</strong>, OTP validity, lockout policy — module 01.</li>
+<li><strong>Instant booking vs host confirmation</strong> — module 03 G7 / module 05 G9.</li>
+<li><strong>Native tab bar</strong> (4 tabs vs 5 with "Updates") and the web PWA banner wrongly shown on native frames.</li>
+<li><strong>Brand name</strong> changes between modules: "DAHAB • دهب — Reservations • Touring • Trips" (auth, discovery, search, guide), "Dahab Sanctuary &amp; Sea" / "Dahab Sanctuary &amp; Sea Marketplace" (bookings, reviews, favourites, settings), "DAHAB LIFE" (native notifications).</li>
+<li><strong>Lead instructor</strong> for the same freediving session: Youssef Ben-Ammar (detail, confirmation, notifications) vs Captain Zaki Mansour (session picker).</li>
+<li><strong>Review categories</strong> for stays and activities (Leave a Review ≠ Reviews Expanded).</li>
+<li><strong>Live marine-conditions data source</strong> (used on Home, Zone, POI, Activity, Concierge) — not in SRS §5.3.</li>
+</ul>
+<h3 id="d-figma-housekeeping">D. Figma housekeeping</h3>
+<ul>
+<li>Discovery Home has 3 different filter panels on Native/Mobile Web and 2 on Tablet — pick one.</li>
+<li>Duplicate frame: Activity Detail — Reviews Expanded (Desktop) ×2.</li>
+<li>Desktop error states for Register/Login use a different header and misspell the brand in Arabic ("ذهب" instead of "دهب").</li>
+<li>Tablet frames are 1280 px wide in Figma (named 834 px).</li>
+<li>Desktop <em>Cancel Booking</em> dialog renders behind the page footer; broken glyphs in the header currency pill (later modules).</li>
+</ul>
+</article>
+
+</main>
+
+</div>
+<footer class="site-footer">
+  <span><b style="color:#fff">DAHAB • دهب</b> — Reservations • Touring • Trips · Guest App specification</span>
+  <span>Sources: SRS v1.0 · Figma “Dahab” → page <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">New</a> · Prepared 23 Sep 2026</span>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

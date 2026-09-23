@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 Search Results &amp; Map · Dahab Guest App Specs</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <label for="nav-toggle" class="nav-btn" aria-label="Menu"><span></span><span></span><span></span></label>
+  <a class="brand" href="index.html">
+    <img src="assets/logo.svg" alt="">
+    <span><span class="brand-name">DAHAB<span class="ar">• دهب</span></span>
+    <span class="brand-sub">Guest App · Product Specification</span></span>
+  </a>
+  <nav class="topbar-links">
+    <a href="index.html">Modules</a>
+    <a href="issues.html">Issues</a>
+    <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">Figma ↗</a>
+  </nav>
+</header>
+<input type="checkbox" id="nav-toggle">
+<div class="layout">
+<nav class="sidebar"><div class="side-label">Overview</div><ul><li><a href="index.html"><span class="num alt">★</span>Home</a></li><li><a href="issues.html"><span class="num alt">!</span>Issues tracker</a></li></ul><div class="side-label">Guest app modules</div><ul><li><a href="01-account-authentication.html"><span class="num">01</span>Account &amp; Authentication</a></li><li><a href="02-discovery-home.html"><span class="num">02</span>Discovery Home</a></li><li><a href="03-search-results-and-map.html" class=active><span class="num">03</span>Search Results &amp; Map</a></li><li><a href="04-dahab-guide-zones-pois-articles.html"><span class="num">04</span>Dahab Guide — Zones, Points of Interest &amp; Articles</a></li><li><a href="05-listing-detail-property-activity.html"><span class="num">05</span>Listing Detail — Property &amp; Activity</a></li><li><a href="06-accommodation-booking-and-my-bookings.html"><span class="num">06</span>Accommodation Booking &amp; My Bookings</a></li><li><a href="07-activity-booking.html"><span class="num">07</span>Activity Booking</a></li><li><a href="08-reviews-and-favorites.html"><span class="num">08</span>Reviews &amp; Favorites</a></li><li><a href="09-notifications-and-language.html"><span class="num">09</span>Notifications &amp; Language Settings</a></li><li><a href="10-ai-concierge.html"><span class="num">10</span>AI Concierge Chat</a></li></ul></nav>
+<main class="content">
+<section class="hero">
+  <div class="eyebrow"><span class="hero-num">03</span> Guest App · Module</div>
+  <h1>Search Results &amp; Map</h1>
+  <p class="lead">After searching (from Discovery Home or the header), the guest sees a list/grid of <b>stays</b> or <b>expeditions</b> matching their criteria, can refine with filters and sort, switch to a <b>map</b>, and open a listing.</p>
+  <dl class="meta"><div><dt>Module</dt><dd>Property search results · Activity search results · Map view</dd></div><div><dt>Apps</dt><dd>Desktop Web (1440), Tablet Web (834), Mobile Web, Native App (390)</dd></div><div><dt>Figma</dt><dd>Page <b>New</b> → sections <em>Property Search Results</em> (8 frames), <em>Activity Search Results</em> (4), <em>Search Results</em> map (8)</dd></div><div><dt>SRS</dt><dd>FR-2.1, FR-2.2, FR-2.3 (entry), FR-2.5, FR-2.6, FR-7.1, NFR-1, §5.2 GPS, §5.3 Maps provider</dd></div><div><dt>Screens</dt><dd>3 screens · 6 states · 20 frames</dd></div></dl>
+  <div class="hero-waves"></div>
+</section><article class="doc"><h2 id="1-module-summary">1. Module summary</h2>
+<p>After searching (from Discovery Home or the header), the guest sees a list/grid of <strong>stays</strong> or <strong>expeditions</strong> matching their criteria, can refine with filters and sort, switch to a <strong>map</strong>, and open a listing. The map shows stays and activities as price pins; selecting a pin opens a preview card.</p>
+<h2 id="2-business-requirements-covered-srs">2. Business requirements covered (SRS)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>MVP</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FR-2.1</td>
+<td>Search properties by zone, dates, guest count, price range, property type, amenities</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Property Search Results + Filter panel</td>
+</tr>
+<tr class="even">
+<td>FR-2.2</td>
+<td>Search activities by zone, category, date, price range</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Activity Search Results</td>
+</tr>
+<tr class="odd">
+<td>FR-2.3</td>
+<td>Open a property/activity detail page</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Card click / "View Sanctuary" (→ module 05)</td>
+</tr>
+<tr class="even">
+<td>FR-2.5</td>
+<td>View properties/activities/POIs on a map</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Map View + Pin popover</td>
+</tr>
+<tr class="odd">
+<td>FR-2.6</td>
+<td>Filter/sort by rating, price, distance, popularity</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Filter pills, Filter panel, Sort control</td>
+</tr>
+<tr class="even">
+<td>FR-7.1</td>
+<td>Save to favourites</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Heart on cards</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">NFR-1</span></td>
+<td>Results load &lt; 2 s on 4G for 95% of requests</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>All result screens</td>
+</tr>
+<tr class="even">
+<td>§5.2 / §5.3</td>
+<td>Device GPS for "near me"; Google Maps or Mapbox</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Map View (no "near me" control designed)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-screen-inventory">3. Screen inventory</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Screen</th>
+<th>States</th>
+<th>Breakpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4.1</td>
+<td>Property Search Results</td>
+<td>Default · Filter panel open</td>
+<td>All 4</td>
+</tr>
+<tr class="even">
+<td>4.2</td>
+<td>Activity Search Results</td>
+<td>Default</td>
+<td>All 4 (no filter/empty state designed)</td>
+</tr>
+<tr class="odd">
+<td>4.3</td>
+<td>Map View</td>
+<td>Default · Map pin detail popover</td>
+<td>All 4</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-screen-specifications">4. Screen specifications</h2>
+<h3 id="41-property-search-results">4.1 Property Search Results</h3>
+<p><strong>Entry:</strong> Search Dahab (home), curated chips, "See all" on a zone, "Discover Stays" nav link. <strong>Exit:</strong> Property Detail, Map View, Filter panel, Modify search.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-12886.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-12886.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-12886" target="_blank" rel="noopener">Open in Figma · 16:12886</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-12030.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-12030.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-12030" target="_blank" rel="noopener">Open in Figma · 16:12030</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-11448.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-11448.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-11448" target="_blank" rel="noopener">Open in Figma · 16:11448</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-10931.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-10931.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-10931" target="_blank" rel="noopener">Open in Figma · 16:10931</a></figure>
+</div>
+
+<div class="state-title">Filter Panel Open</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-13434.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-13434.jpg" alt="Filter Panel Open – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-13434" target="_blank" rel="noopener">Open in Figma · 16:13434</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-12476.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-12476.jpg" alt="Filter Panel Open – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-12476" target="_blank" rel="noopener">Open in Figma · 16:12476</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-11748.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-11748.jpg" alt="Filter Panel Open – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-11748" target="_blank" rel="noopener">Open in Figma · 16:11748</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-11188.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-11188.jpg" alt="Filter Panel Open – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-11188" target="_blank" rel="noopener">Open in Figma · 16:11188</a></figure>
+</div>
+
+<h4 id="ui-elements">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Emergency strip (desktop/tablet)</td>
+<td>"24/7 RED SEA DIVE ALERT PRIORITY — Deco Chamber +20 (69) 364-0530 — VHF Ch 16 — ACTIVE STANDBY"</td>
+<td>Static; tel: link.</td>
+</tr>
+<tr class="even">
+<td>Search summary</td>
+<td>DESTINATION "Lighthouse Bay &amp; Nearby" · DATES "Oct 28 – Nov 04 (7 nights)" · OCCUPANCY "2 Guests • 1 Room" · EXPERIENCE "All Sanctuaries" · <strong>Modify</strong> (Tablet/Mobile: "Edit Search"; Native: criteria pill)</td>
+<td>Modify re-opens the search inputs in place. Nights computed from dates.</td>
+</tr>
+<tr class="odd">
+<td>Quick filter pills</td>
+<td>Zone: Lighthouse Bay (Selected) · Price: EGP 1,000–4,500 · Type: Eco-lodge, Villa · Reef-Front · Freedive Gear Locker · Solar Powered · Bedouin Stewarded · <strong>More Filters (3)</strong> · Reset Filters</td>
+<td>Pill with value opens its dropdown; toggle pills switch on/off; "More Filters" opens the panel; counter = number of active advanced filters.</td>
+</tr>
+<tr class="even">
+<td>Result count</td>
+<td>"38 Sanctuaries found in Dahab" + "14 with direct Red Sea fringing reef access"</td>
+<td>Updates after every filter change.</td>
+</tr>
+<tr class="odd">
+<td>Sort</td>
+<td>"Recommended (Highest Rated &amp; Eco-Charter)"; mobile "Top Rated"; tablet panel "Reef Proximity"</td>
+<td>Options to confirm (see §7): Recommended, Price low→high, Price high→low, Rating, Distance, Popularity.</td>
+</tr>
+<tr class="even">
+<td>View toggle</td>
+<td>Grid · Map View (native: "Map")</td>
+<td>Switches to Map View keeping all criteria.</td>
+</tr>
+<tr class="odd">
+<td>Listing card</td>
+<td>Badge (REEF GUARDIAN CERTIFIED / SUPERHOST • DIVE READY / BEDOUIN STEWARDED), photo (native: "1 / 14 photos" swipe), distance tag ("40m from sea"), amenity tags, rating + review count, zone, name, 1-line description, "EGP 2,400 / night", inclusion note ("Includes marine preservation levy"), CTA <strong>Instant Reserve / Reserve</strong>, heart</td>
+<td>Card → Property Detail. Reserve → Property Detail with room/date selector focused (module 06). Price per night for the searched dates.</td>
+</tr>
+<tr class="even">
+<td>Pagination</td>
+<td>"Showing 1–6 of 38 verified sanctuaries" + <strong>Load 12 More Sanctuaries</strong> (native "Load 10 More", mobile "Load More Stays (35 remaining)")</td>
+<td>Appends the next page; keeps scroll position.</td>
+</tr>
+<tr class="odd">
+<td>Concierge box</td>
+<td>"ASSALAH TRIBAL DESK • ON-CALL CONCIERGE — Need a custom Bedouin camp stay or camel safari combo?" + <strong>WhatsApp Assalah Desk</strong> + Ask a Question</td>
+<td>Opens WhatsApp chat to the platform desk (not the host).</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="filter-panel-state">Filter panel (state)</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Group</th>
+<th>Options (Figma)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dahab coastal zones (multi)</td>
+<td>Lighthouse Bay · Assalah Souk · Mashraba Beach · Eel Garden Reef · Laguna Sand Spit · Blue Hole Sanctuary · Wadi Gnai Coast ("2 SELECTED")</td>
+</tr>
+<tr class="even">
+<td>Nightly price range</td>
+<td>Slider with histogram EGP 600 min → 8,000+ max; inputs MINIMUM/MAXIMUM; "Average: EGP 2,450 / night"; "Includes Marine Eco-Fee"</td>
+</tr>
+<tr class="odd">
+<td>Sanctuary &amp; architecture (multi)</td>
+<td>Eco-Lodge · Freedive Villa · Bedouin Arish / Camp · Boutique Stone Riad ("2 types selected")</td>
+</tr>
+<tr class="even">
+<td>Coastal &amp; reef amenities (multi)</td>
+<td>Reef-Front (&lt;50m shore entry) · Freedive Buoy &amp; Gear Locker · Solar Hot Water &amp; Desal · Bedouin Stewarded Host · Starlink Wi-Fi · Rooftop Stargazing Majlis · Desert Dog &amp; Pet Friendly ("3 CHECKED")</td>
+</tr>
+<tr class="odd">
+<td>Sinai Eco-Charter &amp; badges (toggles)</td>
+<td>Reef Guardian Certified · Bedouin Community Heritage</td>
+</tr>
+<tr class="even">
+<td>Actions</td>
+<td><strong>Reset (4 filters)</strong> · <strong>Apply Filters (18 Sanctuaries)</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Desktop shows the panel as a side drawer with a live preview of matching stays; Tablet as a centred modal; Mobile/Native as a bottom sheet.</p>
+<h4 id="step-by-step">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Arrives with criteria</td>
+<td>Returns first page, sorted "Recommended"; shows count and active pills.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Toggles a quick pill (e.g. Reef-Front)</td>
+<td>Re-queries; updates count, cards and pill state.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Opens <strong>More Filters</strong>, changes options</td>
+<td>Live count on the Apply button.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps <strong>Apply Filters (N)</strong></td>
+<td>Closes panel, reloads results, shows the active count on "More Filters (n)".</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps <strong>Reset</strong></td>
+<td>Clears all filters (keeps destination/dates/guests).</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Changes sort</td>
+<td>Re-orders results from page 1.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Taps <strong>Load more</strong></td>
+<td>Appends the next page.</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Taps <strong>Map View</strong></td>
+<td>Opens 4.3 with the same criteria.</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Taps a card / Reserve</td>
+<td>Opens Property Detail (05).</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>No results</td>
+<td>Shows the shared "No results" pattern (see module 02 §4.3).</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="42-activity-search-results">4.2 Activity Search Results</h3>
+<p><strong>Entry:</strong> "Diving &amp; Safari Trips" nav, activity category pills, Search with an expedition type. <strong>Exit:</strong> Activity Detail, Map View.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-14926.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-14926.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-14926" target="_blank" rel="noopener">Open in Figma · 16:14926</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-14535.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-14535.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-14535" target="_blank" rel="noopener">Open in Figma · 16:14535</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-14246.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-14246.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-14246" target="_blank" rel="noopener">Open in Figma · 16:14246</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-13937.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-13937.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-13937" target="_blank" rel="noopener">Open in Figma · 16:13937</a></figure>
+</div>
+
+<h4 id="ui-elements-1">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Search summary</td>
+<td>EXPEDITION "Freediving &amp; Sinai Treks" · DATES "Nov 02 – Nov 08" · ADVENTURERS "2 Divers / Adventurers" · LEVEL "Beginner to Advanced" · <strong>Modify</strong></td>
+<td>Activity search uses a date range + participants + skill level.</td>
+</tr>
+<tr class="even">
+<td>Filter pills</td>
+<td>Zone: Blue Hole &amp; Lighthouse · Skill Level: All Levels · Duration: Half-day &amp; Multi-day · Activity: Freedive, Scuba, Camel · Group: Small (Max 6) · Sinai Eco-Charter Certified · Equipment Provided · Bedouin Guide Led · <strong>+ Filters (4)</strong> · Reset Filters</td>
+<td>Same behaviour as property pills.</td>
+</tr>
+<tr class="odd">
+<td>Result header</td>
+<td>"26 Sinai Guided Expeditions &amp; Dives" · "Tide &amp; Wind Condition: Optimal" · Sort "Recommended (Safety &amp; Eco-Charter Verified)" · Grid / Map / Sites</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Activity card</td>
+<td>Badge (AIDA / PADI CERTIFIED, BEDOUIN STEWARDED, NIGHT EXPEDITION…), location + duration ("Blue Hole &amp; The Bells • 3.5 Hours"), rating (4.98 (142 reviews)), operator/guide ("Sheikh Salem &amp; Dahab Freedivers"), name, skill ("Intermediate to Pro"), group cap ("Max 4 Divers"), 2 inclusions ("Carbon Fins &amp; Buoy Provided", "Deco Chamber Supported"), price "EGP 1,650 per adventurer", CTA <strong>Reserve Expedition / Instant Book</strong></td>
+<td>Card → Activity Detail. Price per person.</td>
+</tr>
+<tr class="odd">
+<td>Pagination</td>
+<td>"Showing 1–6 of 26 verified expeditions"; native "Load 10 More Expeditions"; mobile "Load More Expeditions (23 remaining)"</td>
+<td>Append next page.</td>
+</tr>
+<tr class="even">
+<td>Concierge</td>
+<td>"DAHAB TRIBAL SAFARI DESK — Online in Assalah" · WhatsApp · <strong>Inquire Custom Itinerary</strong></td>
+<td>Custom multi-day requests.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-1">Step-by-step</h4>
+<p>Same as 4.1 steps 1–9, using activity filters (skill, duration, activity type, group size, equipment, guide type). Reserve / Instant Book → Activity Detail with the session picker (module 07).</p>
+<hr />
+<h3 id="43-map-view--pin-detail-popover">4.3 Map View &amp; pin detail popover</h3>
+<p><strong>Entry:</strong> "Map View" toggle on results, "Interactive Map" on home/zone pages. <strong>Exit:</strong> "Grid/List" toggle back; pin card → detail.</p>
+<div class="state-title">Map View</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-17173.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-17173.jpg" alt="Map View – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-17173" target="_blank" rel="noopener">Open in Figma · 16:17173</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-16555.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-16555.jpg" alt="Map View – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-16555" target="_blank" rel="noopener">Open in Figma · 16:16555</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-16044.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-16044.jpg" alt="Map View – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-16044" target="_blank" rel="noopener">Open in Figma · 16:16044</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-15514.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-15514.jpg" alt="Map View – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-15514" target="_blank" rel="noopener">Open in Figma · 16:15514</a></figure>
+</div>
+
+<div class="state-title">Map Pin Detail Popover</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-17703.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-17703.jpg" alt="Map Pin Detail Popover – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-17703" target="_blank" rel="noopener">Open in Figma · 16:17703</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-16913.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-16913.jpg" alt="Map Pin Detail Popover – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-16913" target="_blank" rel="noopener">Open in Figma · 16:16913</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-16301.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-16301.jpg" alt="Map Pin Detail Popover – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-16301" target="_blank" rel="noopener">Open in Figma · 16:16301</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-15802.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-15802.jpg" alt="Map Pin Detail Popover – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-15802" target="_blank" rel="noopener">Open in Figma · 16:15802</a></figure>
+</div>
+
+<h4 id="ui-elements-2">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Type tabs</td>
+<td>All (64) · Stays (38) · Diving &amp; Safaris (26); mobile toggle "Stays &amp; Expeditions"</td>
+<td>Filters pin types.</td>
+</tr>
+<tr class="even">
+<td>Filter pills + Modify</td>
+<td>Same as results</td>
+<td>Same criteria as the list.</td>
+</tr>
+<tr class="odd">
+<td>Split list (desktop)</td>
+<td>"Active Sinai Sanctuaries", Sort, list cards; selected card flagged "SELECTED ON MAP"</td>
+<td>Hover/select a card highlights its pin and vice versa.</td>
+</tr>
+<tr class="even">
+<td>Map</td>
+<td>Price pins ("EGP 1,200"), stay vs expedition pin styles, zone labels (Lighthouse Bay, Blue Hole Marine Reserve, Laguna…), protected-area overlays</td>
+<td>Maps provider per SRS §5.3 (Google Maps or Mapbox).</td>
+</tr>
+<tr class="odd">
+<td>Search this area</td>
+<td>Button / "Search this area as I pan" checkbox (tablet)</td>
+<td>Re-queries within the visible bounds.</td>
+</tr>
+<tr class="even">
+<td>Map style</td>
+<td>Satellite · Terrain · Eco-Reef (desktop)</td>
+<td>Changes base layer ("Eco-Reef" needs a custom reef layer — see §7).</td>
+</tr>
+<tr class="odd">
+<td>Legend</td>
+<td>Stays &amp; Eco-Lodges · Diving &amp; Desert Safaris · Protected Coral Barrier · No Anchoring in Lagoon</td>
+<td>Static.</td>
+</tr>
+<tr class="even">
+<td>Sea-state chip (tablet)</td>
+<td>"SEA STATE • LOW TIDE — Lagoon Calm • 0.4m Swell"</td>
+<td>Same data source as module 02 conditions.</td>
+</tr>
+<tr class="odd">
+<td>Bottom carousel (native/mobile)</td>
+<td>Cards "1 of 64", swipe</td>
+<td>Swiping moves the map to the next pin.</td>
+</tr>
+<tr class="even">
+<td>List / Grid toggle</td>
+<td>"List" (native) / "Grid"</td>
+<td>Returns to results with same criteria.</td>
+</tr>
+<tr class="odd">
+<td><strong>Pin detail popover</strong></td>
+<td>Selected pin highlighted in terracotta ("★ EGP 2,400"); card: photo "1/14", badge (Reef Guardian Certified), name, location ("Lighthouse Bay • 40m from reef drop-off"), amenities line, rating, price, "Includes marine conservation fee", CTA <strong>View Sanctuary</strong> (tablet "Reserve Sanctuary"; mobile shows "Total EGP 14,400 (6 nights, incl. reef fee)" + Reserve); close ✕ / drag handle on native</td>
+<td>Tap pin → open card; tap ✕, map background or another pin → close/switch; card CTA → Detail (05).</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-2">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Taps <strong>Map View</strong></td>
+<td>Fits the map to all results; shows count ("64 Results").</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Pans/zooms</td>
+<td>If "Search this area as I pan" on → auto re-query; else shows <strong>Search this area</strong> button.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Taps a pin</td>
+<td>Highlights pin, opens the popover (desktop/tablet) or bottom sheet (mobile/native).</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps ✕ / outside</td>
+<td>Closes the card, stays on the map.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps <strong>View Sanctuary / Reserve</strong></td>
+<td>Opens Listing Detail.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Switches tab All/Stays/Diving</td>
+<td>Filters pins and list.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Taps List / Grid</td>
+<td>Back to results, same criteria and scroll.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-cross-screen-business-rules">5. Cross-screen business rules</h2>
+<ol type="1">
+<li>Search criteria (zone, dates, guests/rooms, type, filters, sort) are kept in the URL (web) / navigation state (native) so back/forward and sharing work.</li>
+<li>Only approved, active listings with availability for the dates are returned; if no dates, show "from" prices.</li>
+<li>Property prices = nightly rate for the selected dates incl. mandatory eco/marine fees; activity prices = per person.</li>
+<li>Pins cluster when zoomed out (not designed; recommended for performance).</li>
+<li>Rating shown only when a listing has ≥ 1 review (define minimum, e.g. 3).</li>
+<li>Concierge/WhatsApp desk links go to the platform support number, not to a host (host messaging FR-8.1 is Phase 2).</li>
+</ol>
+<h2 id="6-story-candidates-for-jira">6. Story candidates for Jira</h2>
+<p><strong>Epic:</strong> GUEST-SEARCH — Search Results &amp; Map</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Key idea</th>
+<th>Story</th>
+<th>Acceptance criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-key">SRCH-1</span></td>
+<td>As a guest, I want to see stays matching my zone, dates and guests.</td>
+<td>Count, cards and pagination as designed; &lt; 2 s on 4G; criteria editable via Modify.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">SRCH-2</span></td>
+<td>As a guest, I want quick filter pills for stays.</td>
+<td>Each pill filters; active state visible; Reset clears.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">SRCH-3</span></td>
+<td>As a guest, I want advanced stay filters (zones, price, type, amenities, eco badges).</td>
+<td>Live count on Apply; Reset; panel layout per breakpoint.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">SRCH-4</span></td>
+<td>As a guest, I want to sort results.</td>
+<td>Sort options agreed in §7 G2; re-orders from page 1.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">SRCH-5</span></td>
+<td>As a guest, I want to load more results.</td>
+<td>Next page appended; "Showing x–y of N" updates.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">SRCH-6</span></td>
+<td>As a guest, I want to search guided activities by type, dates, participants and skill level.</td>
+<td>Activity cards show duration, skill, group cap, inclusions, per-person price.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">SRCH-7</span></td>
+<td>As a guest, I want activity filters (zone, skill, duration, type, group size, equipment, guide).</td>
+<td><em>Filter panel for activities needs design</em>; same behaviour as SRCH-3.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">SRCH-8</span></td>
+<td>As a guest, I want to see results on a map.</td>
+<td>Pins with price; list/map sync on desktop; Search this area; type tabs.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">SRCH-9</span></td>
+<td>As a guest, I want to preview a pin without leaving the map.</td>
+<td>Popover/bottom sheet with photo, name, rating, price, CTA; dismiss keeps map state.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">SRCH-10</span></td>
+<td>As a guest, I want to ask the local desk for custom trips.</td>
+<td>WhatsApp deep link to support number with prefilled message incl. search criteria.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">SRCH-11</span></td>
+<td>As a guest, I want to find stays "near me".</td>
+<td><em>Not designed</em> — GPS permission + distance sort (SRS §5.2).</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Finding</th>
+<th>Suggested decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-gap">G1</span></td>
+<td><strong>Activity Search has no Filter-panel state and no empty state.</strong></td>
+<td>Design both (reuse property pattern).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G2</span></td>
+<td>Sort options differ (Recommended / Top Rated / Reef Proximity / Safety &amp; Eco-Charter Verified) and SRS asks for rating, price, distance, popularity.</td>
+<td>Agree one sort list for stays and one for activities.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G3</span></td>
+<td>Page sizes differ (6 / 4 / 3 cards, "Load 12 / 10 more").</td>
+<td>Define page size per breakpoint.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G4</span></td>
+<td>Price ranges differ between Home filter (800–6,000+) and Search filter (600–8,000+).</td>
+<td>Derive min/max from data.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G5</span></td>
+<td>"Near me" / GPS (SRS §5.2) not designed on map or results.</td>
+<td>Add "Use my location" to map and distance sort.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G6</span></td>
+<td>Map style "Eco-Reef" and overlays (Protected Coral Barrier, No Anchoring zones) need custom geo data.</td>
+<td>Decide MVP (probably Satellite/Terrain only).</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G7</span></td>
+<td>"Instant Reserve / Instant Book" implies instant confirmation — SRS FR-15.2 lets providers confirm bookings.</td>
+<td>Define booking confirmation mode (instant vs request) per listing.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G8</span></td>
+<td>"Sites" in "Map / Sites" toggle (activities) is undefined.</td>
+<td>Clarify (POIs layer?) or remove.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G9</span></td>
+<td>Mobile Web pin card shows total for 6 nights; other breakpoints show per-night.</td>
+<td>Choose one (recommend per-night + total when dates set).</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-out-of-scope-for-mvp">8. Out of scope for MVP</h2>
+<ul>
+<li>Personalised ranking (FR-11.1), multi-currency (FR-20.3), content auto-translation (FR-2.7).</li>
+</ul>
+</article><nav class="pager"><a href="02-discovery-home.html"><small>← Previous</small><b>02 · Discovery Home</b></a><a class="next" href="04-dahab-guide-zones-pois-articles.html"><small>Next →</small><b>04 · Dahab Guide — Zones, Points of Interest &amp; Articles</b></a></nav>
+</main>
+<aside class="toc"><div class="side-label">On this page</div><ul><li class="l2"><a href="#1-module-summary">1. Module summary</a></li>
+<li class="l2"><a href="#2-business-requirements-covered-srs">2. Business requirements covered (SRS)</a></li>
+<li class="l2"><a href="#3-screen-inventory">3. Screen inventory</a></li>
+<li class="l2"><a href="#4-screen-specifications">4. Screen specifications</a></li>
+<li class="l3"><a href="#41-property-search-results">4.1 Property Search Results</a></li>
+<li class="l3"><a href="#42-activity-search-results">4.2 Activity Search Results</a></li>
+<li class="l3"><a href="#43-map-view--pin-detail-popover">4.3 Map View &amp; pin detail popover</a></li>
+<li class="l2"><a href="#5-cross-screen-business-rules">5. Cross-screen business rules</a></li>
+<li class="l2"><a href="#6-story-candidates-for-jira">6. Story candidates for Jira</a></li>
+<li class="l2"><a href="#7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</a></li>
+<li class="l2"><a href="#8-out-of-scope-for-mvp">8. Out of scope for MVP</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <span><b style="color:#fff">DAHAB • دهب</b> — Reservations • Touring • Trips · Guest App specification</span>
+  <span>Sources: SRS v1.0 · Figma “Dahab” → page <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">New</a> · Prepared 23 Sep 2026</span>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

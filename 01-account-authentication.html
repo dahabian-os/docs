@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01 Account &amp; Authentication · Dahab Guest App Specs</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <label for="nav-toggle" class="nav-btn" aria-label="Menu"><span></span><span></span><span></span></label>
+  <a class="brand" href="index.html">
+    <img src="assets/logo.svg" alt="">
+    <span><span class="brand-name">DAHAB<span class="ar">• دهب</span></span>
+    <span class="brand-sub">Guest App · Product Specification</span></span>
+  </a>
+  <nav class="topbar-links">
+    <a href="index.html">Modules</a>
+    <a href="issues.html">Issues</a>
+    <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">Figma ↗</a>
+  </nav>
+</header>
+<input type="checkbox" id="nav-toggle">
+<div class="layout">
+<nav class="sidebar"><div class="side-label">Overview</div><ul><li><a href="index.html"><span class="num alt">★</span>Home</a></li><li><a href="issues.html"><span class="num alt">!</span>Issues tracker</a></li></ul><div class="side-label">Guest app modules</div><ul><li><a href="01-account-authentication.html" class=active><span class="num">01</span>Account &amp; Authentication</a></li><li><a href="02-discovery-home.html"><span class="num">02</span>Discovery Home</a></li><li><a href="03-search-results-and-map.html"><span class="num">03</span>Search Results &amp; Map</a></li><li><a href="04-dahab-guide-zones-pois-articles.html"><span class="num">04</span>Dahab Guide — Zones, Points of Interest &amp; Articles</a></li><li><a href="05-listing-detail-property-activity.html"><span class="num">05</span>Listing Detail — Property &amp; Activity</a></li><li><a href="06-accommodation-booking-and-my-bookings.html"><span class="num">06</span>Accommodation Booking &amp; My Bookings</a></li><li><a href="07-activity-booking.html"><span class="num">07</span>Activity Booking</a></li><li><a href="08-reviews-and-favorites.html"><span class="num">08</span>Reviews &amp; Favorites</a></li><li><a href="09-notifications-and-language.html"><span class="num">09</span>Notifications &amp; Language Settings</a></li><li><a href="10-ai-concierge.html"><span class="num">10</span>AI Concierge Chat</a></li></ul></nav>
+<main class="content">
+<section class="hero">
+  <div class="eyebrow"><span class="hero-num">01</span> Guest App · Module</div>
+  <h1>Account &amp; Authentication</h1>
+  <p class="lead">Lets a tourist create a Dahab account (email/password, Google or Apple), verify it with a 6-digit code (SMS, with WhatsApp as a fallback), log in, recover a forgotten password, and maintain a profile.</p>
+  <dl class="meta"><div><dt>Module</dt><dd>Guest Account &amp; Authentication</dd></div><div><dt>Apps</dt><dd>Guest app — Desktop Web (1440), Tablet Web (834), Mobile Web, Native App (iOS/Android, 390)</dd></div><div><dt>Figma</dt><dd>File "Dahab" → page <b>New</b> → sections <em>Register, Login, Forgot Password, Verification OTP, Edit Profile</em></dd></div><div><dt>SRS</dt><dd>§3.1 Guest Account &amp; Authentication, §3.20 Localization, NFR-3, NFR-6, NFR-9, NFR-11</dd></div><div><dt>Screens</dt><dd>5 screens · 9 states · 28 frames</dd></div></dl>
+  <div class="hero-waves"></div>
+</section><article class="doc"><h2 id="1-module-summary">1. Module summary</h2>
+<p>Lets a tourist create a Dahab account (email/password, Google or Apple), verify it with a 6-digit code (SMS, with WhatsApp as a fallback), log in, recover a forgotten password, and maintain a profile. Every screen exists in English (LTR) and must work in Arabic (RTL); the Tablet error states in Figma are the Arabic reference specimens.</p>
+<p><strong>Happy path:</strong> Register → Verification OTP → (logged in) → Discovery Home. <strong>Returning user:</strong> Login → Discovery Home (or back to the page that required login). <strong>Recovery:</strong> Login → Forgot password → Recovery link/code sent → <em>Set new password (not designed — see §7)</em> → Login.</p>
+<h2 id="2-business-requirements-covered-srs">2. Business requirements covered (SRS)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>MVP</th>
+<th>Where in the design</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FR-1.1</td>
+<td>Register via email/password, Google, or Apple</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Register</td>
+</tr>
+<tr class="even">
+<td>FR-1.2</td>
+<td>Log in, log out, reset a forgotten password</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Login, Forgot Password, Edit Profile (Log out on native only)</td>
+</tr>
+<tr class="odd">
+<td>FR-1.3</td>
+<td>Edit profile: name, photo, nationality, preferred language, phone</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Edit Profile</td>
+</tr>
+<tr class="even">
+<td>FR-1.4</td>
+<td>Delete account / request data deletion</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-later">Later</span></td>
+<td>Not designed (correct for MVP)</td>
+</tr>
+<tr class="odd">
+<td>FR-1.5</td>
+<td>Email/SMS verification on registration</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Verification OTP</td>
+</tr>
+<tr class="even">
+<td>FR-20.2</td>
+<td>Switch language at any time from settings</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Language toggle in every header + Edit Profile language toggle</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">NFR-3</span></td>
+<td>HTTPS/TLS, hashed passwords (bcrypt/argon2)</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Backend; "256-bit encrypted" badges on screens</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">NFR-6</span></td>
+<td>First-time guest can book without &gt; 5 setup steps</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Register + OTP = 2 steps</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">NFR-9</span></td>
+<td>Personal data encrypted at rest; export/deletion supported</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Edit Profile collects passport/ID data → in scope of NFR-9</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">NFR-11</span></td>
+<td>WCAG 2.1 AA where practical</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>All forms (labels, error text, contrast)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-screen-inventory">3. Screen inventory</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Screen</th>
+<th>States in Figma</th>
+<th>Breakpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4.1</td>
+<td>Register</td>
+<td>Default · Validation error</td>
+<td>All 4 (Tablet error state is the Arabic RTL specimen)</td>
+</tr>
+<tr class="even">
+<td>4.2</td>
+<td>Login</td>
+<td>Default · Wrong-credentials error</td>
+<td>All 4 (Tablet error state is Arabic RTL)</td>
+</tr>
+<tr class="odd">
+<td>4.3</td>
+<td>Forgot Password</td>
+<td>Default · Recovery link dispatched</td>
+<td>All 4</td>
+</tr>
+<tr class="even">
+<td>4.4</td>
+<td>Verification OTP</td>
+<td>6-digit entry</td>
+<td>All 4</td>
+</tr>
+<tr class="odd">
+<td>4.5</td>
+<td>Edit Profile</td>
+<td>Default</td>
+<td>All 4</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Shared shell (all web screens):</strong> top header — logo <em>DAHAB • دهب</em>, links <em>Discover Stays · Diving &amp; Safari Trips · Bedouin Stories · Dahab Zones Map</em>, language toggle <em>EN | عربي</em>, <em>HOST PORTAL</em> link, profile icon; footer with destination links, legal links and the 24/7 emergency block (Dahab Hyperbaric Chamber +20 69 364 0530, VHF Ch 16). Mobile Web adds a PWA "Install" banner at the top. <strong>Native App:</strong> iOS-style nav bar (<em>Cancel</em> · title · <em>عربي</em>); screens reached after login show the bottom tab bar <em>Explore · Saved · Bookings · Profile</em>.</p>
+<hr />
+<h2 id="4-screen-specifications">4. Screen specifications</h2>
+<h3 id="41-register">4.1 Register</h3>
+<p><strong>Purpose:</strong> create a guest account. <strong>Entry points:</strong> "Create account / Register" links on Login; header profile icon when logged out; any action that requires an account (Reserve, Save to favorites). <strong>Exit:</strong> Verification OTP (success) · Login (via "Log in" link) · previous screen (Cancel on native).</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-635.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-635.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-635" target="_blank" rel="noopener">Open in Figma · 16:635</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-414.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-414.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-414" target="_blank" rel="noopener">Open in Figma · 16:414</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-141.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-141.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-141" target="_blank" rel="noopener">Open in Figma · 16:141</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-5.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-5.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-5" target="_blank" rel="noopener">Open in Figma · 16:5</a></figure>
+</div>
+
+<div class="state-title">Validation Error</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-823.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-823.jpg" alt="Validation Error – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-823" target="_blank" rel="noopener">Open in Figma · 16:823</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span><span class="rtl">Arabic · RTL</span></figcaption><a class="frame" href="images/16-515.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-515.jpg" alt="Validation Error – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-515" target="_blank" rel="noopener">Open in Figma · 16:515</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-278.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-278.jpg" alt="Validation Error – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-278" target="_blank" rel="noopener">Open in Figma · 16:278</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-87.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-87.jpg" alt="Validation Error – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-87" target="_blank" rel="noopener">Open in Figma · 16:87</a></figure>
+</div>
+
+<h4 id="ui-elements">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Type</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Continue with <strong>Google</strong></td>
+<td>Button (SSO)</td>
+<td>Starts Google OAuth. On success creates/links account and skips the password fields.</td>
+</tr>
+<tr class="even">
+<td>Continue with <strong>Apple</strong></td>
+<td>Button (SSO)</td>
+<td>Starts Sign in with Apple. Required on iOS whenever another social login is offered. <em>Missing on Tablet design.</em></td>
+</tr>
+<tr class="odd">
+<td>Full Name / اسم الضيف</td>
+<td>Text input, required</td>
+<td>Error copy: "Name is required for Bedouin permits &amp; guest checks." <em>Missing on Tablet design.</em></td>
+</tr>
+<tr class="even">
+<td>Email Address</td>
+<td>Email input, required</td>
+<td>Must be a valid address with a top-level domain. Error: "Please enter a valid email address with top-level domain."</td>
+</tr>
+<tr class="odd">
+<td>Password</td>
+<td>Password input, required, show/hide toggle (mobile web)</td>
+<td>Helper text: "Must be at least 8 characters with 1 number." (see §7 — rule differs between breakpoints)</td>
+</tr>
+<tr class="even">
+<td>Create Dahab Account / Agree &amp; Register</td>
+<td>Primary button</td>
+<td>Validates all fields; on success sends the verification code and opens Verification OTP.</td>
+</tr>
+<tr class="odd">
+<td>Consent text</td>
+<td>Static text with links</td>
+<td>"By signing up, you agree to Dahab's Terms &amp; honor the Environmental Charter". Tapping "Agree &amp; Register" = acceptance.</td>
+</tr>
+<tr class="even">
+<td>Already have an account? <strong>Log in</strong></td>
+<td>Link</td>
+<td>Opens Login.</td>
+</tr>
+<tr class="odd">
+<td>عربي / EN toggle</td>
+<td>Toggle</td>
+<td>Switches UI language and direction instantly; form content is kept.</td>
+</tr>
+<tr class="even">
+<td>Cancel (native)</td>
+<td>Nav button</td>
+<td>Closes the flow without saving.</td>
+</tr>
+<tr class="odd">
+<td>Install (mobile web)</td>
+<td>Banner button</td>
+<td>Offers "Add to home screen" (PWA). Dismissible.</td>
+</tr>
+<tr class="even">
+<td>Hero panel, testimonial, "Join 12,000+ …" (desktop)</td>
+<td>Marketing content</td>
+<td>Static; managed as content, no logic.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step--email-registration-happy-path">Step-by-step — email registration (happy path)</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens Register</td>
+<td>Shows empty form; SSO buttons on top (web) or below the form (native).</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Types full name, email, password</td>
+<td>Inline validation on blur (format, password rule).</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Taps <strong>Create Dahab Account / Agree &amp; Register</strong></td>
+<td>Validates all fields server-side; checks email not already registered.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>—</td>
+<td>Creates the account in <em>unverified</em> state, stores password hashed (bcrypt/argon2), records consent timestamp + terms version.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>—</td>
+<td>Sends a 6-digit verification code (SMS; WhatsApp available as fallback; email per FR-1.5) and opens <strong>Verification OTP</strong>.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Enters the code (see 4.4)</td>
+<td>Marks account verified, signs the guest in, returns them to the page they came from (or Discovery Home).</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step--google--apple">Step-by-step — Google / Apple</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Taps Google or Apple</td>
+<td>Opens the provider's consent sheet.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Approves</td>
+<td>If the email already exists → links the provider to that account and signs in. If new → creates the account using the provider's name/email (Apple "Hide my email" relay addresses must be accepted).</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Cancels at provider</td>
+<td>Returns to Register with no error message.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="states--errors">States &amp; errors</h4>
+<ul>
+<li><strong>Validation error</strong> (Figma state): summary alert at the top — Desktop "Please correct 2 highlighted fields"; Native "Missing required fields — Check full name &amp; email before submitting."; Mobile Web "Please correct highlighted fields before submitting". Each invalid field gets a coral-red border (#C24338) and an inline message under it. Focus moves to the first invalid field (accessibility).</li>
+<li><strong>Email already registered</strong> — <em>not designed.</em> Proposed: inline under email "An account with this email already exists. Log in or reset your password."</li>
+<li><strong>SSO failure / network error</strong> — <em>not designed.</em></li>
+<li><strong>Loading</strong> — button shows a spinner and is disabled to prevent double submission (not designed).</li>
+</ul>
+<h4 id="breakpoint-differences">Breakpoint differences</h4>
+<ul>
+<li>Desktop: split screen — marketing hero (left, teal) + form (right).</li>
+<li>Tablet: centred card; <em>only Google SSO, only Email + Password fields</em> (see §7).</li>
+<li>Mobile Web: SSO buttons first, then "OR SIGN IN WITH EMAIL", then fields; PWA install banner.</li>
+<li>Native: nav bar with Cancel/title/عربي; CTA reads "Agree &amp; Register"; SSO below the CTA.</li>
+</ul>
+<hr />
+<h3 id="42-login">4.2 Login</h3>
+<p><strong>Purpose:</strong> sign in a returning guest. <strong>Entry:</strong> header profile icon, "Log in" links, protected actions (Reserve, Saved, Bookings, Profile tabs). <strong>Exit:</strong> previous page / Discovery Home; Forgot Password; Register.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-1654.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-1654.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-1654" target="_blank" rel="noopener">Open in Figma · 16:1654</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-1394.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-1394.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-1394" target="_blank" rel="noopener">Open in Figma · 16:1394</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-1135.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-1135.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-1135" target="_blank" rel="noopener">Open in Figma · 16:1135</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-987.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-987.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-987" target="_blank" rel="noopener">Open in Figma · 16:987</a></figure>
+</div>
+
+<div class="state-title">Wrong-Credentials Error</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-1815.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-1815.jpg" alt="Wrong-Credentials Error – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-1815" target="_blank" rel="noopener">Open in Figma · 16:1815</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span><span class="rtl">Arabic · RTL</span></figcaption><a class="frame" href="images/16-1509.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-1509.jpg" alt="Wrong-Credentials Error – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-1509" target="_blank" rel="noopener">Open in Figma · 16:1509</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-1275.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-1275.jpg" alt="Wrong-Credentials Error – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-1275" target="_blank" rel="noopener">Open in Figma · 16:1275</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-1074.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-1074.jpg" alt="Wrong-Credentials Error – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-1074" target="_blank" rel="noopener">Open in Figma · 16:1074</a></figure>
+</div>
+
+<h4 id="ui-elements-1">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Type</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Google / Apple</td>
+<td>SSO buttons</td>
+<td>Same as Register; logs in or creates the account.</td>
+</tr>
+<tr class="even">
+<td>Email or Phone Number</td>
+<td>Text input</td>
+<td>Accepts an email <strong>or</strong> an Egyptian mobile number (+20).</td>
+</tr>
+<tr class="odd">
+<td>Password</td>
+<td>Password input</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Forgot password?</td>
+<td>Link</td>
+<td>Opens Forgot Password, pre-filling the email/phone typed so far.</td>
+</tr>
+<tr class="odd">
+<td>Keep me signed in for 30 days / Remember me</td>
+<td>Checkbox (web) / switch (native)</td>
+<td>If on: session refresh token valid 30 days; if off: session ends when the browser/app session ends.</td>
+</tr>
+<tr class="even">
+<td>Log In to Dahab</td>
+<td>Primary button</td>
+<td>Authenticates.</td>
+</tr>
+<tr class="odd">
+<td>Don't have an account? Create account</td>
+<td>Link</td>
+<td>Opens Register.</td>
+</tr>
+<tr class="even">
+<td>Contact Bedouin Support</td>
+<td>Link (error state)</td>
+<td>Opens support channel (WhatsApp/help page — target not defined).</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Enters email/phone + password</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Optionally ticks "Keep me signed in for 30 days"</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Taps <strong>Log In</strong></td>
+<td>Verifies credentials.</td>
+</tr>
+<tr class="even">
+<td>4a</td>
+<td>— (correct)</td>
+<td>Creates session, returns to the originating page (deep-link return), otherwise Discovery Home. If the account is not yet verified → opens Verification OTP.</td>
+</tr>
+<tr class="odd">
+<td>4b</td>
+<td>— (wrong)</td>
+<td>Shows the wrong-credentials state, keeps the email, clears the password, decrements remaining attempts.</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>After the last failed attempt</td>
+<td>Temporarily locks the account; shows lockout message and "Reset password now".</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="states--errors-1">States &amp; errors</h4>
+<ul>
+<li><strong>Wrong credentials</strong> (Figma state): alert "Incorrect email or password — The credentials provided do not match our Sinai records. Please check your spelling or reset your password." + inline "Wrong password. 3 attempts remaining before lockout." + "Trouble accessing your account? Contact Bedouin Support". Native: "Incorrect credentials — The password entered is incorrect. 3 attempts remaining before temporary lockout." + "Reset password now".</li>
+<li><strong>Account locked</strong> — <em>not designed</em> (message, duration, unlock by reset).</li>
+<li><strong>Unverified account</strong> — redirect to OTP (not designed as a separate message).</li>
+</ul>
+<hr />
+<h3 id="43-forgot-password">4.3 Forgot Password</h3>
+<p><strong>Purpose:</strong> let a guest recover access by email or Egyptian mobile number. <strong>Entry:</strong> "Forgot password?" on Login, "Reset password now" in the error state. <strong>Exit:</strong> "Back to Log In", or the reset link/code.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-2916.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-2916.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2916" target="_blank" rel="noopener">Open in Figma · 16:2916</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-2590.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-2590.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2590" target="_blank" rel="noopener">Open in Figma · 16:2590</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-2184.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-2184.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2184" target="_blank" rel="noopener">Open in Figma · 16:2184</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-1939.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-1939.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-1939" target="_blank" rel="noopener">Open in Figma · 16:1939</a></figure>
+</div>
+
+<div class="state-title">Recovery Link Dispatched</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-3130.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-3130.jpg" alt="Recovery Link Dispatched – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-3130" target="_blank" rel="noopener">Open in Figma · 16:3130</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-2757.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-2757.jpg" alt="Recovery Link Dispatched – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2757" target="_blank" rel="noopener">Open in Figma · 16:2757</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-2404.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-2404.jpg" alt="Recovery Link Dispatched – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2404" target="_blank" rel="noopener">Open in Figma · 16:2404</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-2071.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-2071.jpg" alt="Recovery Link Dispatched – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2071" target="_blank" rel="noopener">Open in Figma · 16:2071</a></figure>
+</div>
+
+<h4 id="ui-elements-2">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Type</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Back to Login</td>
+<td>Link</td>
+<td>Returns to Login.</td>
+</tr>
+<tr class="even">
+<td>Email or Phone Number</td>
+<td>Input; Mobile Web adds tabs <strong>Email Address / SMS / WhatsApp</strong></td>
+<td>Accepts email or +20 number (placeholder "eg. +20 10X XXX XXXX").</td>
+</tr>
+<tr class="odd">
+<td>Quick fill chips (mobile web)</td>
+<td>Chips with previous identifiers</td>
+<td>Pre-fills from values remembered on this device only (see §7 privacy note).</td>
+</tr>
+<tr class="even">
+<td>Off-grid tip</td>
+<td>Info callout</td>
+<td>"If SMS signals are weak along the gulf, choose email recovery…"</td>
+</tr>
+<tr class="odd">
+<td>Send Reset Instructions</td>
+<td>Primary button</td>
+<td>Sends link and/or code.</td>
+</tr>
+<tr class="even">
+<td>Remember your password? Log in</td>
+<td>Link</td>
+<td>Back to Login.</td>
+</tr>
+<tr class="odd">
+<td><strong>Dispatched state:</strong> Open Email App</td>
+<td>Button</td>
+<td>Opens the default mail app (native/mobile).</td>
+</tr>
+<tr class="even">
+<td>Resend code (0:54)</td>
+<td>Button with countdown</td>
+<td>Disabled until the countdown ends.</td>
+</tr>
+<tr class="odd">
+<td>Reference code "DHB-792-XPR", "Valid for 15 minutes", "Dispatched via Sinai SMS Gateway + Email"</td>
+<td>Info block</td>
+<td>Shows channel, expiry and a support reference.</td>
+</tr>
+<tr class="even">
+<td>Contact Assalah Desk / WhatsApp Desk</td>
+<td>Link</td>
+<td>Human support fallback.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-1">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Enters email or phone, taps <strong>Send Reset Instructions</strong></td>
+<td>Validates format.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>—</td>
+<td>If an account exists: sends a one-time reset link (email) and/or 6-digit code (SMS/WhatsApp), valid <strong>15 minutes</strong>. The response is identical whether or not the account exists (no account enumeration).</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>—</td>
+<td>Shows <strong>Recovery link dispatched</strong> with masked destination (e.g. +20 ••• ••• 4182), expiry, reference code, resend countdown.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Opens the link or enters the code</td>
+<td><em>Set new password screen — not designed.</em></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Sets a new password</td>
+<td>Invalidates old sessions, confirms success, signs in or returns to Login.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="44-verification-otp">4.4 Verification OTP</h3>
+<p><strong>Purpose:</strong> verify the guest's phone/email after registration (FR-1.5); reused for password-reset codes and phone changes. <strong>Entry:</strong> after Register; after login of an unverified account. <strong>Exit:</strong> logged-in destination; "Edit contact" returns to the previous form.</p>
+<div class="state-title">6-Digit</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-3832.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-3832.jpg" alt="6-Digit – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-3832" target="_blank" rel="noopener">Open in Figma · 16:3832</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-3671.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-3671.jpg" alt="6-Digit – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-3671" target="_blank" rel="noopener">Open in Figma · 16:3671</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-3476.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-3476.jpg" alt="6-Digit – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-3476" target="_blank" rel="noopener">Open in Figma · 16:3476</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-3366.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-3366.jpg" alt="6-Digit – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-3366" target="_blank" rel="noopener">Open in Figma · 16:3366</a></figure>
+</div>
+
+<h4 id="ui-elements-3">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Type</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Destination line</td>
+<td>Text</td>
+<td>"We sent a 6-digit code to +20 10****5432" (masked).</td>
+</tr>
+<tr class="even">
+<td>Wrong number or email? Edit contact / Change number</td>
+<td>Link</td>
+<td>Returns to edit the destination; a new code is sent.</td>
+</tr>
+<tr class="odd">
+<td>6-digit code boxes</td>
+<td>OTP input (6 cells)</td>
+<td>Auto-advance, paste of the full code, numeric keyboard, SMS auto-fill (iOS one-time-code / Android SMS Retriever).</td>
+</tr>
+<tr class="even">
+<td>Time remaining 04:32</td>
+<td>Countdown</td>
+<td>Code validity (≈5 min on desktop).</td>
+</tr>
+<tr class="odd">
+<td>Confirm &amp; Continue / Confirm &amp; Login / Verify Code</td>
+<td>Primary button</td>
+<td>Enabled only when 6 digits are entered ("6 digits entered • Ready to proceed").</td>
+</tr>
+<tr class="even">
+<td>Resend SMS in 37s</td>
+<td>Button with cooldown</td>
+<td>Re-sends after cooldown.</td>
+</tr>
+<tr class="odd">
+<td>Send code via WhatsApp</td>
+<td>Secondary option</td>
+<td>Sends the same/new code over WhatsApp Business API.</td>
+</tr>
+<tr class="even">
+<td>العرض بالعربية (RTL) (mobile web)</td>
+<td>Toggle</td>
+<td>Switches to Arabic.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-2">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Arrives from Register</td>
+<td>Code already sent; countdown starts.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Types / pastes / auto-fills the 6 digits</td>
+<td>Enables the confirm button.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Taps Confirm</td>
+<td>Validates code and expiry.</td>
+</tr>
+<tr class="even">
+<td>4a</td>
+<td>Correct</td>
+<td>Marks phone/email verified, signs in, redirects.</td>
+</tr>
+<tr class="odd">
+<td>4b</td>
+<td>Wrong / expired</td>
+<td><em>Error state not designed</em> — proposed inline "Incorrect code. 2 attempts left." / "Code expired — resend a new one."</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Taps Resend (after cooldown) or WhatsApp</td>
+<td>Sends new code, invalidates the previous one, restarts timers.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="45-edit-profile">4.5 Edit Profile</h3>
+<p><strong>Purpose:</strong> manage personal details used by hosts and for Sinai permits. <strong>Entry:</strong> Profile tab (native), avatar menu (web). <strong>Exit:</strong> Save Changes / Done; Discard / Cancel.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-4772.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-4772.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-4772" target="_blank" rel="noopener">Open in Figma · 16:4772</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-4421.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-4421.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-4421" target="_blank" rel="noopener">Open in Figma · 16:4421</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-4239.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-4239.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-4239" target="_blank" rel="noopener">Open in Figma · 16:4239</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-4059.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-4059.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-4059" target="_blank" rel="noopener">Open in Figma · 16:4059</a></figure>
+</div>
+
+<h4 id="ui-elements-union-of-all-breakpoints">UI elements (union of all breakpoints)</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Type</th>
+<th>SRS</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Profile photo — Upload New Image / Change Photo / Remove</td>
+<td>Image upload</td>
+<td>FR-1.3</td>
+<td>JPG or PNG, max 4 MB (mobile web copy). Visible to hosts.</td>
+</tr>
+<tr class="even">
+<td>Full legal name (as in passport)</td>
+<td>Text, required</td>
+<td>FR-1.3</td>
+<td>Used on bookings and permit manifests.</td>
+</tr>
+<tr class="odd">
+<td>Nationality</td>
+<td>Select</td>
+<td>FR-1.3</td>
+<td>Helper: "Determines protectorate gate fee exemption rates."</td>
+</tr>
+<tr class="even">
+<td>WhatsApp &amp; mobile number (+20 default, country code picker)</td>
+<td>Phone input, required, "Verified" badge</td>
+<td>FR-1.3</td>
+<td>Changing it must trigger OTP re-verification (4.4).</td>
+</tr>
+<tr class="odd">
+<td>Preferred language — English (LTR) / العربية (RTL)</td>
+<td>Segmented toggle</td>
+<td>FR-1.3, FR-20.2</td>
+<td>Changes app language and the language of notifications/manifests.</td>
+</tr>
+<tr class="even">
+<td>Emergency contact in Dahab — Update Contact</td>
+<td>Sub-form</td>
+<td><em>not in SRS</em></td>
+<td>Name, relation, phone.</td>
+</tr>
+<tr class="odd">
+<td>Passport / National ID ("Tourism Manifest", "Permits ID")</td>
+<td>Select + ID field</td>
+<td><em>not in SRS</em></td>
+<td>Sensitive → encrypt at rest (NFR-9).</td>
+</tr>
+<tr class="even">
+<td>Dive certifications (e.g. "PADI Advanced Open Water #219084", "AIDA 3 • PADI Rescue") — Update Certification</td>
+<td>Sub-form</td>
+<td><em>not in SRS</em></td>
+<td>Could feed the activity prerequisite check (module 07).</td>
+</tr>
+<tr class="odd">
+<td>Reef Guardian pledge — View Pledge / Download Certificate PDF</td>
+<td>Badge + link</td>
+<td><em>not in SRS</em></td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>"Sinai Checkpoint Clearance 85% complete"</td>
+<td>Progress indicator</td>
+<td><em>not in SRS</em></td>
+<td>Profile completeness.</td>
+</tr>
+<tr class="odd">
+<td>Save Changes / Done / Save / Save Credentials</td>
+<td>Primary action</td>
+<td>FR-1.3</td>
+<td>Validates &amp; saves; success toast (not designed).</td>
+</tr>
+<tr class="even">
+<td>Discard / Cancel</td>
+<td>Secondary</td>
+<td>—</td>
+<td>Reverts unsaved changes (confirm if dirty — not designed).</td>
+</tr>
+<tr class="odd">
+<td>Log Out of Dahab Account</td>
+<td>Destructive link (native only)</td>
+<td>FR-1.2</td>
+<td>Ends session, returns to Discovery Home.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-3">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens Profile → Edit</td>
+<td>Loads current values.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Changes photo</td>
+<td>Uploads to object storage/CDN, shows preview.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Edits name / nationality / language</td>
+<td>Marks form dirty; Save enabled.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Changes phone number</td>
+<td>On save, sends OTP to the new number; the number is only replaced after verification.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps <strong>Save Changes</strong></td>
+<td>Validates, saves, confirms. If language changed, UI re-renders in the new language/direction.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Taps Discard / Cancel</td>
+<td>Reverts to stored values.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-cross-screen-business-rules">5. Cross-screen business rules</h2>
+<ol type="1">
+<li><strong>One account per email and per verified phone number.</strong></li>
+<li><strong>Password policy (to confirm, see §7):</strong> minimum 8 characters incl. at least 1 number; stored with bcrypt/argon2 (NFR-3).</li>
+<li><strong>Verification:</strong> a new account can browse but must be verified before completing a booking (NFR-6 keeps this to Register + OTP).</li>
+<li><strong>OTP:</strong> 6 digits, single use, expires (≈5 min registration; 15 min password reset), resend cooldown ≈60 s, max attempts before a new code is required (to define). Channels: SMS first, WhatsApp as fallback (SRS §5.3).</li>
+<li><strong>Lockout:</strong> after N failed logins (design implies 5 — "3 attempts remaining") lock temporarily; unlock via reset or timeout (duration to define).</li>
+<li><strong>Session:</strong> "Keep me signed in" = 30-day refresh token; otherwise session-only.</li>
+<li><strong>Language:</strong> EN/AR toggle available on every auth screen; switching keeps typed values; Arabic flips layout to RTL.</li>
+<li><strong>Privacy:</strong> error messages must not reveal whether an email/phone is registered (login and forgot password).</li>
+<li><strong>Accessibility:</strong> every input has a visible label, errors are announced to screen readers, OTP cells are a single labelled group.</li>
+</ol>
+<h2 id="6-story-candidates-for-jira">6. Story candidates for Jira</h2>
+<p><strong>Epic:</strong> GUEST-AUTH — Guest Account &amp; Authentication</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Key idea</th>
+<th>Story</th>
+<th>Acceptance criteria (Given / When / Then)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-key">AUTH-1</span></td>
+<td>As a guest, I want to register with my name, email and password so that I can book stays and trips.</td>
+<td>• Given valid data, when I tap Create Account, then an unverified account is created and I land on Verification OTP.<br>• Given an invalid email or missing name, when I submit, then I see the summary alert and inline errors from the design and no account is created.<br>• Given an email that already exists, when I submit, then I am told to log in or reset my password.<br>• Password stored hashed; consent (terms version + timestamp) recorded.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">AUTH-2</span></td>
+<td>As a guest, I want to sign up / log in with Google.</td>
+<td>• New email → account created and signed in.<br>• Existing email → provider linked, signed in.<br>• Cancel at Google → back on the form, no error.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">AUTH-3</span></td>
+<td>As a guest, I want to sign up / log in with Apple.</td>
+<td>Same as AUTH-2; supports Apple private relay email; available on iOS, Android and web.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">AUTH-4</span></td>
+<td>As a new guest, I want to verify my phone with a 6-digit code so that my account is trusted.</td>
+<td>• Code sent after registration; masked destination shown.<br>• Paste and SMS auto-fill work; confirm enabled at 6 digits.<br>• Correct code → verified + signed in.<br>• Wrong/expired code → error message, attempts limited.<br>• Resend available after cooldown; WhatsApp alternative sends a code.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">AUTH-5</span></td>
+<td>As a returning guest, I want to log in with my email or phone and password.</td>
+<td>• Correct → signed in and returned to the page I came from.<br>• "Keep me signed in" keeps me logged in 30 days.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">AUTH-6</span></td>
+<td>As a guest, I want clear feedback when my credentials are wrong so that I can recover.</td>
+<td>• Generic "Incorrect email or password" message.<br>• Remaining attempts shown; lockout after the limit with "Reset password now".</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">AUTH-7</span></td>
+<td>As a guest, I want to request a password reset by email or phone.</td>
+<td>• Same confirmation shown whether or not the account exists.<br>• Link/code valid 15 minutes; resend after countdown; reference code shown.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">AUTH-8</span></td>
+<td>As a guest, I want to set a new password from the reset link/code.</td>
+<td><em>Needs design.</em> New password + confirm, same policy; old sessions invalidated; success message.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">AUTH-9</span></td>
+<td>As a guest, I want to edit my profile (photo, name, nationality, language, phone).</td>
+<td>• Changes saved and shown after reload.<br>• Photo JPG/PNG ≤ 4 MB.<br>• Phone change requires OTP on the new number.<br>• Language change re-renders UI (LTR/RTL).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">AUTH-10</span></td>
+<td>As a guest, I want to log out on any platform.</td>
+<td>Log out available on native (designed) and web (avatar menu — needs design); session revoked.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">AUTH-11</span></td>
+<td>As an Arabic-speaking guest, I want all auth screens in Arabic RTL.</td>
+<td>All labels, errors and placeholders translated; layout mirrored as in the Tablet RTL specimens; strings externalised (NFR-7).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">AUTH-12 (tech)</span></td>
+<td>Security baseline for auth (NFR-3).</td>
+<td>HTTPS only, argon2/bcrypt, rate limiting on login/OTP/reset endpoints, OTP and reset tokens single-use.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-gaps-inconsistencies--open-questions-from-comparing-srs--figma">7. Gaps, inconsistencies &amp; open questions (from comparing SRS ↔︎ Figma)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Finding</th>
+<th>Screens</th>
+<th>Suggested decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-gap">G1</span></td>
+<td><strong>"Set new password" screen is missing</strong> — the reset flow ends at "Recovery link dispatched".</td>
+<td>Forgot Password</td>
+<td>Design a Set New Password screen + success state (all 4 breakpoints).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G2</span></td>
+<td><strong>OTP error states missing</strong> (wrong code, expired code, too many attempts).</td>
+<td>Verification OTP</td>
+<td>Add sibling states.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G3</span></td>
+<td><strong>Where does the phone number come from?</strong> OTP says "We sent a code to +20 10 9876 5432", but Register has no phone field.</td>
+<td>Register → OTP</td>
+<td>Either add a phone field to Register, or verify email first and phone later. SRS FR-1.5 allows email <em>or</em> SMS.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G4</span></td>
+<td><strong>Password rule differs by breakpoint:</strong> "8+ chars" (native), "Min. 8 characters" (mobile web), "at least 8 characters with 1 number" (desktop), "8 letters &amp; numbers with at least one symbol" (Arabic tablet).</td>
+<td>Register</td>
+<td>Pick one rule and use identical copy in EN/AR.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G5</span></td>
+<td><strong>Tablet Register</strong> has no Full Name field and no Apple button; Tablet Login has both SSO buttons.</td>
+<td>Register (Tablet)</td>
+<td>Align Tablet with other breakpoints.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G6</span></td>
+<td><strong>Error-state desktop screens use a different header/footer</strong> (nav "Cottages &amp; Camps · Freedive &amp; Scuba · Bedouin Treks · Environmental Charter · HOST A REEF CHALET · Sign In") and the brand written <strong>"ذهب" (gold) instead of "دهب" (Dahab)</strong>.</td>
+<td>Register &amp; Login desktop error states</td>
+<td>Use the standard shell; fix Arabic spelling.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G7</span></td>
+<td>Wrong-credentials native copy says "The <strong>password</strong> entered is incorrect" → reveals the account exists.</td>
+<td>Login (Native)</td>
+<td>Use the generic web copy.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G8</span></td>
+<td>Lockout policy not defined (attempt count, duration).</td>
+<td>Login</td>
+<td>Define, e.g. 5 attempts → 15-minute lock.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G9</span></td>
+<td>OTP timer/validity differs (04:32 desktop, 0:51/0:27/0:44 resend on others; reset says 15 min).</td>
+<td>OTP, Forgot Password</td>
+<td>Define: registration code validity, reset link validity, resend cooldown.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G10</span></td>
+<td><strong>Native app screens show the web "INSTALL" PWA banner</strong> (Edit Profile, OTP native).</td>
+<td>Native frames</td>
+<td>Remove from native.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G11</span></td>
+<td>Tablet OTP copy is written for hosts ("Two-Step Host Security", "Protecting bedouin dive trips…").</td>
+<td>OTP (Tablet)</td>
+<td>Use guest copy.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G12</span></td>
+<td>Edit Profile collects much more than FR-1.3 (passport/national ID, emergency contact, dive certifications, permits, reef pledge, profile completeness).</td>
+<td>Edit Profile</td>
+<td>Decide MVP scope; if kept, update SRS and treat IDs as sensitive data (NFR-9).</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G13</span></td>
+<td>Log out exists only on native; no web avatar/account menu is designed.</td>
+<td>Edit Profile / header</td>
+<td>Design the logged-in header menu (Profile, Bookings, Saved, Log out).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G14</span></td>
+<td>"Quick fill" chips on Forgot Password show stored emails/phones — privacy risk on shared devices.</td>
+<td>Forgot Password (Mobile Web)</td>
+<td>Only show values from this device, or remove.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G15</span></td>
+<td>"Contact Bedouin Support" target is undefined.</td>
+<td>Login error, Forgot Password</td>
+<td>Define support channel (WhatsApp Business number / help centre).</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-out-of-scope-for-mvp-per-srs">8. Out of scope for MVP (per SRS)</h2>
+<ul>
+<li>FR-1.4 Delete account / data-deletion request (Later) — note NFR-9 still requires the backend to support deletion requests.</li>
+<li>Provider staff/admin login (Provider Portal / Admin Panel modules).</li>
+</ul>
+</article><nav class="pager"><a class="next" href="02-discovery-home.html"><small>Next →</small><b>02 · Discovery Home</b></a></nav>
+</main>
+<aside class="toc"><div class="side-label">On this page</div><ul><li class="l2"><a href="#1-module-summary">1. Module summary</a></li>
+<li class="l2"><a href="#2-business-requirements-covered-srs">2. Business requirements covered (SRS)</a></li>
+<li class="l2"><a href="#3-screen-inventory">3. Screen inventory</a></li>
+<li class="l2"><a href="#4-screen-specifications">4. Screen specifications</a></li>
+<li class="l3"><a href="#41-register">4.1 Register</a></li>
+<li class="l3"><a href="#42-login">4.2 Login</a></li>
+<li class="l3"><a href="#43-forgot-password">4.3 Forgot Password</a></li>
+<li class="l3"><a href="#44-verification-otp">4.4 Verification OTP</a></li>
+<li class="l3"><a href="#45-edit-profile">4.5 Edit Profile</a></li>
+<li class="l2"><a href="#5-cross-screen-business-rules">5. Cross-screen business rules</a></li>
+<li class="l2"><a href="#6-story-candidates-for-jira">6. Story candidates for Jira</a></li>
+<li class="l2"><a href="#7-gaps-inconsistencies--open-questions-from-comparing-srs--figma">7. Gaps, inconsistencies &amp; open questions (from comparing SRS ↔︎ Figma)</a></li>
+<li class="l2"><a href="#8-out-of-scope-for-mvp-per-srs">8. Out of scope for MVP (per SRS)</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <span><b style="color:#fff">DAHAB • دهب</b> — Reservations • Touring • Trips · Guest App specification</span>
+  <span>Sources: SRS v1.0 · Figma “Dahab” → page <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">New</a> · Prepared 23 Sep 2026</span>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

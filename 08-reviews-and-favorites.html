@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>08 Reviews &amp; Favorites · Dahab Guest App Specs</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <label for="nav-toggle" class="nav-btn" aria-label="Menu"><span></span><span></span><span></span></label>
+  <a class="brand" href="index.html">
+    <img src="assets/logo.svg" alt="">
+    <span><span class="brand-name">DAHAB<span class="ar">• دهب</span></span>
+    <span class="brand-sub">Guest App · Product Specification</span></span>
+  </a>
+  <nav class="topbar-links">
+    <a href="index.html">Modules</a>
+    <a href="issues.html">Issues</a>
+    <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">Figma ↗</a>
+  </nav>
+</header>
+<input type="checkbox" id="nav-toggle">
+<div class="layout">
+<nav class="sidebar"><div class="side-label">Overview</div><ul><li><a href="index.html"><span class="num alt">★</span>Home</a></li><li><a href="issues.html"><span class="num alt">!</span>Issues tracker</a></li></ul><div class="side-label">Guest app modules</div><ul><li><a href="01-account-authentication.html"><span class="num">01</span>Account &amp; Authentication</a></li><li><a href="02-discovery-home.html"><span class="num">02</span>Discovery Home</a></li><li><a href="03-search-results-and-map.html"><span class="num">03</span>Search Results &amp; Map</a></li><li><a href="04-dahab-guide-zones-pois-articles.html"><span class="num">04</span>Dahab Guide — Zones, Points of Interest &amp; Articles</a></li><li><a href="05-listing-detail-property-activity.html"><span class="num">05</span>Listing Detail — Property &amp; Activity</a></li><li><a href="06-accommodation-booking-and-my-bookings.html"><span class="num">06</span>Accommodation Booking &amp; My Bookings</a></li><li><a href="07-activity-booking.html"><span class="num">07</span>Activity Booking</a></li><li><a href="08-reviews-and-favorites.html" class=active><span class="num">08</span>Reviews &amp; Favorites</a></li><li><a href="09-notifications-and-language.html"><span class="num">09</span>Notifications &amp; Language Settings</a></li><li><a href="10-ai-concierge.html"><span class="num">10</span>AI Concierge Chat</a></li></ul></nav>
+<main class="content">
+<section class="hero">
+  <div class="eyebrow"><span class="hero-num">08</span> Guest App · Module</div>
+  <h1>Reviews &amp; Favorites</h1>
+  <p class="lead">- <b>Leave a Review:</b> after a completed stay/activity, the guest rates it overall and by category, writes a review, and submits it.</p>
+  <dl class="meta"><div><dt>Module</dt><dd>Leave a Review · Favorites / Wishlist (with empty state)</dd></div><div><dt>Apps</dt><dd>Desktop Web (1440), Tablet Web (834), Mobile Web, Native App (390)</dd></div><div><dt>Figma</dt><dd>Page <b>New</b> → sections <em>Leave a Review</em> (4 frames) and <em>Favorites / Wishlist</em> (8 frames)</dd></div><div><dt>SRS</dt><dd>§3.6 FR-6.1 (FR-6.2, 6.3, 6.4 Later), §3.7 FR-7.1, FR-7.2</dd></div><div><dt>Screens</dt><dd>2 screens · 3 states · 12 frames</dd></div></dl>
+  <div class="hero-waves"></div>
+</section><article class="doc"><blockquote>
+<p>Content checked against the exported Desktop screenshots (the Figma text API limit was reached for this module).</p>
+</blockquote>
+<hr />
+<h2 id="1-module-summary">1. Module summary</h2>
+<ul>
+<li><strong>Leave a Review:</strong> after a completed stay/activity, the guest rates it overall and by category, writes a review, and submits it. Reviews then appear on the listing (module 05).</li>
+<li><strong>Favorites / Wishlist:</strong> the guest's saved stays, activities (and POIs), filterable by category, with quick booking and one-tap remove; an empty state invites exploring.</li>
+</ul>
+<h2 id="2-business-requirements-covered-srs">2. Business requirements covered (SRS)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>MVP</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FR-6.1</td>
+<td>Rating (1–5) and written review after a completed booking</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Leave a Review</td>
+</tr>
+<tr class="even">
+<td>FR-6.2</td>
+<td>Attach photos to a review</td>
+<td><span class="badge b-low">Low</span></td>
+<td><strong>Later</strong></td>
+<td>Photo uploader is in the design — §7 G1</td>
+</tr>
+<tr class="odd">
+<td>FR-6.3</td>
+<td>Provider responds publicly</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-later">Later</span></td>
+<td>(display in module 05)</td>
+</tr>
+<tr class="even">
+<td>FR-6.4</td>
+<td>AI sentiment scoring &amp; moderation flagging</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-later">Later</span></td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>FR-7.1</td>
+<td>Save properties/activities to favourites</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Hearts everywhere + Favorites screen</td>
+</tr>
+<tr class="even">
+<td>FR-7.2</td>
+<td>Remove items from favourites</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Filled heart on each card</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-screen-inventory">3. Screen inventory</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Screen</th>
+<th>States</th>
+<th>Breakpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4.1</td>
+<td>Leave a Review</td>
+<td>Default</td>
+<td>All 4</td>
+</tr>
+<tr class="even">
+<td>4.2</td>
+<td>Favorites / Wishlist</td>
+<td>Default · Empty state</td>
+<td>All 4</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-screen-specifications">4. Screen specifications</h2>
+<h3 id="41-leave-a-review">4.1 Leave a Review</h3>
+<p><strong>Entry:</strong> My Bookings → Past Stays → booking → <strong>Leave a Review</strong>; review-prompt notification (module 09). <strong>Exit:</strong> submit → back to My Bookings with "Review submitted"; Save Draft; Cancel.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-17849.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-17849.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-17849" target="_blank" rel="noopener">Open in Figma · 42:17849</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-17369.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-17369.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-17369" target="_blank" rel="noopener">Open in Figma · 42:17369</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-17104.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-17104.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-17104" target="_blank" rel="noopener">Open in Figma · 42:17104</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-16795.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-16795.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-16795" target="_blank" rel="noopener">Open in Figma · 42:16795</a></figure>
+</div>
+
+<h4 id="ui-elements">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Stay reference</td>
+<td>"GUEST SANCTUARY EVALUATION", BOOKING REFERENCE DHB-2025-8841-ARB; card "Dar Tarabin Coastal Ecolodge — Stargazing Palm Arish • Oct 16 – Oct 20, 2025 (4 nights) — Hosted by Sheikh Salama Tarabin &amp; Family" + <strong>Verified Stay</strong>; sidebar host card with quote, check-in/out times and lodging format</td>
+<td>Only for the guest's own completed booking.</td>
+</tr>
+<tr class="even">
+<td>Back link</td>
+<td>"← Back to My Bookings / Past Stays"</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Overall experience</td>
+<td>5-star selector, scale labels "1 = Disappointing · 3 = Balanced · 5 = Exceptional &amp; Transformative", live label "Exceptional (5.0)"</td>
+<td><strong>Required.</strong></td>
+</tr>
+<tr class="even">
+<td>Category ratings (stays)</td>
+<td>Bedouin Hospitality &amp; Host Warmth · Cleanliness &amp; Eco-Living · Authenticity &amp; Heritage Vibe · Location &amp; Reef/Mountain Access · Value &amp; Ethical Accord</td>
+<td>Stars 1–5 each; required or optional (decide). <strong>Must match the categories displayed on Reviews Expanded (module 05 — see §7 G3).</strong></td>
+</tr>
+<tr class="odd">
+<td>Written review "Your Review &amp; Stories"</td>
+<td>Text area, counter "0 / 1,000 characters (min 20)", note "Verified Guest Review • Protected under Bedouin Heritage Guidelines"</td>
+<td>Min 20, max 1,000 characters.</td>
+</tr>
+<tr class="even">
+<td>Quick tag chips "TAP TO ADD HIGHLIGHTS"</td>
+<td>+ Incredible Stargazing · + Authentic Bedouin Majlis · + Pristine Reef Access · + Welcoming Sheikh Salama · + Eco-Friendly Solar Living · + Fresh Morning Habaq Tea</td>
+<td>Tap inserts the phrase into the text (or stores tags).</td>
+</tr>
+<tr class="odd">
+<td>"Add Visual Memories (Optional)"</td>
+<td>Drop zone "Drop photos here or browse", max 6 photos, JPG/PNG up to 10 MB each, previews with ✕, counter "2 / 6 added"</td>
+<td>FR-6.2 is Later — see §7 G1.</td>
+</tr>
+<tr class="even">
+<td>Consent checkboxes</td>
+<td>☑ "Post review publicly with my verified profile" (shows first name + initial, e.g. "Elena M.") · ☑ "I confirm this review reflects my genuine stay under the Sinai Bedouin Hospitality Accord"</td>
+<td>Genuine-stay confirmation required; public-profile optional.</td>
+</tr>
+<tr class="odd">
+<td>Side panels</td>
+<td>"Guidelines for Helpful Reviews" (eco-realities, tribal tradition, practical dive &amp; reef tips) · "Need assistance? Contact Dahab Sanctuary Concierge — Chat" · "Community impact 88%"</td>
+<td>Static help content.</td>
+</tr>
+<tr class="even">
+<td>Actions</td>
+<td><strong>Submit Review →</strong> · <strong>Save Draft</strong>; note "Your submission is encrypted and published following host moderation within 24h."</td>
+<td>Submit disabled until required fields valid.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens from a past booking</td>
+<td>Checks booking is completed and not yet reviewed; loads form.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Picks overall and category stars</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Writes review / taps quick tags</td>
+<td>Counter updates; min-length indicator turns green when met.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>(Optional) adds photos</td>
+<td>Uploads with progress (if FR-6.2 in scope).</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Ticks "I confirm this review reflects my genuine stay…" (and optionally "Post publicly")</td>
+<td>Enables Submit.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Taps <strong>Submit Review</strong></td>
+<td>Saves review linked to booking, listing, provider; recalculates listing averages; publishes (or queues for moderation — decide); thanks message; booking shows "Reviewed".</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Taps <strong>Save Draft</strong></td>
+<td>Stores draft; resumes later.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="42-favorites--wishlist">4.2 Favorites / Wishlist</h3>
+<p><strong>Entry:</strong> Saved tab (native/mobile), header "Saved" (count badge). <strong>Exit:</strong> listing detail, booking flows, Discovery Home (empty state).</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-20169.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-20169.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-20169" target="_blank" rel="noopener">Open in Figma · 42:20169</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-19341.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-19341.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-19341" target="_blank" rel="noopener">Open in Figma · 42:19341</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-18890.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-18890.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-18890" target="_blank" rel="noopener">Open in Figma · 42:18890</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-18401.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-18401.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-18401" target="_blank" rel="noopener">Open in Figma · 42:18401</a></figure>
+</div>
+
+<div class="state-title">Empty State</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-20777.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-20777.jpg" alt="Empty State – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-20777" target="_blank" rel="noopener">Open in Figma · 42:20777</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-19854.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-19854.jpg" alt="Empty State – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-19854" target="_blank" rel="noopener">Open in Figma · 42:19854</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-19175.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-19175.jpg" alt="Empty State – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-19175" target="_blank" rel="noopener">Open in Figma · 42:19175</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-18703.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-18703.jpg" alt="Empty State – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-18703" target="_blank" rel="noopener">Open in Figma · 42:18703</a></figure>
+</div>
+
+<h4 id="ui-elements--default">UI elements — default</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Header &amp; title</td>
+<td>"Saved" active in nav + heart icon with count badge; "PERSONAL EXPEDITION LEDGER — Saved Sanctuaries &amp; Expeditions"; "6 Items — Across 3 Sinai Sectors"; summary "6 items saved • 2 Stays • 3 Expeditions • 1 Cultural Point of Interest"; "LIVE INVENTORY SYNCHRONIZED"</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Category filter &amp; tools</td>
+<td>Pills <strong>All Saved (6) · Ecolodges &amp; Stays (2) · Diving &amp; Ocean (2) · Desert Safaris (1) · Cultural POIs (1)</strong> · sort <strong>Recently Added</strong> · <strong>Share</strong> · <strong>Clear All</strong></td>
+<td>Filters list; Share = shareable list link; Clear All asks for confirmation (not designed).</td>
+</tr>
+<tr class="odd">
+<td>Saved cards</td>
+<td>Badges, rating, category label, name, 1-line features, <strong>availability line</strong> ("Available next: Oct 18 – 22 · 4 nights min", "Next open slot: Sat, Oct 18 (2 spots) 08:00 AM", "Departs daily at 15:30 · Pickup included", "Tomorrow 10:00 AM (Wind 18 kts)", "Entry: Free access (Eco-tag required)"), price (EGP 2,400/night · 2,400/diver · 1,950/night · 1,600/person · 1,850/rider · "Free to visit") and actions <strong>View / Details</strong> + <strong>Reserve Stay · Book Session · Book Trek · Book Clinic · Explore Landmark</strong></td>
+<td>Card → detail; CTA → booking flow (stay 06 / activity 07); POI → module 04.</td>
+</tr>
+<tr class="even">
+<td>Remove</td>
+<td>Solid terracotta heart on photo</td>
+<td>One tap removes (FR-7.2); undo toast recommended (not designed).</td>
+</tr>
+<tr class="odd">
+<td>Collections module</td>
+<td>"COLLABORATIVE SINAI ITINERARIES — Create Custom Wishlist Collection… Share live pricing and split deposits with fellow travelers" · <strong>New Custom Folder</strong> · <strong>Export Itinerary PDF</strong></td>
+<td>Not in SRS — §7 G2.</td>
+</tr>
+<tr class="even">
+<td>Top bar edit (native)</td>
+<td>"Edit"</td>
+<td>Multi-select remove.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="ui-elements--empty-state">UI elements — empty state</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Illustration</td>
+<td>Bedouin heritage badge</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Copy</td>
+<td>"No sanctuaries saved yet — When you discover an ecolodge…, tap the heart icon to save it here for quick access."; counter "0 items saved"; category pills all at 0</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>CTAs</td>
+<td><strong>Explore Dahab Sanctuaries →</strong> · <strong>View Trending Expeditions</strong></td>
+<td>Discovery Home (02) / Activity search (03).</td>
+</tr>
+<tr class="even">
+<td>Suggestions</td>
+<td>"Sinai Highlights &amp; Popular Sanctuaries" cards + <strong>Explore all 84 verified listings</strong></td>
+<td>Heart on these saves directly.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-1">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Taps a heart anywhere in the app</td>
+<td>Logged-in → saved immediately (heart fills, count +1). Logged-out → Login → then saved.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Opens Saved</td>
+<td>Lists saved items (newest first) with live price/availability.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Filters by category</td>
+<td>Shows matching items.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps filled heart</td>
+<td>Removes item; count −1; empty state if none left.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps Reserve / Book</td>
+<td>Opens the relevant booking flow.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-cross-screen-business-rules">5. Cross-screen business rules</h2>
+<ol type="1">
+<li><strong>Who can review:</strong> only the guest of a <strong>completed</strong> booking (after check-out / activity end), one review per booking (FR-6.1). Review window (e.g. 30 days after completion) — define.</li>
+<li>Reviews labelled "Verified Stay/Diver"; published immediately or after moderation (FR-17.3 moderation is Later → decide default).</li>
+<li>Listing rating = average of overall ratings; category averages shown on detail pages.</li>
+<li>Favourites are per account, synced across web and native; items that become inactive show "No longer available".</li>
+<li>Favourites support stays and activities (FR-7.1); POIs/articles in the design extend this (decide).</li>
+</ol>
+<h2 id="6-story-candidates-for-jira">6. Story candidates for Jira</h2>
+<p><strong>Epic:</strong> GUEST-ENGAGE — Reviews &amp; Favorites</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Key idea</th>
+<th>Story</th>
+<th>Acceptance criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-key">REV-1</span></td>
+<td>As a guest with a completed stay, I want to rate it overall and by category.</td>
+<td>Only completed, unreviewed bookings; stars 1–5; required overall.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">REV-2</span></td>
+<td>As a guest, I want to write a review with quick tags.</td>
+<td>1,000-char limit, minimum length, tag insertion.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">REV-3</span></td>
+<td>As a guest, I want to save my review as a draft.</td>
+<td>Draft restored when reopening.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">REV-4</span></td>
+<td>As a guest, I want my review to appear on the listing.</td>
+<td>Appears in Reviews Expanded with "Verified" label; averages updated.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">REV-5</span></td>
+<td>As a guest, I want to be prompted to review after my trip.</td>
+<td>Notification + My Bookings "Leave a Review" button (module 09).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">FAV-1</span></td>
+<td>As a guest, I want to save a stay/activity with a heart.</td>
+<td>Works from all cards and detail pages; login prompt if needed; persists across devices.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">FAV-2</span></td>
+<td>As a guest, I want to see my saved items by category.</td>
+<td>Category pills with counts; cards link to detail and booking.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">FAV-3</span></td>
+<td>As a guest, I want to remove an item from favourites.</td>
+<td>Tap filled heart; count updates; empty state when none.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">FAV-4</span></td>
+<td>As a guest with no saved items, I want suggestions to start exploring.</td>
+<td>Empty state + Start Exploring + trending items.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Finding</th>
+<th>Suggested decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-gap">G1</span></td>
+<td><strong>Review photo upload</strong> is designed but FR-6.2 is <strong>Later</strong>.</td>
+<td>Hide for MVP or pull FR-6.2 into MVP.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G2</span></td>
+<td><strong>Wishlist collections &amp; group sharing</strong> is designed but not in the SRS.</td>
+<td>Phase 2 candidate; remove from MVP screens.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G3</span></td>
+<td>Review categories on "Leave a Review" (Hospitality, Cleanliness &amp; Eco-Living, Authenticity, Location &amp; Access, Value &amp; Ethical Accord) ≠ categories on Reviews Expanded (Reef Quality &amp; Cleanliness, Eco-Living &amp; Solar, Bedouin Hospitality, Listing Accuracy, Coordination &amp; Logistics, Value for Conservation).</td>
+<td>Define one category list per listing type (stay vs activity).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G4</span></td>
+<td><strong>Leave a Review for activities</strong> not designed (activity categories: Instructor Safety, Rig Stability, Equalization Coaching…).</td>
+<td>Add activity variant.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G5</span></td>
+<td>Favourites include POIs ("The Bells Drop-off", "Cultural POIs") — SRS FR-7.1 covers properties/activities only.</td>
+<td>Decide.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G6</span></td>
+<td>Moderation before publishing — not specified for MVP.</td>
+<td>Decide (auto-publish + Report link recommended).</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G7</span></td>
+<td>Undo after removing a favourite not designed.</td>
+<td>Add toast with Undo.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G8</span></td>
+<td><strong>Reviews are "published following host moderation within 24h"</strong> — letting the host moderate reviews of their own property is a conflict of interest; SRS puts moderation with the admin (FR-17.3, Later).</td>
+<td>Admin moderation or auto-publish + Report.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G9</span></td>
+<td>Empty-state header still shows a heart badge "3" while 0 items are saved.</td>
+<td>Copy/visual fix.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G10</span></td>
+<td>One trending-card image in the empty state is a screenshot of another UI ("Your Wishlist is Empty").</td>
+<td>Replace asset.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G11</span></td>
+<td>Photo size limit differs: 10 MB (review) vs 4 MB (profile photo, module 01).</td>
+<td>Define upload limits once.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G12</span></td>
+<td>"Split deposits with fellow travelers" and "Export Itinerary PDF" imply group payments/itineraries — not in the SRS.</td>
+<td>Out of MVP.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-out-of-scope-for-mvp">8. Out of scope for MVP</h2>
+<ul>
+<li>Review photos (FR-6.2), host responses (FR-6.3), AI sentiment moderation (FR-6.4), shared wishlists.</li>
+</ul>
+</article><nav class="pager"><a href="07-activity-booking.html"><small>← Previous</small><b>07 · Activity Booking</b></a><a class="next" href="09-notifications-and-language.html"><small>Next →</small><b>09 · Notifications &amp; Language Settings</b></a></nav>
+</main>
+<aside class="toc"><div class="side-label">On this page</div><ul><li class="l2"><a href="#1-module-summary">1. Module summary</a></li>
+<li class="l2"><a href="#2-business-requirements-covered-srs">2. Business requirements covered (SRS)</a></li>
+<li class="l2"><a href="#3-screen-inventory">3. Screen inventory</a></li>
+<li class="l2"><a href="#4-screen-specifications">4. Screen specifications</a></li>
+<li class="l3"><a href="#41-leave-a-review">4.1 Leave a Review</a></li>
+<li class="l3"><a href="#42-favorites--wishlist">4.2 Favorites / Wishlist</a></li>
+<li class="l2"><a href="#5-cross-screen-business-rules">5. Cross-screen business rules</a></li>
+<li class="l2"><a href="#6-story-candidates-for-jira">6. Story candidates for Jira</a></li>
+<li class="l2"><a href="#7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</a></li>
+<li class="l2"><a href="#8-out-of-scope-for-mvp">8. Out of scope for MVP</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <span><b style="color:#fff">DAHAB • دهب</b> — Reservations • Touring • Trips · Guest App specification</span>
+  <span>Sources: SRS v1.0 · Figma “Dahab” → page <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">New</a> · Prepared 23 Sep 2026</span>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>09 Notifications &amp; Language Settings · Dahab Guest App Specs</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <label for="nav-toggle" class="nav-btn" aria-label="Menu"><span></span><span></span><span></span></label>
+  <a class="brand" href="index.html">
+    <img src="assets/logo.svg" alt="">
+    <span><span class="brand-name">DAHAB<span class="ar">• دهب</span></span>
+    <span class="brand-sub">Guest App · Product Specification</span></span>
+  </a>
+  <nav class="topbar-links">
+    <a href="index.html">Modules</a>
+    <a href="issues.html">Issues</a>
+    <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">Figma ↗</a>
+  </nav>
+</header>
+<input type="checkbox" id="nav-toggle">
+<div class="layout">
+<nav class="sidebar"><div class="side-label">Overview</div><ul><li><a href="index.html"><span class="num alt">★</span>Home</a></li><li><a href="issues.html"><span class="num alt">!</span>Issues tracker</a></li></ul><div class="side-label">Guest app modules</div><ul><li><a href="01-account-authentication.html"><span class="num">01</span>Account &amp; Authentication</a></li><li><a href="02-discovery-home.html"><span class="num">02</span>Discovery Home</a></li><li><a href="03-search-results-and-map.html"><span class="num">03</span>Search Results &amp; Map</a></li><li><a href="04-dahab-guide-zones-pois-articles.html"><span class="num">04</span>Dahab Guide — Zones, Points of Interest &amp; Articles</a></li><li><a href="05-listing-detail-property-activity.html"><span class="num">05</span>Listing Detail — Property &amp; Activity</a></li><li><a href="06-accommodation-booking-and-my-bookings.html"><span class="num">06</span>Accommodation Booking &amp; My Bookings</a></li><li><a href="07-activity-booking.html"><span class="num">07</span>Activity Booking</a></li><li><a href="08-reviews-and-favorites.html"><span class="num">08</span>Reviews &amp; Favorites</a></li><li><a href="09-notifications-and-language.html" class=active><span class="num">09</span>Notifications &amp; Language Settings</a></li><li><a href="10-ai-concierge.html"><span class="num">10</span>AI Concierge Chat</a></li></ul></nav>
+<main class="content">
+<section class="hero">
+  <div class="eyebrow"><span class="hero-num">09</span> Guest App · Module</div>
+  <h1>Notifications &amp; Language Settings</h1>
+  <p class="lead">- <b>Notification Center:</b> an in-app inbox of everything that happened to the guest's trips — booking confirmations, host messages, waitlist releases, safety/weather advisories, wishlist updates and review prompts — with filters, unread markers, "mark all as read" and channel settings (WhatsApp, SMS, weekly digest).</p>
+  <dl class="meta"><div><dt>Module</dt><dd>Notification Center (EN + Arabic RTL) · Language Switcher (Settings)</dd></div><div><dt>Apps</dt><dd>Desktop Web (1440), Tablet Web (834), Mobile Web, Native App (390)</dd></div><div><dt>Figma</dt><dd>Page <b>New</b> → sections <em>Notification Center</em> (8 frames: EN + Arabic RTL) and <em>Language Switcher</em> (4 frames)</dd></div><div><dt>SRS</dt><dd>FR-8.3, FR-4.4 (Later), FR-20.1, FR-20.2, FR-20.3 (Later), NFR-7, §5.3 Email/SMS/WhatsApp, Push (FCM/APNs)</dd></div><div><dt>Screens</dt><dd>2 screens · 12 frames</dd></div></dl>
+  <div class="hero-waves"></div>
+</section><article class="doc"><blockquote>
+<p>Content checked against the exported Desktop screenshots (the Figma text API limit was reached for this module).</p>
+</blockquote>
+<hr />
+<h2 id="1-module-summary">1. Module summary</h2>
+<ul>
+<li><strong>Notification Center:</strong> an in-app inbox of everything that happened to the guest's trips — booking confirmations, host messages, waitlist releases, safety/weather advisories, wishlist updates and review prompts — with filters, unread markers, "mark all as read" and channel settings (WhatsApp, SMS, weekly digest). Also delivered as push/email/SMS/WhatsApp.</li>
+<li><strong>Language Switcher:</strong> settings page to switch the whole app between <strong>English (LTR)</strong> and <strong>العربية (RTL)</strong>, with currency display preference and formatting preview. The Arabic Notification Center is the reference proof that RTL works on a content-heavy screen.</li>
+</ul>
+<h2 id="2-business-requirements-covered-srs">2. Business requirements covered (SRS)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>MVP</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FR-8.3</td>
+<td>Push/email/SMS notifications for confirmations, cancellations, reminders</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Notification Center + channel settings</td>
+</tr>
+<tr class="even">
+<td>FR-4.4</td>
+<td>Reminders before activities</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-later">Later</span></td>
+<td>"Weather advisory" / reminders appear in the design</td>
+</tr>
+<tr class="odd">
+<td>FR-20.1</td>
+<td>UI in English and Arabic at launch</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Language Switcher + RTL Notification Center</td>
+</tr>
+<tr class="even">
+<td>FR-20.2</td>
+<td>Switch language any time from settings</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Language Switcher</td>
+</tr>
+<tr class="odd">
+<td>FR-20.3</td>
+<td>Preferred currency alongside EGP/USD</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><strong>Later</strong></td>
+<td>Currency selector is designed — §7 G2</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">NFR-7</span></td>
+<td>All user-facing text externalised for translation</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>All screens</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-screen-inventory">3. Screen inventory</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Screen</th>
+<th>States</th>
+<th>Breakpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4.1</td>
+<td>Notification Center</td>
+<td>English (LTR) · Arabic (RTL)</td>
+<td>All 4</td>
+</tr>
+<tr class="even">
+<td>4.2</td>
+<td>Language Switcher — Settings</td>
+<td>Default</td>
+<td>All 4</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-screen-specifications">4. Screen specifications</h2>
+<h3 id="41-notification-center">4.1 Notification Center</h3>
+<p><strong>Entry:</strong> bell icon with unread badge (web header), "Updates" tab (native bottom bar), push notification tap. <strong>Exit:</strong> the item's target screen.</p>
+<div class="state-title">Arabic RTL</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-23093.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-23093.jpg" alt="Arabic RTL – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-23093" target="_blank" rel="noopener">Open in Figma · 42:23093</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-22222.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-22222.jpg" alt="Arabic RTL – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-22222" target="_blank" rel="noopener">Open in Figma · 42:22222</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-21721.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-21721.jpg" alt="Arabic RTL – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-21721" target="_blank" rel="noopener">Open in Figma · 42:21721</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-21192.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-21192.jpg" alt="Arabic RTL – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-21192" target="_blank" rel="noopener">Open in Figma · 42:21192</a></figure>
+</div>
+
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-23618.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-23618.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-23618" target="_blank" rel="noopener">Open in Figma · 42:23618</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-22668.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-22668.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-22668" target="_blank" rel="noopener">Open in Figma · 42:22668</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-21996.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-21996.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-21996" target="_blank" rel="noopener">Open in Figma · 42:21996</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-21460.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-21460.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-21460" target="_blank" rel="noopener">Open in Figma · 42:21460</a></figure>
+</div>
+
+<h4 id="ui-elements">UI elements</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Header</td>
+<td>Bell icon with red dot (web), "Updates" tab (native); breadcrumb Marketplace › Personal Account › Notifications; title "Notification Center" + badge <strong>3 New</strong>; "Syncing Realtime • Dahab (GMT+3) 17:56"</td>
+<td>Unread count.</td>
+</tr>
+<tr class="even">
+<td>Filter chips (with counts)</td>
+<td><strong>All Notifications (6 total, 3 unread) · Bookings &amp; Stays (2) · Host Messages (2) · Expeditions &amp; Diving (1) · Safety &amp; Weather (1)</strong></td>
+<td>Filter by type.</td>
+</tr>
+<tr class="odd">
+<td>Mark all as read · settings icon</td>
+<td>Links top-right</td>
+<td>Clears unread state / opens settings.</td>
+</tr>
+<tr class="even">
+<td>Unread styling</td>
+<td>Terracotta dot + left accent border (right border in RTL)</td>
+<td>Read items plain.</td>
+</tr>
+<tr class="odd">
+<td>Notification cards (Figma)</td>
+<td>① <strong>Confirmed Stay</strong> (12 minutes ago) — "Booking Confirmed: Dar Tarabin Coastal Ecolodge… Booking Reference #DHB-2025-8841-ARB" + booking thumbnail → <strong>View Reservation</strong> · <strong>Message Sheikh Salama</strong> ② <strong>Direct Host Message</strong> (45 min ago) — Sheikh Salama Tarabin, quoted message → <strong>Reply to Host</strong> · <strong>Call via WhatsApp</strong> ③ <strong>Waitlist Released</strong> — "Morning Glass Slot Released: Blue Hole Arch &amp; Bells Deep Freediving… with Master Guide Youssef Ben-Ammar. 2 divers max on line buoy.", specs (Max depth line to 60 m · Water 26°C · Safety ratio 1:2 dedicated · Special rate EGP 2,400), timer <strong>Expires in 58 mins</strong> → <strong>Claim Slot (EGP 2,400)</strong> · <strong>Pass Slot</strong> ④ <strong>Conditions Advisory</strong> (yesterday) — "Red Sea Marine Conditions: Lighthouse &amp; Blue Hole", clarity rating 35 m → <strong>View Live Dahab Wind &amp; Tides</strong> ⑤ <strong>Price &amp; Availability</strong> — wishlist item update ⑥ review prompt</td>
+<td>Each card: type chip, title, body, time, CTAs deep-linking to the target (My Bookings, WhatsApp, Session Picker with slot pre-selected, conditions page, listing, Leave a Review).</td>
+</tr>
+<tr class="even">
+<td>Delivery Channels (sidebar, "3 Active")</td>
+<td>Toggles <strong>WhatsApp Alerts · SMS Urgent Notices · Weekly Digest</strong> · <strong>Manage Notification Settings</strong></td>
+<td>Stored per user; transactional emails always sent. Settings page not designed.</td>
+</tr>
+<tr class="odd">
+<td>Side cards</td>
+<td>"Sinai Marine Safety Net" (chamber line +20 (0)69 364 0530, VHF Ch 16, <strong>Direct Chamber Dispatch Link</strong>) · "Host Concierge Desk" → <strong>Chat with Dahab Desk</strong></td>
+<td>Shared config / support channel.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="arabic-rtl-state--what-must-mirror">Arabic (RTL) state — what must mirror</h4>
+<p>Navigation shell flows right-to-left; in the bottom bar <strong>استكشف (Explore)</strong> is right-most and <strong>حسابي (Profile)</strong> left-most; unread dots/borders on the right; avatars/thumbnails on the right; primary CTA on the right (e.g. <strong>عرض الحجز</strong>, <strong>حجز المقعد الآن</strong>); Arabic numerals in badges (٣) and prices (٢,٤٠٠ ج.م); translated notification bodies.</p>
+<h4 id="step-by-step">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Receives an event (booking, message, waitlist…)</td>
+<td>Creates notification record; sends push/email/SMS/WhatsApp per type and settings (FR-8.3).</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Opens Notification Center</td>
+<td>Lists newest first; unread styled; badge count.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Filters by type</td>
+<td>Shows matching items.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps an item / its CTA</td>
+<td>Marks it read; deep-links to target.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps <strong>Claim Slot</strong> on a waitlist item</td>
+<td>Opens Session Picker with slot pre-selected; if already taken → sold-out state (07). Countdown shows claim window.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Taps <strong>Mark all as read</strong></td>
+<td>All read; badge cleared.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Toggles a channel</td>
+<td>Saves preference immediately.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="42-language-switcher--settings">4.2 Language Switcher — Settings</h3>
+<p><strong>Entry:</strong> Profile/Settings; also reachable from header EN | عربي toggle (quick switch). <strong>Exit:</strong> back to Settings.</p>
+<div class="state-title">Default</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/42-25095.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-25095.jpg" alt="Default – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-25095" target="_blank" rel="noopener">Open in Figma · 42:25095</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/42-24701.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-24701.jpg" alt="Default – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-24701" target="_blank" rel="noopener">Open in Figma · 42:24701</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/42-24423.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-24423.jpg" alt="Default – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-24423" target="_blank" rel="noopener">Open in Figma · 42:24423</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/42-24099.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/42-24099.jpg" alt="Default – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=42-24099" target="_blank" rel="noopener">Open in Figma · 42:24099</a></figure>
+</div>
+
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Page</td>
+<td>Breadcrumb Settings › Preferences › Language &amp; Region; title "Language &amp; Regional Settings"; "Active Locale: English (US) • EGP (EGP)"</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Primary Language</td>
+<td><strong>English</strong> (United Kingdom / International) — DEFAULT · <strong>العربية</strong> (Arabic Egypt) "Auto Right-to-Left (RTL)" · <strong>Français</strong> · <strong>Deutsch</strong> · <strong>Русский</strong></td>
+<td>Selecting applies strings, direction and fonts (Plus Jakarta Sans + Arabic fallback). <strong>Only EN and AR are MVP</strong> (§7 G8).</td>
+</tr>
+<tr class="odd">
+<td>Layout &amp; Reading Orientation</td>
+<td>Cards <strong>Left-to-Right (LTR)</strong> (selected) · <strong>Auto-Match RTL</strong> ("mirrors entire viewport… when Arabic is active")</td>
+<td>Should follow language automatically (§7 G9).</td>
+</tr>
+<tr class="even">
+<td>Display Currency</td>
+<td><strong>EGP (£E)</strong> Local Native · <strong>USD ($)</strong> · <strong>EUR (€)</strong> · <strong>GBP (£)</strong>; note "Sinai Fair Exchange Assurance — all checkout transactions settle in EGP…"</td>
+<td>FR-20.3 is Later — see §7 G2. Settlement always EGP.</td>
+</tr>
+<tr class="odd">
+<td>Calendar &amp; Week Cycle</td>
+<td>Calendar system <strong>Gregorian</strong> / <strong>Hijri • Lunar</strong>; first day of week <strong>Saturday</strong> (Egypt standard) / Sunday / Monday</td>
+<td>Not in SRS (§7 G10).</td>
+</tr>
+<tr class="even">
+<td>Live Experience Preview</td>
+<td>Sample listing card (Dar Tarabin, dates, host welcome, "EGP 2,400 / night", "Free cancellation up to 48h") + summary (Layout orientation, Currency identifier, Calendar engine)</td>
+<td>Re-renders as options change.</td>
+</tr>
+<tr class="odd">
+<td>Actions</td>
+<td><strong>Save Preferences</strong> · <strong>Reset</strong>; info "Language changes will automatically apply across all search filters, booking itineraries, and host messages."</td>
+<td>Saved to the account (and device for logged-out users).</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-1">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens Language settings</td>
+<td>Shows current language selected.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Picks Arabic and taps <strong>Save Preferences</strong></td>
+<td>Re-renders the app in Arabic RTL without losing navigation state; saves to profile (same field as Edit Profile "Preferred language").</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>(If in scope) picks currency</td>
+<td>Updates price display site-wide with conversion note.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Returns</td>
+<td>Preference applied everywhere, incl. emails/SMS/notifications language.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-cross-screen-business-rules">5. Cross-screen business rules</h2>
+<ol type="1">
+<li><strong>Notification catalogue (MVP):</strong> booking confirmed, booking modified, booking cancelled + refund issued, payment failed, host message (if messaging in scope), waitlist slot released, safety/weather advisory, review prompt after completion. Each type defines channels (push, email, SMS, WhatsApp) and template in EN + AR.</li>
+<li>Transactional messages (confirmation, cancellation, refund) are always sent by email; opt-out applies only to marketing/digest.</li>
+<li>Notification language = user's preferred language.</li>
+<li>Language preference is one field shared by Edit Profile (01), header toggle and this screen.</li>
+<li>RTL rules: logical CSS properties, mirrored icons/chevrons, numbers/phone numbers kept LTR inside RTL text.</li>
+<li>Retention of notifications in the inbox (e.g. 90 days) — define.</li>
+</ol>
+<h2 id="6-story-candidates-for-jira">6. Story candidates for Jira</h2>
+<p><strong>Epic:</strong> GUEST-NOTIFY-L10N — Notifications &amp; Localization</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Key idea</th>
+<th>Story</th>
+<th>Acceptance criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-key">NOTIF-1</span></td>
+<td>As a guest, I want an in-app notification center.</td>
+<td>List, unread badge, filters, mark all as read, deep links.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">NOTIF-2</span></td>
+<td>As a guest, I want booking confirmations/cancellations by push, email and SMS.</td>
+<td>Sent on each event in the user's language (FR-8.3).</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">NOTIF-3</span></td>
+<td>As a guest, I want to be alerted when a waitlisted slot opens and claim it.</td>
+<td>Alert via chosen channel; Claim opens picker with slot; handles already-taken.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">NOTIF-4</span></td>
+<td>As a guest, I want to choose my alert channels.</td>
+<td>WhatsApp, SMS, digest toggles saved; transactional email always on.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">NOTIF-5</span></td>
+<td>As a guest, I want safety/weather advisories for my upcoming trips.</td>
+<td>Advisory items linked to booking/zone (data source TBD).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">L10N-1</span></td>
+<td>As a guest, I want to switch the whole app to Arabic or English at any time.</td>
+<td>Immediate re-render; RTL mirrored; preference saved to profile and device.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">L10N-2</span></td>
+<td>As an Arabic guest, I want notifications and emails in Arabic.</td>
+<td>Templates in AR; numerals and dates localised.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">L10N-3 (tech)</span></td>
+<td>All strings externalised; RTL layout support.</td>
+<td>No hard-coded strings (NFR-7); logical CSS; RTL QA checklist passes on the 12 RTL specimen screens.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Finding</th>
+<th>Suggested decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-gap">G1</span></td>
+<td>Native tab bar here has <strong>5 tabs (Explore · Saved · Bookings · Updates · Profile)</strong>, other modules have 4 (no Updates). The native Notification screen is also branded "DAHAB LIFE".</td>
+<td>Decide final tab set and brand; apply to all native/mobile frames.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G2</span></td>
+<td><strong>Currency selector (EGP/USD/EUR)</strong> is designed, but FR-20.3 is Later; also shown as "EGP" in the web header.</td>
+<td>Hide for MVP or move FR-20.3 into MVP.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G3</span></td>
+<td><strong>Host message notifications with Reply</strong> depend on in-app messaging (FR-8.1/8.2, Phase 2).</td>
+<td>MVP: WhatsApp deep link only.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G4</span></td>
+<td>Waitlist "Claim Slot (EGP 2,400)" price ≠ activity detail price (EGP 1,650).</td>
+<td>See module 07 G1.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G5</span></td>
+<td>Weather/marine advisories need a data source and a trigger rule.</td>
+<td>See module 02 G3.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G6</span></td>
+<td>Only the Notification Center has full Arabic designs; other modules have none (except auth tablet errors).</td>
+<td>Plan an RTL QA pass for all modules.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G7</span></td>
+<td>Notification preferences for email/push per type are not designed (only WhatsApp/SMS/digest); "Manage Notification Settings" page not designed.</td>
+<td>Extend settings or keep minimal.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G8</span></td>
+<td><strong>Language list shows 5 languages</strong> (EN, AR, FR, DE, RU); SRS MVP = EN + AR (others later, architecture-ready).</td>
+<td>Show EN/AR only for MVP.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G9</span></td>
+<td>Separate "Layout &amp; Reading Orientation" setting lets a user pick LTR while in Arabic.</td>
+<td>Tie direction to language; remove the setting.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G10</span></td>
+<td>Calendar system (Hijri) and first-day-of-week settings are not in the SRS.</td>
+<td>Phase 2 or remove.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G11</span></td>
+<td>Broken glyphs in the header currency pill (")▯.▯EGP(") and next to "Arabic Egypt" on the language card.</td>
+<td>Font/icon fix in Figma.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G12</span></td>
+<td>Waitlist card says "line to 60m"; the activity is 30–45 m elsewhere.</td>
+<td>Copy fix.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-out-of-scope-for-mvp">8. Out of scope for MVP</h2>
+<ul>
+<li>Reminders 24 h before activities (FR-4.4), preferred currency (FR-20.3), additional languages (German, Russian, Italian — architecture must allow them).</li>
+</ul>
+</article><nav class="pager"><a href="08-reviews-and-favorites.html"><small>← Previous</small><b>08 · Reviews &amp; Favorites</b></a><a class="next" href="10-ai-concierge.html"><small>Next →</small><b>10 · AI Concierge Chat</b></a></nav>
+</main>
+<aside class="toc"><div class="side-label">On this page</div><ul><li class="l2"><a href="#1-module-summary">1. Module summary</a></li>
+<li class="l2"><a href="#2-business-requirements-covered-srs">2. Business requirements covered (SRS)</a></li>
+<li class="l2"><a href="#3-screen-inventory">3. Screen inventory</a></li>
+<li class="l2"><a href="#4-screen-specifications">4. Screen specifications</a></li>
+<li class="l3"><a href="#41-notification-center">4.1 Notification Center</a></li>
+<li class="l3"><a href="#42-language-switcher--settings">4.2 Language Switcher — Settings</a></li>
+<li class="l2"><a href="#5-cross-screen-business-rules">5. Cross-screen business rules</a></li>
+<li class="l2"><a href="#6-story-candidates-for-jira">6. Story candidates for Jira</a></li>
+<li class="l2"><a href="#7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</a></li>
+<li class="l2"><a href="#8-out-of-scope-for-mvp">8. Out of scope for MVP</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <span><b style="color:#fff">DAHAB • دهب</b> — Reservations • Touring • Trips · Guest App specification</span>
+  <span>Sources: SRS v1.0 · Figma “Dahab” → page <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">New</a> · Prepared 23 Sep 2026</span>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

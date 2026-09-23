@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04 Dahab Guide — Zones, Points of Interest &amp; Articles · Dahab Guest App Specs</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <label for="nav-toggle" class="nav-btn" aria-label="Menu"><span></span><span></span><span></span></label>
+  <a class="brand" href="index.html">
+    <img src="assets/logo.svg" alt="">
+    <span><span class="brand-name">DAHAB<span class="ar">• دهب</span></span>
+    <span class="brand-sub">Guest App · Product Specification</span></span>
+  </a>
+  <nav class="topbar-links">
+    <a href="index.html">Modules</a>
+    <a href="issues.html">Issues</a>
+    <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">Figma ↗</a>
+  </nav>
+</header>
+<input type="checkbox" id="nav-toggle">
+<div class="layout">
+<nav class="sidebar"><div class="side-label">Overview</div><ul><li><a href="index.html"><span class="num alt">★</span>Home</a></li><li><a href="issues.html"><span class="num alt">!</span>Issues tracker</a></li></ul><div class="side-label">Guest app modules</div><ul><li><a href="01-account-authentication.html"><span class="num">01</span>Account &amp; Authentication</a></li><li><a href="02-discovery-home.html"><span class="num">02</span>Discovery Home</a></li><li><a href="03-search-results-and-map.html"><span class="num">03</span>Search Results &amp; Map</a></li><li><a href="04-dahab-guide-zones-pois-articles.html" class=active><span class="num">04</span>Dahab Guide — Zones, Points of Interest &amp; Articles</a></li><li><a href="05-listing-detail-property-activity.html"><span class="num">05</span>Listing Detail — Property &amp; Activity</a></li><li><a href="06-accommodation-booking-and-my-bookings.html"><span class="num">06</span>Accommodation Booking &amp; My Bookings</a></li><li><a href="07-activity-booking.html"><span class="num">07</span>Activity Booking</a></li><li><a href="08-reviews-and-favorites.html"><span class="num">08</span>Reviews &amp; Favorites</a></li><li><a href="09-notifications-and-language.html"><span class="num">09</span>Notifications &amp; Language Settings</a></li><li><a href="10-ai-concierge.html"><span class="num">10</span>AI Concierge Chat</a></li></ul></nav>
+<main class="content">
+<section class="hero">
+  <div class="eyebrow"><span class="hero-num">04</span> Guest App · Module</div>
+  <h1>Dahab Guide — Zones, Points of Interest &amp; Articles</h1>
+  <p class="lead">The "tourist guide" layer that helps a first-time visitor understand Dahab: <b>Zones</b> (named areas such as Blue Hole, Lighthouse, Mashraba, Assalah), <b>POIs</b> (landmarks inside a zone — informational, not bookable), and <b>Articles</b> (practical advice: transport, safety, culture).</p>
+  <dl class="meta"><div><dt>Module</dt><dd>Guide content: Zone Overview · POI Detail · Guide Article reader</dd></div><div><dt>Apps</dt><dd>Desktop Web (1440), Tablet Web (834), Mobile Web, Native App (390)</dd></div><div><dt>Figma</dt><dd>Page <b>New</b> → sections <em>Zone Overview</em> (Blue Hole example), <em>POI Detail</em> (The Bells Drop-off), <em>Guide Article</em> (Getting Around Dahab) — 12 frames</dd></div><div><dt>SRS</dt><dd>FR-2.4, FR-2.5, FR-2.7 (Later), FR-19.1–19.2 (admin creates this content), §2.5 offline-tolerant guide content, NFR-7</dd></div><div><dt>Screens</dt><dd>3 screens · 1 state each · 12 frames</dd></div></dl>
+  <div class="hero-waves"></div>
+</section><article class="doc"><h2 id="1-module-summary">1. Module summary</h2>
+<p>The "tourist guide" layer that helps a first-time visitor understand Dahab: <strong>Zones</strong> (named areas such as Blue Hole, Lighthouse, Mashraba, Assalah), <strong>POIs</strong> (landmarks inside a zone — informational, not bookable), and <strong>Articles</strong> (practical advice: transport, safety, culture). Every page ends by linking into bookable stays and expeditions nearby, so guide content feeds the marketplace. All content is created by admins (module Admin — FR-19) in EN and AR.</p>
+<p><strong>Hierarchy:</strong> Zone → POIs in that zone → nearby listings. Articles can reference zones and POIs.</p>
+<h2 id="2-business-requirements-covered-srs">2. Business requirements covered (SRS)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>MVP</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FR-2.4</td>
+<td>Browse Dahab guide content: zones, POIs, articles (transport, safety, culture)</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>All 3 screens</td>
+</tr>
+<tr class="even">
+<td>FR-2.5</td>
+<td>View properties/activities/POIs on a map</td>
+<td><span class="badge b-high">High</span></td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Zone map, POI topography map, "View on Dahab Map"</td>
+</tr>
+<tr class="odd">
+<td>FR-2.7</td>
+<td>Content in selected language with auto-translation fallback</td>
+<td><span class="badge b-medium">Medium</span></td>
+<td><span class="badge b-later">Later</span></td>
+<td>Arabic headings shown; full AR pages not designed</td>
+</tr>
+<tr class="even">
+<td>FR-19.1 / 19.2</td>
+<td>Admin creates/edits zones, POIs, articles; publishes in multiple languages</td>
+<td>H / M</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>Source of all content on these pages</td>
+</tr>
+<tr class="odd">
+<td>§2.5</td>
+<td>Offline-tolerant behaviour for previously loaded guide content</td>
+<td>—</td>
+<td><span class="badge b-mvp">MVP ✓</span></td>
+<td>"Save Offline", "Offline Guide &amp; GPS", "Download … Safety &amp; Reef Guide (PDF)"</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-screen-inventory">3. Screen inventory</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Screen</th>
+<th>Example in Figma</th>
+<th>Breakpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4.1</td>
+<td>Zone Overview</td>
+<td>Blue Hole &amp; The Bells (Zone 01)</td>
+<td>All 4</td>
+</tr>
+<tr class="even">
+<td>4.2</td>
+<td>POI Detail</td>
+<td>The Bells Drop-off</td>
+<td>All 4</td>
+</tr>
+<tr class="odd">
+<td>4.3</td>
+<td>Guide Article</td>
+<td>Getting Around Dahab: Transport, Safety &amp; Culture</td>
+<td>All 4</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-screen-specifications">4. Screen specifications</h2>
+<h3 id="41-zone-overview">4.1 Zone Overview</h3>
+<p><strong>Entry:</strong> zone cards on Discovery Home, "Dahab Zones Map" nav, POI breadcrumb, article links. <strong>Exit:</strong> POI Detail, listing detail, filtered search results, map.</p>
+<div class="state-title">Blue Hole</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-19353.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-19353.jpg" alt="Blue Hole – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-19353" target="_blank" rel="noopener">Open in Figma · 16:19353</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-18820.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-18820.jpg" alt="Blue Hole – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-18820" target="_blank" rel="noopener">Open in Figma · 16:18820</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-18451.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-18451.jpg" alt="Blue Hole – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-18451" target="_blank" rel="noopener">Open in Figma · 16:18451</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-18106.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-18106.jpg" alt="Blue Hole – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-18106" target="_blank" rel="noopener">Open in Figma · 16:18106</a></figure>
+</div>
+
+<h4 id="page-sections">Page sections</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Section</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Emergency strip</td>
+<td>"24/7 Red Sea Dive Alert: Dahab Hyperbaric Medical Center Operational — Ready &amp; On-Call — VHF Ch. 16 — Emergency SOS Guide"</td>
+<td>SOS Guide link opens safety article/PDF.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Breadcrumb</td>
+<td>Dahab Zones › Blue Hole Protected Marine Area &amp; Ras Abu Galum Gateway · "Zone Code: BH-RAG-01"</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Hero</td>
+<td>Badge "PROTECTED MARINE SANCTUARY • ZONE 01", "Muziena Bedouin Ancestral Domain", title "Blue Hole &amp; The Bells" + Arabic name, live chips (Water 24°C · Wind 11 kts NNE · Low Tide Calm), bathymetry bar (-130m floor, Saddle 7m, Arch 56m), visibility "30m+"</td>
+<td>Conditions from the same data source as module 02.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Zone quick stats</td>
+<td>8 Sanctuaries · 14 Expeditions · 12 km North (from Assalah) · Camel &amp; 4x4 Only</td>
+<td>Counts computed from live listings in the zone.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Primary actions</td>
+<td><strong>Explore 22 Stays &amp; Expeditions in this Zone</strong> · <strong>View Interactive Bathymetry Map</strong> · Marine Protection Protocols &amp; SOS</td>
+<td>Explore → Search Results filtered by zone (03). Map → Map View centred on the zone.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Story "Living reef &amp; tribal stewardship"</td>
+<td>Narrative text</td>
+<td>Admin-managed rich text.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Mandatory Sanctuary Codes</td>
+<td>Reef Guardian Protocol (mineral sunscreen only) · Freedive &amp; Scuba Safety Code (no solo, surface buoy) · Single-Use Plastic Ban &amp; Pack-Out · Muziena Camelier &amp; Marine Accord · Chamber Dispatch SOS "+20 (0) 69 364 0530"</td>
+<td>Native adds "EGP 150 ECO-TAX — payable at barrier checkpoint". Mobile shows these as an accordion ("MANDATORY").</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Key Points of Interest</td>
+<td>5 POI cards: The Bells Drop-off (-28m, Advanced Drift), The Blue Hole Saddle (-7m, All levels snorkel), The Arch &amp; Outer Wall (-56m, Trimix/Tec only), Bedouin Shade Majlis &amp; Tea Arish, Ras Abu Galum Trailhead (6.5 km, 1.5h hike / 45m camel)</td>
+<td>Card → POI Detail (4.2). Native: horizontal swipe "SWIPE TO INSPECT".</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Featured stays &amp; safaris in the zone</td>
+<td>4 cards (e.g. Blue Hole Bedouin Coastal Bivouac EGP 950/night, Ras Abu Galum Star Camp EGP 850/night, Blue Hole Arch &amp; Bells Deep Freediving EGP 1,650/person, Ras Abu Galum Camel Trek EGP 1,200/person) with <strong>Book Stay / Reserve Seat</strong>; Tablet adds tabs All (22) · Freediving · Eco-Camps · Safari</td>
+<td>Cards → Detail (05). "View all 22" → filtered results.</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Ranger field post / concierge</td>
+<td>"Bedouin Ranger Field Post &amp; Safety Hub — Station Active — Lead Ranger: Sheikh Mansour Muziena" · Contact Station Dispatch · <strong>Download Zone 01 Safety &amp; Reef Guide (PDF)</strong>; mobile/native: WhatsApp Bedouin Ranger</td>
+<td>PDF downloadable &amp; available offline.</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Zone boundary map (native "Sanctuary Boundaries — Expand")</td>
+<td>"North Dahab Coast • 8.4 km zone"</td>
+<td>Expands to full map.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens a zone</td>
+<td>Loads zone content in the current language, live conditions, counts, POIs, featured listings.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Reads the codes / expands accordion</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Taps a POI</td>
+<td>Opens POI Detail.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps <strong>Explore 22 Stays &amp; Expeditions</strong></td>
+<td>Opens Search Results with zone filter.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps a featured card / Book Stay / Reserve Seat</td>
+<td>Opens the listing detail (05).</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Taps <strong>Download … Safety &amp; Reef Guide (PDF)</strong></td>
+<td>Downloads the PDF; stored for offline use.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Taps Chamber / Call</td>
+<td>Opens phone dialer (tel:).</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="42-poi-detail">4.2 POI Detail</h3>
+<p><strong>Purpose:</strong> explain a landmark (not bookable). Booking actions exist <strong>only</strong> on the linked nearby listings. <strong>Entry:</strong> Zone POI cards, map POI pins, articles. <strong>Exit:</strong> nearby listings, zone, map.</p>
+<div class="state-title">The Bells Drop-off</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-21044.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-21044.jpg" alt="The Bells Drop-off – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-21044" target="_blank" rel="noopener">Open in Figma · 16:21044</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-20533.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-20533.jpg" alt="The Bells Drop-off – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-20533" target="_blank" rel="noopener">Open in Figma · 16:20533</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-20227.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-20227.jpg" alt="The Bells Drop-off – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-20227" target="_blank" rel="noopener">Open in Figma · 16:20227</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-19958.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-19958.jpg" alt="The Bells Drop-off – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-19958" target="_blank" rel="noopener">Open in Figma · 16:19958</a></figure>
+</div>
+
+<h4 id="page-sections-1">Page sections</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Section</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Breadcrumb</td>
+<td>Dahab Zones › Blue Hole Marine Sanctuary › Points of Interest › The Bells Drop-off</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Actions</td>
+<td><strong>Share</strong> · <strong>Save to Itinerary</strong> · <strong>Offline Guide &amp; GPS</strong></td>
+<td>Save to itinerary = add POI to the guest's saved items (see §7 G3). Offline = cache page + coordinates.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Header facts</td>
+<td>"Natural Landmark • Submarine Chute", depth "28m chimney to 100m+ wall drop", "EEAA Protected Marine Sanctuary", GPS 28.5742° N, 34.5381° E</td>
+<td>GPS tap → open in maps app.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Gallery</td>
+<td>Photos with captions, "View all 16 photos &amp; dive topo"</td>
+<td>Opens a lightbox (same pattern as module 05).</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Story &amp; anatomy</td>
+<td>"The Legend &amp; Subterranean Anatomy" narrative</td>
+<td>Rich text.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Mandatory protocol "Sinai Sanctuary Code"</td>
+<td>Zero Contact Wall Rule · Certified Guide Requirement (no solo) · One-Way Drift Route · Reef-Safe Mineral Sunscreen · Dahab Hyperbaric Chamber 24/7 (VHF 16, +20 69 364 0530)</td>
+<td>Highlighted safety block; phone is tel:.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Cross-section profile</td>
+<td>Bells → Blue Hole Saddle profile (0m, -7m saddle exit, -28m chimney/arch, 15–20m drift)</td>
+<td>Static diagram (image asset).</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Key specifications table</td>
+<td>Entry method (shore entry via rock gap) · Chimney metrics (0–28m) · Current profile (mild–moderate south drift) · Experience threshold (AOW / AIDA 3; snorkel upper rim only) · Optimal illumination (08:00–13:00) · Water clarity (30–45m+)</td>
+<td>Structured fields per POI type (dive-site template).</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Today's conditions (tablet)</td>
+<td>Water temp · Visibility · Surface surge · Peak sunlight angle — "Live Sensor"</td>
+<td>Data source — see module 02 G3.</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>How to get there</td>
+<td>Transit from Dahab town (4x4, ~25 min, "Estimated 4x4 fare: 250–350 EGP round-trip"), 150m north track walk, chute entry on high tide; native shows 3 numbered steps</td>
+<td>Admin-managed steps.</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Interactive topography map</td>
+<td>"Open Fullscreen Dahab Map", current pin, drift route, current 0.4 kn south</td>
+<td>Opens Map View centred on POI.</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Nearby stays &amp; expeditions ("Marketplace connections")</td>
+<td>3 cards (Blue Hole Arch &amp; Bells Deep Freediving 1,650 EGP/diver · Blue Hole Bedouin Coastal Bivouac 950 EGP/night · Ras Abu Galum Camel Trek &amp; Bells Snorkel 1,200 EGP/person) + "Explore all 24 Blue Hole offerings"</td>
+<td>Only place with booking CTAs (Book Stay / Reserve Spot).</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-1">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens the POI</td>
+<td>Loads content, gallery, specs, nearby listings (within radius / same zone).</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Taps <strong>Save to Itinerary</strong></td>
+<td>Logged-in: saved (confirmation toast). Logged-out: Login first.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Taps <strong>Offline Guide &amp; GPS</strong></td>
+<td>Caches the page, images and coordinates for offline use; shows "Available offline".</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps <strong>Share</strong></td>
+<td>Native share sheet / copy link.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps GPS or map</td>
+<td>Opens map / external maps app with the coordinates.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Taps a nearby listing</td>
+<td>Opens listing detail (05).</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="43-guide-article-reader">4.3 Guide Article reader</h3>
+<p><strong>Entry:</strong> "Bedouin Stories" nav, story cards on Home, Zone and POI pages, related articles. <strong>Exit:</strong> related articles/zones, listings.</p>
+<div class="state-title">Getting Around Dahab</div>
+<div class="shot-grid" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<figure class="shot bp-desktop"><figcaption><span class="bp-ico">Desktop</span></figcaption><a class="frame" href="images/16-22851.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-22851.jpg" alt="Getting Around Dahab – Desktop"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-22851" target="_blank" rel="noopener">Open in Figma · 16:22851</a></figure>
+<figure class="shot bp-tablet"><figcaption><span class="bp-ico">Tablet</span></figcaption><a class="frame" href="images/16-22305.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-22305.jpg" alt="Getting Around Dahab – Tablet"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-22305" target="_blank" rel="noopener">Open in Figma · 16:22305</a></figure>
+<figure class="shot bp-mobile"><figcaption><span class="bp-ico">Mobile Web</span></figcaption><a class="frame" href="images/16-21988.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-21988.jpg" alt="Getting Around Dahab – Mobile Web"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-21988" target="_blank" rel="noopener">Open in Figma · 16:21988</a></figure>
+<figure class="shot bp-native"><figcaption><span class="bp-ico">Native App</span></figcaption><a class="frame" href="images/16-21648.png" target="_blank" rel="noopener"><img loading="lazy" src="images/thumbs/16-21648.jpg" alt="Getting Around Dahab – Native App"></a><a class="figma" href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-21648" target="_blank" rel="noopener">Open in Figma · 16:21648</a></figure>
+</div>
+
+<h4 id="page-sections-2">Page sections</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Section</th>
+<th>Content (Figma)</th>
+<th>Behaviour / rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Category &amp; meta</td>
+<td>"BEDOUIN STORIES &amp; PRACTICAL ADVICE", "#DahabGuide • Field Dispatch 04", author ("Dahab Local Stewards &amp; Muzayna Elders" / "Salem Al-Mezeina"), "Updated March 2025", "6 min read", "Authenticity Checked"</td>
+<td>Author, updated date and read time come from the CMS.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Actions</td>
+<td><strong>Save Article</strong> · <strong>Share</strong>; mobile "Copy Story Link"</td>
+<td>Save = add to favourites (module 08); requires login.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Hero image + caption</td>
+<td>Coastal photo with location caption</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Body</td>
+<td>Intro, Bedouin quote block, Part 01 Transport (Bedouin 4x4 pickups EGP 25–40, blue microbuses EGP 10–15, bikes EGP 120–180/day, promenade walking), fare benchmark table (e.g. Lighthouse ⇄ Assalah EGP 25–35; Town ⇄ Blue Hole return EGP 200–280), Part 02 Ocean safety &amp; Deco Chamber + "4 Sinai Marine Commandments", Part 03 Bedouin etiquette (habak tea, attire, bargaining, camera &amp; drones)</td>
+<td>Rich text with tables, callouts, images. Prices are editorial guidance, not bookable.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Sticky side rail (desktop) "Sinai Quick Pocket Sheet"</td>
+<td><strong>SAVE OFFLINE</strong>; critical numbers (Hyperbaric Chamber +20 69 364 0530, Tourist Police 126 / VHF 16, Dahab Public Hospital +20 69 364 0210); Bedouin courtesy phrases (Salam Alaykum, Shukran Jazilan, Bikam da?, Habibi); <strong>Copy Key Contacts to Clipboard</strong>; Table of contents (01, 02, 03); Key coastal zones mini-map</td>
+<td>TOC links scroll to sections; Copy puts the contact list on the clipboard with confirmation.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Native extras</td>
+<td><strong>Listen to Article</strong> (5 min narration), tap-to-listen phrasebook</td>
+<td>Audio narration — see §7 G5.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Feedback</td>
+<td>"Was this guide helpful?" <strong>Yes / Needs updates</strong></td>
+<td>Stores feedback per article for admins.</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Author box</td>
+<td>Steward bio, contact email</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Related</td>
+<td>"Related Field Stories &amp; Sanctuary Guides" (3 cards: The Blue Hole ecological guide, Freediving Etiquette, Bedouin Celestial Navigation) / "Related Guides &amp; Zones"</td>
+<td>Opens article / zone.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="step-by-step-2">Step-by-step</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Guest does</th>
+<th>System does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Opens an article</td>
+<td>Renders content in current language; logs a view.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Uses TOC</td>
+<td>Smooth-scrolls to section; TOC highlights current section.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Taps <strong>Save Offline</strong></td>
+<td>Stores article + images for offline reading (§2.5).</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Taps <strong>Copy Key Contacts</strong></td>
+<td>Copies numbers; toast "Copied".</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Taps a phone number</td>
+<td>Opens dialer.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Answers "Was this helpful?"</td>
+<td>Saves response; thanks message.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Taps <strong>Save Article</strong> / <strong>Share</strong></td>
+<td>Save to favourites (login) / share sheet.</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Taps a related card</td>
+<td>Opens that article/zone.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-cross-screen-business-rules">5. Cross-screen business rules</h2>
+<ol type="1">
+<li>All guide content is admin-managed (FR-19.1) with EN + AR versions (FR-19.2); pages show the version matching the UI language; if AR missing, show EN with a notice (auto-translation is Later, FR-2.7).</li>
+<li>POIs are <strong>not bookable</strong> — no price or Reserve on the POI itself (confirmed in design).</li>
+<li>"Nearby listings" = approved listings in the same zone or within X km of the POI (define X).</li>
+<li>Emergency numbers must be admin-configurable in one place and reused on every page (strip, footer, POI, article) — the design shows several different numbers (see §7 G1).</li>
+<li>Offline: previously opened zones/POIs/articles and downloaded PDFs are readable without connection (SRS §2.5).</li>
+<li>Structured POI fields (depth, entry method, current, level, best time, visibility) require a POI "type" template in the CMS (dive site, trailhead, cultural site…).</li>
+</ol>
+<h2 id="6-story-candidates-for-jira">6. Story candidates for Jira</h2>
+<p><strong>Epic:</strong> GUEST-GUIDE — Dahab Guide content</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Key idea</th>
+<th>Story</th>
+<th>Acceptance criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-key">GUIDE-1</span></td>
+<td>As a guest, I want a zone page explaining the area, rules, POIs and what I can book there.</td>
+<td>Sections as §4.1; counts from live data; Explore button opens filtered search.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">GUIDE-2</span></td>
+<td>As a guest, I want to read mandatory sanctuary rules and emergency contacts for a zone.</td>
+<td>Rules block always visible (accordion on mobile); phone numbers are tap-to-call.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">GUIDE-3</span></td>
+<td>As a guest, I want a POI page with how-to-get-there, safety and specs.</td>
+<td>No booking CTA on the POI; nearby listings section with CTAs; GPS opens maps.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">GUIDE-4</span></td>
+<td>As a guest, I want to save a zone/POI/article for offline use.</td>
+<td>After saving, content opens without network; "Available offline" indicator.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">GUIDE-5</span></td>
+<td>As a guest, I want to download a zone safety PDF.</td>
+<td>PDF downloads; accessible offline.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">GUIDE-6</span></td>
+<td>As a guest, I want to read practical articles with a table of contents.</td>
+<td>TOC scroll; sticky rail on desktop; related articles at the end.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">GUIDE-7</span></td>
+<td>As a guest, I want to copy key emergency contacts.</td>
+<td>Copy button → clipboard + toast.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">GUIDE-8</span></td>
+<td>As a guest, I want to rate whether an article was helpful.</td>
+<td>Yes / Needs updates stored per article; one vote per user/device.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-key">GUIDE-9</span></td>
+<td>As a guest, I want guide pages in Arabic.</td>
+<td>AR version shown when UI is Arabic; RTL layout; EN fallback notice.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-key">GUIDE-10</span></td>
+<td>As a guest, I want to share and save guide pages.</td>
+<td>Share sheet/link; save to favourites (login).</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Finding</th>
+<th>Suggested decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge b-gap">G1</span></td>
+<td><strong>Emergency numbers disagree:</strong> Chamber "+20 69 364 0530" vs "+20 (0)69 364 0536" (tablet article); Tourist Police "126" vs "069 364 0180"; Hospital "+20 69 364 0210" vs "+20 69 3640106" (activity page).</td>
+<td>Verify real numbers with local authorities; single admin setting.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G2</span></td>
+<td>Zone codes/labels differ: "Zone 01" (desktop), "ZONE 04 • NORTH SINAI" (tablet), "Zone B" (POI mobile); "Ras Mohammed National Park rules" on native POI (wrong park).</td>
+<td>Fix copy; zone code is a CMS field.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G3</span></td>
+<td>"Save to Itinerary" (POI) — itinerary is the AI Trip Planner (FR-9, Phase 2).</td>
+<td>For MVP map it to Favourites (FR-7.1) or remove.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G4</span></td>
+<td>Arabic versions of these pages are not designed (only Arabic sub-headings).</td>
+<td>Add at least one RTL specimen (zone or article).</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G5</span></td>
+<td><strong>Audio narration "Listen to Article"</strong> (native) is not in the SRS.</td>
+<td>Phase 2 candidate; remove from MVP or add requirement (TTS/recorded audio).</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G6</span></td>
+<td>"Live Sensor" conditions on POI (tablet) — no data source.</td>
+<td>Same decision as module 02 G3.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G7</span></td>
+<td>Author differs per breakpoint for the same article (Dahab Local Stewards / Salama Al-Jabali / Tarek Mansour / Salem Al-Mezeina).</td>
+<td>CMS-driven — note only.</td>
+</tr>
+<tr class="even">
+<td><span class="badge b-gap">G8</span></td>
+<td>Articles list/index page ("Read all stories", "Browse All", "View All Guides") is not designed.</td>
+<td>Design a Stories/Guides index with category filters.</td>
+</tr>
+<tr class="odd">
+<td><span class="badge b-gap">G9</span></td>
+<td>Zones index / "Dahab Zones Map" landing page not designed (nav link exists).</td>
+<td>Design, or point the nav link to Map View with a zones layer.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-out-of-scope-for-mvp">8. Out of scope for MVP</h2>
+<ul>
+<li>Auto-translation fallback (FR-2.7), featuring content on home (FR-19.3, Later — home shows stories, so decide how they are selected).</li>
+</ul>
+</article><nav class="pager"><a href="03-search-results-and-map.html"><small>← Previous</small><b>03 · Search Results &amp; Map</b></a><a class="next" href="05-listing-detail-property-activity.html"><small>Next →</small><b>05 · Listing Detail — Property &amp; Activity</b></a></nav>
+</main>
+<aside class="toc"><div class="side-label">On this page</div><ul><li class="l2"><a href="#1-module-summary">1. Module summary</a></li>
+<li class="l2"><a href="#2-business-requirements-covered-srs">2. Business requirements covered (SRS)</a></li>
+<li class="l2"><a href="#3-screen-inventory">3. Screen inventory</a></li>
+<li class="l2"><a href="#4-screen-specifications">4. Screen specifications</a></li>
+<li class="l3"><a href="#41-zone-overview">4.1 Zone Overview</a></li>
+<li class="l3"><a href="#42-poi-detail">4.2 POI Detail</a></li>
+<li class="l3"><a href="#43-guide-article-reader">4.3 Guide Article reader</a></li>
+<li class="l2"><a href="#5-cross-screen-business-rules">5. Cross-screen business rules</a></li>
+<li class="l2"><a href="#6-story-candidates-for-jira">6. Story candidates for Jira</a></li>
+<li class="l2"><a href="#7-gaps-inconsistencies--open-questions">7. Gaps, inconsistencies &amp; open questions</a></li>
+<li class="l2"><a href="#8-out-of-scope-for-mvp">8. Out of scope for MVP</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <span><b style="color:#fff">DAHAB • دهب</b> — Reservations • Touring • Trips · Guest App specification</span>
+  <span>Sources: SRS v1.0 · Figma “Dahab” → page <a href="https://www.figma.com/design/JeROg9VP2nDmcMHfGjXmLy/Dahab?node-id=16-2" target="_blank" rel="noopener">New</a> · Prepared 23 Sep 2026</span>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>
